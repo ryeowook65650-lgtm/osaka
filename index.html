@@ -92,7 +92,6 @@
         /* =========================================
            5. 記帳版面 (Bento Box 網格佈局)
            ========================================= */
-        /* 餘額卡片 */
         .balance-card {
             background: linear-gradient(135deg, #1C1C1E 0%, #3A3A3C 100%);
             border-radius: var(--radius-lg); padding: 24px; color: #FFF; margin-top: 10px; margin-bottom: 24px;
@@ -104,12 +103,10 @@
         .b-sub { font-size: 15px; opacity: 0.8; font-weight: 600; }
         .rate-badge { background: rgba(255,255,255,0.15); padding: 4px 8px; border-radius: 8px; font-size: 11px; backdrop-filter: blur(5px); }
 
-        /* 分段選擇器 (Segmented Control) */
         .segment-wrapper { background: #E5E5EA; border-radius: 12px; display: flex; padding: 4px; margin-bottom: 20px; }
         .seg-btn { flex: 1; text-align: center; padding: 10px 0; font-size: 13px; font-weight: 600; color: var(--text-muted); border-radius: 8px; transition: 0.2s; }
         .seg-btn.active { background: #FFF; color: var(--text-main); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 
-        /* 便當盒分類網格 (Bento Grid) */
         .section-title { font-size: 15px; font-weight: 800; margin: 0 0 12px; color: var(--text-main); }
         .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
         .bento-box { background: var(--card-bg); border-radius: var(--radius-md); padding: 16px; text-align: center; border: 2px solid transparent; box-shadow: var(--shadow-card); transition: 0.2s; }
@@ -119,7 +116,7 @@
         .bento-label { font-size: 14px; font-weight: 600; color: var(--text-main); }
         .bento-box.active .bento-label { color: var(--primary); }
 
-        /* 新型輸入框與送出按鈕組合 */
+        /* 新型輸入框與送出按鈕組合 (幣值切換內建) */
         .input-composite { background: var(--card-bg); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-card); margin-bottom: 30px; border: 1px solid var(--border-color); }
         .input-row { display: flex; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; }
         .input-row input { flex: 1; font-size: 16px; font-weight: 600; padding: 8px; color: var(--text-main); }
@@ -127,8 +124,13 @@
         
         .price-action-row { display: flex; align-items: center; justify-content: space-between; }
         .price-input-wrapper { display: flex; align-items: center; background: #F2F2F7; border-radius: 12px; padding: 12px 16px; flex: 1; margin-right: 12px; }
-        .curr-symbol { font-weight: 800; font-size: 20px; color: var(--primary); margin-right: 8px; }
+        
+        /* 切換按鈕的樣式 */
+        .curr-toggle { font-weight: 800; font-size: 20px; color: var(--primary); margin-right: 12px; padding-right: 12px; border-right: 2px solid #D1D1D6; cursor: pointer; transition: 0.2s; user-select: none; }
+        .curr-toggle:active { transform: scale(0.85); opacity: 0.7; }
+        
         .price-input-wrapper input { font-size: 24px; font-weight: 800; width: 100%; color: var(--text-main); }
+        .price-input-wrapper input::placeholder { color: #C7C7CC; }
         .submit-fab { width: 54px; height: 54px; border-radius: 16px; background: var(--primary); color: #FFF; font-size: 24px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-btn); flex-shrink: 0;}
 
         /* 歷史清單 */
@@ -144,7 +146,7 @@
         .h-del { color: #FF3B30; padding: 10px; margin-left: 5px; font-size: 20px; }
 
         /* =========================================
-           6. 行程版面 (Timeline)
+           6. 行程與機票版面
            ========================================= */
         .trip-card { background: var(--card-bg); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow-card); }
         .t-img { width: 100%; height: 180px; object-fit: cover; }
@@ -155,9 +157,6 @@
         .t-row i { font-size: 20px; color: var(--text-main); }
         .map-btn { display: block; width: 100%; text-align: center; background: #F2F2F7; color: var(--text-main); padding: 14px; border-radius: 12px; font-weight: 600; font-size: 14px; text-decoration: none; margin-top: 16px; }
 
-        /* =========================================
-           7. 機票版面
-           ========================================= */
         .flight-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-card); border-top: 6px solid var(--secondary); }
         .f-top { display: flex; justify-content: space-between; margin-bottom: 24px; }
         .f-code { font-size: 36px; font-weight: 800; display: block; }
@@ -243,24 +242,18 @@
                 <div class="input-row">
                     <input type="text" id="item-name" placeholder="品項名稱 (選填)">
                 </div>
-                
-                <div class="segment-wrapper" id="currency-segment" style="margin-bottom: 16px; background: #F2F2F7; padding: 4px;">
-                    <button class="seg-btn active" onclick="selectCurrency('JPY', this)">¥ 日幣 (JPY)</button>
-                    <button class="seg-btn" onclick="selectCurrency('TWD', this)">$ 台幣 (TWD)</button>
-                </div>
 
                 <div class="price-action-row">
                     <div class="price-input-wrapper">
-                        <span class="curr-symbol" id="curr-display">¥</span>
-                        <input type="number" id="item-price" placeholder="0" min="0" step="0.01">
+                        <div class="curr-toggle" id="curr-toggle" onclick="toggleCurrency()">¥</div>
+                        <input type="number" id="item-price" placeholder="輸入日幣金額" min="0" step="0.01">
                     </div>
                     <button class="submit-fab" onclick="addExpense()"><i class="ph-bold ph-plus"></i></button>
                 </div>
             </div>
 
             <h3 class="section-title">今日紀錄</h3>
-            <div id="expense-list" class="history-list">
-                </div>
+            <div id="expense-list" class="history-list"></div>
         </section>
 
         <section id="view-itinerary" class="view-container">
@@ -273,8 +266,7 @@
             <div id="itinerary-content"></div>
         </section>
 
-        <section id="view-flight" class="view-container" style="padding-top: 10px;">
-            </section>
+        <section id="view-flight" class="view-container" style="padding-top: 10px;"></section>
     </main>
 
     <nav class="bottom-nav">
@@ -295,14 +287,8 @@
     <div id="toast-container" class="toast-container"></div>
 
     <script>
-        /* =========================================
-           1. 你的最新 Google Apps Script 網址
-           ========================================= */
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9QRzDsOKhw89lgS03-oOhGpUcfd6szO3-QZ78w_6Mpz18rLnszsFHNyyfzEJntg1m/exec';
 
-        /* =========================================
-           2. 資料與狀態 (安全防呆版)
-           ========================================= */
         function getSafeStorage(key, defaultVal) {
             try {
                 const val = localStorage.getItem(key);
@@ -320,7 +306,7 @@
                 date: '5/22',
                 person: '',     
                 category: '交通',
-                currency: 'JPY', /* 預設幣值 */
+                currency: 'JPY', 
                 activeDay: 'day1'
             },
             updateRate(newRate) {
@@ -335,7 +321,6 @@
 
         const EMOJI_MAP = { '交通': 'ph-train', '食物': 'ph-hamburger', '購物': 'ph-shopping-bag', '其他': 'ph-ticket' };
 
-        /* 行程資料 */
         const ITINERARY_DATA = {
             day1: [
                 { time: "預估 50 分", title: "抵達關西機場 & 特急", address: "關西國際機場 (KIX)", icon: "ph-train", info: "南海電鐵特急 Rapi:t (¥1490)", mapUrl: "https://maps.google.com", imgUrl: "https://images.unsplash.com/photo-1590559899731-a38283b156b6?q=80&w=800&auto=format&fit=crop" },
@@ -359,9 +344,6 @@
             { label: "回程 Inbound", date: "5/25 (一)", fCode: "KIX", tCode: "TPE", dTime: "13:15", aTime: "15:05", air: "STARLUX JX821", url: "https://www.starlux-airlines.com/zh-TW/check-in" }
         ];
 
-        /* =========================================
-           3. 系統初始化
-           ========================================= */
         document.addEventListener('DOMContentLoaded', () => {
             renderFlights();
             renderItinerary('day1');
@@ -376,9 +358,6 @@
             }
         });
 
-        /* =========================================
-           4. UI 互動邏輯
-           ========================================= */
         function switchTab(tabId) {
             document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -412,17 +391,24 @@
             el.classList.add('active');
         }
 
-        function selectCurrency(curr, el) {
-            Store.state.currency = curr;
-            document.querySelectorAll('#currency-segment .seg-btn').forEach(btn => btn.classList.remove('active'));
-            el.classList.add('active');
+        // 🌟 更新：按鈕點擊切換幣別的邏輯
+        function toggleCurrency() {
+            const toggleBtn = document.getElementById('curr-toggle');
+            const inputField = document.getElementById('item-price');
             
-            const symbolEl = document.getElementById('curr-display');
-            symbolEl.innerText = (curr === 'JPY') ? '¥' : '$';
-            symbolEl.style.color = (curr === 'JPY') ? 'var(--primary)' : 'var(--secondary)';
+            if (Store.state.currency === 'JPY') {
+                Store.state.currency = 'TWD';
+                toggleBtn.innerText = '$';
+                toggleBtn.style.color = 'var(--secondary)'; // 台幣顯示藍色
+                inputField.placeholder = "輸入台幣金額";
+            } else {
+                Store.state.currency = 'JPY';
+                toggleBtn.innerText = '¥';
+                toggleBtn.style.color = 'var(--primary)';   // 日幣顯示紅色
+                inputField.placeholder = "輸入日幣金額";
+            }
         }
 
-        // 🌟 新增：專用手動同步按鈕邏輯
         function manualSync() {
             showToast('正在同步資料...', 'success');
             fetchExpenses();
@@ -440,9 +426,6 @@
             }, 2500);
         }
 
-        /* =========================================
-           5. 畫面渲染邏輯
-           ========================================= */
         function renderItinerary(day) {
             const container = document.getElementById('itinerary-content');
             let html = '';
@@ -490,18 +473,13 @@
             const listEl = document.getElementById('expense-list');
             listEl.innerHTML = '';
             
-            // 🌟 修正：放寬過濾條件，讓 Google Sheet 的完整時間字串也能成功配對到我們的簡寫日期 (例如 5/22)
             const todayItems = Store.state.expenses.filter(item => {
                 const sheetDate = String(item.date).trim();
                 const targetDate = Store.state.date; 
                 
-                // 1. 如果是直接剛寫入的格式
                 if (sheetDate === targetDate || sheetDate.includes(targetDate)) return true;
-                
-                // 2. 如果是 Google Sheet 回傳的 ISO 格式 (e.g. 2026-05-21T16:00:00.000Z)
                 if (sheetDate.includes('T') || sheetDate.includes('-')) {
                     const d = new Date(sheetDate);
-                    // 將 Date 物件轉為 "M/D" 的格式去比對
                     const md = `${d.getMonth() + 1}/${d.getDate()}`;
                     return md === targetDate;
                 }
@@ -548,9 +526,6 @@
             document.getElementById('total-secondary').innerText = `≈ ¥ ${totalJPY.toLocaleString()}`;
         }
 
-        /* =========================================
-           6. API 連線區
-           ========================================= */
         async function fetchExchangeRate() {
             try {
                 const res = await fetch('https://open.er-api.com/v6/latest/JPY');
