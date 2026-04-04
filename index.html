@@ -97,11 +97,18 @@
             border-radius: var(--radius-lg); padding: 24px; color: #FFF; margin-top: 10px; margin-bottom: 24px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.15); position: relative; overflow: hidden;
         }
-        .balance-card::after { content: ''; position: absolute; right: -20px; top: -20px; width: 120px; height: 120px; background: rgba(255,255,255,0.05); border-radius: 50%; }
-        .b-title { font-size: 13px; font-weight: 600; opacity: 0.7; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;}
-        .b-amount { font-size: 40px; font-weight: 800; margin: 0 0 4px; letter-spacing: -1px; }
-        .b-sub { font-size: 15px; opacity: 0.8; font-weight: 600; }
+        .balance-card::after { content: ''; position: absolute; right: -20px; top: -20px; width: 120px; height: 120px; background: rgba(255,255,255,0.05); border-radius: 50%; pointer-events: none;}
+        
+        .b-title { font-size: 13px; font-weight: 600; opacity: 0.8; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2;}
+        .b-title-right { display: flex; align-items: center; gap: 8px; }
         .rate-badge { background: rgba(255,255,255,0.15); padding: 4px 8px; border-radius: 8px; font-size: 11px; backdrop-filter: blur(5px); }
+        
+        /* 🌟 新增：統計按鈕樣式 */
+        .stats-btn { background: rgba(255,255,255,0.2); border-radius: 8px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; color: #FFF; font-size: 16px; backdrop-filter: blur(5px); transition: 0.2s; }
+        .stats-btn:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
+
+        .b-amount { font-size: 40px; font-weight: 800; margin: 0 0 4px; letter-spacing: -1px; position: relative; z-index: 2;}
+        .b-sub { font-size: 15px; opacity: 0.8; font-weight: 600; position: relative; z-index: 2;}
 
         .segment-wrapper { background: #E5E5EA; border-radius: 12px; display: flex; padding: 4px; margin-bottom: 20px; }
         .seg-btn { flex: 1; text-align: center; padding: 10px 0; font-size: 13px; font-weight: 600; color: var(--text-muted); border-radius: 8px; transition: 0.2s; }
@@ -116,7 +123,6 @@
         .bento-label { font-size: 14px; font-weight: 600; color: var(--text-main); }
         .bento-box.active .bento-label { color: var(--primary); }
 
-        /* 新型輸入框與送出按鈕組合 (幣值切換內建) */
         .input-composite { background: var(--card-bg); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-card); margin-bottom: 30px; border: 1px solid var(--border-color); }
         .input-row { display: flex; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; }
         .input-row input { flex: 1; font-size: 16px; font-weight: 600; padding: 8px; color: var(--text-main); }
@@ -124,16 +130,12 @@
         
         .price-action-row { display: flex; align-items: center; justify-content: space-between; }
         .price-input-wrapper { display: flex; align-items: center; background: #F2F2F7; border-radius: 12px; padding: 12px 16px; flex: 1; margin-right: 12px; }
-        
-        /* 切換按鈕的樣式 */
         .curr-toggle { font-weight: 800; font-size: 20px; color: var(--primary); margin-right: 12px; padding-right: 12px; border-right: 2px solid #D1D1D6; cursor: pointer; transition: 0.2s; user-select: none; }
         .curr-toggle:active { transform: scale(0.85); opacity: 0.7; }
-        
         .price-input-wrapper input { font-size: 24px; font-weight: 800; width: 100%; color: var(--text-main); }
         .price-input-wrapper input::placeholder { color: #C7C7CC; }
         .submit-fab { width: 54px; height: 54px; border-radius: 16px; background: var(--primary); color: #FFF; font-size: 24px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-btn); flex-shrink: 0;}
 
-        /* 歷史清單 */
         .history-list { display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px;}
         .h-item { background: var(--card-bg); padding: 16px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-card); }
         .h-left { display: flex; align-items: center; gap: 12px; }
@@ -165,6 +167,38 @@
         .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--bg-color); padding: 16px; border-radius: 12px; margin-bottom: 16px; }
         .f-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; display: block; }
         .f-val { font-size: 18px; font-weight: 800; color: var(--text-main); }
+
+        /* =========================================
+           7. 🌟 底部彈出統計視窗 (Bottom Sheet Modal)
+           ========================================= */
+        .modal-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; 
+            display: flex; align-items: flex-end; 
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-card { 
+            background: var(--bg-color); width: 100%; max-height: 85vh; overflow-y: auto;
+            border-radius: 24px 24px 0 0; padding: 24px; 
+            padding-bottom: calc(24px + env(safe-area-inset-bottom)); 
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1); 
+        }
+        .modal-overlay.active .modal-card { transform: translateY(0); }
+        
+        .pull-indicator { width: 40px; height: 5px; background: #D1D1D6; border-radius: 3px; margin: 0 auto 16px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .modal-header h3 { margin: 0; font-size: 20px; font-weight: 800; color: var(--text-main); }
+        .close-btn { background: #E5E5EA; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: var(--text-main); font-size: 16px; }
+        
+        .stat-item { background: var(--card-bg); padding: 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: var(--shadow-card); }
+        .stat-left { display: flex; align-items: center; gap: 12px; }
+        .stat-icon { width: 44px; height: 44px; background: var(--primary-light); color: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .stat-info h4 { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: var(--text-main); }
+        .stat-percent { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+        .stat-right { text-align: right; }
+        .s-twd { font-size: 17px; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 2px;}
+        .s-jpy { font-size: 12px; font-weight: 600; color: var(--text-muted); }
 
         /* Toast 提示 */
         .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 9999; width: 90%; max-width: 350px; pointer-events: none;}
@@ -198,7 +232,15 @@
         <section id="view-accounting" class="view-container active">
             
             <div class="balance-card">
-                <div class="b-title">Total Expenses <span class="rate-badge" id="rate-display">匯率 0.21</span></div>
+                <div class="b-title">
+                    <span>Total Expenses</span>
+                    <div class="b-title-right">
+                        <span class="rate-badge" id="rate-display">匯率 0.21</span>
+                        <button class="stats-btn" onclick="openStatsModal()">
+                            <i class="ph-bold ph-chart-pie-slice"></i>
+                        </button>
+                    </div>
+                </div>
                 <h2 class="b-amount" id="total-primary">NT$ 0</h2>
                 <div class="b-sub" id="total-secondary">≈ ¥ 0</div>
             </div>
@@ -283,6 +325,18 @@
             <span>機票</span>
         </button>
     </nav>
+
+    <div class="modal-overlay" id="stats-modal" onclick="closeStatsModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="pull-indicator"></div>
+            <div class="modal-header">
+                <h3>分類花費統計</h3>
+                <button onclick="closeStatsModal()" class="close-btn"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <div id="stats-content">
+                </div>
+        </div>
+    </div>
 
     <div id="toast-container" class="toast-container"></div>
 
@@ -391,7 +445,6 @@
             el.classList.add('active');
         }
 
-        // 🌟 更新：按鈕點擊切換幣別的邏輯
         function toggleCurrency() {
             const toggleBtn = document.getElementById('curr-toggle');
             const inputField = document.getElementById('item-price');
@@ -399,12 +452,12 @@
             if (Store.state.currency === 'JPY') {
                 Store.state.currency = 'TWD';
                 toggleBtn.innerText = '$';
-                toggleBtn.style.color = 'var(--secondary)'; // 台幣顯示藍色
+                toggleBtn.style.color = 'var(--secondary)';
                 inputField.placeholder = "輸入台幣金額";
             } else {
                 Store.state.currency = 'JPY';
                 toggleBtn.innerText = '¥';
-                toggleBtn.style.color = 'var(--primary)';   // 日幣顯示紅色
+                toggleBtn.style.color = 'var(--primary)';
                 inputField.placeholder = "輸入日幣金額";
             }
         }
@@ -413,6 +466,51 @@
             showToast('正在同步資料...', 'success');
             fetchExpenses();
             fetchExchangeRate();
+        }
+
+        // 🌟 處理底部統計卡片開啟與關閉的邏輯
+        function openStatsModal() {
+            const container = document.getElementById('stats-content');
+            let stats = { '交通': 0, '食物': 0, '購物': 0, '其他': 0 };
+            let totalTWD = 0;
+            
+            // 計算各分類總和
+            Store.state.expenses.forEach(item => {
+                let price = Math.round(parseFloat(item.price) || 0);
+                stats[item.cat] = (stats[item.cat] || 0) + price;
+                totalTWD += price;
+            });
+
+            let html = '';
+            const cats = ['交通', '食物', '購物', '其他'];
+            cats.forEach(cat => {
+                let valTWD = stats[cat];
+                let valJPY = Math.round(valTWD / Store.state.rate);
+                let icon = EMOJI_MAP[cat] || 'ph-ticket';
+                let percent = totalTWD === 0 ? 0 : Math.round((valTWD / totalTWD) * 100);
+                
+                html += `
+                <div class="stat-item">
+                    <div class="stat-left">
+                        <div class="stat-icon"><i class="ph-fill ${icon}"></i></div>
+                        <div class="stat-info">
+                            <h4>${cat}</h4>
+                            <span class="stat-percent">${percent}% 佔比</span>
+                        </div>
+                    </div>
+                    <div class="stat-right">
+                        <span class="s-twd">$${valTWD.toLocaleString()}</span>
+                        <span class="s-jpy">≈ ¥${valJPY.toLocaleString()}</span>
+                    </div>
+                </div>`;
+            });
+            
+            container.innerHTML = html;
+            document.getElementById('stats-modal').classList.add('active');
+        }
+
+        function closeStatsModal() {
+            document.getElementById('stats-modal').classList.remove('active');
         }
 
         function showToast(msg, type = 'success') {
