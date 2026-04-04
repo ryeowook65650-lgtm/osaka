@@ -103,12 +103,18 @@
         .b-title-right { display: flex; align-items: center; gap: 8px; }
         .rate-badge { background: rgba(255,255,255,0.15); padding: 4px 8px; border-radius: 8px; font-size: 11px; backdrop-filter: blur(5px); }
         
-        /* 🌟 新增：統計按鈕樣式 */
         .stats-btn { background: rgba(255,255,255,0.2); border-radius: 8px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; color: #FFF; font-size: 16px; backdrop-filter: blur(5px); transition: 0.2s; }
         .stats-btn:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
 
         .b-amount { font-size: 40px; font-weight: 800; margin: 0 0 4px; letter-spacing: -1px; position: relative; z-index: 2;}
         .b-sub { font-size: 15px; opacity: 0.8; font-weight: 600; position: relative; z-index: 2;}
+
+        /* 🌟 極簡科技感：預算進度條 */
+        .budget-wrapper { margin-top: 20px; position: relative; z-index: 2; }
+        .budget-info { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; margin-bottom: 8px; opacity: 0.9; }
+        .budget-tot { opacity: 0.6; }
+        .budget-track { height: 6px; background: rgba(255,255,255,0.15); border-radius: 99px; overflow: hidden; backdrop-filter: blur(4px); box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);}
+        .budget-fill { height: 100%; width: 0%; background: #34C759; border-radius: 99px; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease; }
 
         .segment-wrapper { background: #E5E5EA; border-radius: 12px; display: flex; padding: 4px; margin-bottom: 20px; }
         .seg-btn { flex: 1; text-align: center; padding: 10px 0; font-size: 13px; font-weight: 600; color: var(--text-muted); border-radius: 8px; transition: 0.2s; }
@@ -169,7 +175,7 @@
         .f-val { font-size: 18px; font-weight: 800; color: var(--text-main); }
 
         /* =========================================
-           7. 🌟 底部彈出統計視窗 (Bottom Sheet Modal)
+           7. 底部彈出統計視窗 (Bottom Sheet Modal)
            ========================================= */
         .modal-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
@@ -243,6 +249,16 @@
                 </div>
                 <h2 class="b-amount" id="total-primary">NT$ 0</h2>
                 <div class="b-sub" id="total-secondary">≈ ¥ 0</div>
+
+                <div class="budget-wrapper">
+                    <div class="budget-info">
+                        <span id="budget-rem-label">剩餘 NT$ 30,000</span>
+                        <span class="budget-tot">/ 30k 預算</span>
+                    </div>
+                    <div class="budget-track">
+                        <div class="budget-fill" id="budget-fill"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="segment-wrapper" id="date-segment">
@@ -333,8 +349,7 @@
                 <h3>分類花費統計</h3>
                 <button onclick="closeStatsModal()" class="close-btn"><i class="ph-bold ph-x"></i></button>
             </div>
-            <div id="stats-content">
-                </div>
+            <div id="stats-content"></div>
         </div>
     </div>
 
@@ -374,6 +389,7 @@
         };
 
         const EMOJI_MAP = { '交通': 'ph-train', '食物': 'ph-hamburger', '購物': 'ph-shopping-bag', '其他': 'ph-ticket' };
+        const TOTAL_BUDGET = 30000; // 🌟 預算設定為三萬台幣
 
         const ITINERARY_DATA = {
             day1: [
@@ -468,13 +484,11 @@
             fetchExchangeRate();
         }
 
-        // 🌟 處理底部統計卡片開啟與關閉的邏輯
         function openStatsModal() {
             const container = document.getElementById('stats-content');
             let stats = { '交通': 0, '食物': 0, '購物': 0, '其他': 0 };
             let totalTWD = 0;
             
-            // 計算各分類總和
             Store.state.expenses.forEach(item => {
                 let price = Math.round(parseFloat(item.price) || 0);
                 stats[item.cat] = (stats[item.cat] || 0) + price;
@@ -622,6 +636,23 @@
             
             document.getElementById('total-primary').innerText = `NT$ ${totalTWD.toLocaleString()}`;
             document.getElementById('total-secondary').innerText = `≈ ¥ ${totalJPY.toLocaleString()}`;
+
+            // 🌟 渲染預算進度條
+            let spentPercent = (totalTWD / TOTAL_BUDGET) * 100;
+            let remaining = TOTAL_BUDGET - totalTWD;
+            const fillEl = document.getElementById('budget-fill');
+            const remLabel = document.getElementById('budget-rem-label');
+
+            if (remaining >= 0) {
+                remLabel.innerText = `剩餘 NT$ ${remaining.toLocaleString()}`;
+                fillEl.style.width = `${Math.min(spentPercent, 100)}%`;
+                // 顏色變化：超過 85% 變黃色警告，否則保持綠色
+                fillEl.style.background = spentPercent > 85 ? '#FFCC00' : '#34C759'; 
+            } else {
+                remLabel.innerText = `超支 NT$ ${Math.abs(remaining).toLocaleString()}`;
+                fillEl.style.width = `100%`;
+                fillEl.style.background = '#FF3B30'; // 超支變紅色
+            }
         }
 
         async function fetchExchangeRate() {
