@@ -8,6 +8,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#f4f2e2">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,15 +46,33 @@
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        button, input, select {
+        button, input, select, textarea {
             appearance: none; -webkit-appearance: none;
             font-family: inherit; margin: 0; padding: 0; outline: none; background: transparent; border: none;
         }
         
+        /* 提升觸控靈敏度，消除 300ms 延遲 */
+        button, .chip, .nav-btn, .cat-btn, .date-divider, .weather-badge {
+            touch-action: manipulation;
+        }
+        
         body { 
-            margin: 0; padding: 0; font-family: var(--font-sans); background-color: var(--color-cream); color: var(--color-dark); padding-bottom: 100px; letter-spacing: 0.03em; 
+            margin: 0; padding: 0; font-family: var(--font-sans); background-color: var(--color-cream); color: var(--color-dark); letter-spacing: 0.03em; 
+            /* 適配 iOS 底部橫條 */
+            padding-bottom: calc(100px + env(safe-area-inset-bottom));
             /* 輕微的紙張紋理感 (Noise) */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            /* 阻斷瀏覽器原生的下拉刷新與邊緣彈性效果 */
+            overscroll-behavior-y: none; 
+            /* 禁用長按選取文字 (提升 App 手感) */
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* 讓輸入框恢復可以選取文字與游標操作 */
+        input, textarea {
+            -webkit-user-select: auto;
+            user-select: auto;
         }
 
         /* =========================================
@@ -131,13 +151,22 @@
         .scroll-container, .cat-row { 
             overflow-x: auto; white-space: nowrap; padding-bottom: 10px; scrollbar-width: none; display: flex; gap: 12px; 
             padding-right: 40px; mask-image: linear-gradient(to right, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); margin-bottom: 25px;
+            /* 加入橫向滑動捕捉 */
+            scroll-snap-type: x mandatory;
+            scroll-padding-left: 0;
         }
         .scroll-container::-webkit-scrollbar { display: none; }
 
-        .chip { display: flex; align-items: center; justify-content: center; background: var(--color-white); border: 1px solid rgba(42,34,30,0.08); border-radius: var(--border-radius-pill); padding: 10px 20px; font-size: 14px; font-weight: 700; color: var(--color-text-muted); cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(42,34,30,0.02);}
+        .chip { display: flex; align-items: center; justify-content: center; background: var(--color-white); border: 1px solid rgba(42,34,30,0.08); border-radius: var(--border-radius-pill); padding: 10px 20px; font-size: 14px; font-weight: 700; color: var(--color-text-muted); cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(42,34,30,0.02);
+            /* 滑動捕捉定位 */
+            scroll-snap-align: start;
+        }
         .chip.active { background: var(--color-red); color: var(--color-white); border-color: var(--color-red); box-shadow: var(--box-shadow-btn);}
 
-        .cat-btn { flex: 1; min-width: 85px; padding: 16px 10px; background: var(--color-white); border-radius: 16px; border: 1px solid rgba(42,34,30,0.05); font-size: 13px; font-weight: 700; color: var(--color-text-muted); cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(42,34,30,0.02);}
+        .cat-btn { flex: 1; min-width: 85px; padding: 16px 10px; background: var(--color-white); border-radius: 16px; border: 1px solid rgba(42,34,30,0.05); font-size: 13px; font-weight: 700; color: var(--color-text-muted); cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(42,34,30,0.02);
+            /* 滑動捕捉定位 */
+            scroll-snap-align: start;
+        }
         .cat-btn.active { background: var(--color-blue); color: var(--color-white); border-color: var(--color-blue); box-shadow: 0 8px 20px rgba(162,185,213,0.4); transform: translateY(-4px);}
         .cat-emoji { font-size: 28px; display: block; margin-bottom: 10px; transition: 0.2s; }
         .cat-btn.active .cat-emoji { transform: scale(1.1); color: var(--color-white);}
@@ -160,7 +189,10 @@
 
         .add-btn { 
             width: 100%; background: var(--color-red); color: var(--color-white); padding: 20px; border-radius: var(--border-radius-pill); font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; letter-spacing: 2px; box-shadow: var(--box-shadow-btn); display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 10px; 
-            position: sticky; bottom: 20px; z-index: 100;
+            position: sticky; 
+            /* 適配 iOS 底部橫條 */
+            bottom: calc(20px + env(safe-area-inset-bottom)); 
+            z-index: 100;
         }
         .add-btn:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(176,16,19,0.2); }
         .add-btn:disabled { background: var(--color-text-muted); box-shadow: none; transform: none; }
