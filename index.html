@@ -151,7 +151,7 @@
         .h-right { text-align: right; }
         .h-price { font-size: 17px; font-weight: 800; color: var(--primary); margin-bottom: 2px; }
         .h-jpy { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-        .h-del { color: #FF3B30; padding: 10px; margin-left: 5px; font-size: 20px; }
+        .h-del { color: #FF3B30; padding: 10px; margin-left: 5px; font-size: 20px; cursor: pointer; border: none; background: none;}
 
         /* =========================================
            6. 行程與機票版面
@@ -195,7 +195,7 @@
         .pull-indicator { width: 40px; height: 5px; background: #D1D1D6; border-radius: 3px; margin: 0 auto 16px; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
         .modal-header h3 { margin: 0; font-size: 20px; font-weight: 800; color: var(--text-main); }
-        .close-btn { background: #E5E5EA; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: var(--text-main); font-size: 16px; }
+        .close-btn { background: #E5E5EA; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: var(--text-main); font-size: 16px; cursor: pointer; border: none;}
         
         .stat-item { background: var(--card-bg); padding: 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: var(--shadow-card); }
         .stat-left { display: flex; align-items: center; gap: 12px; }
@@ -389,7 +389,7 @@
         };
 
         const EMOJI_MAP = { '交通': 'ph-train', '食物': 'ph-hamburger', '購物': 'ph-shopping-bag', '其他': 'ph-ticket' };
-        const TOTAL_BUDGET = 30000; // 🌟 預算設定為三萬台幣
+        const TOTAL_BUDGET = 30000; 
 
         const ITINERARY_DATA = {
             day1: [
@@ -410,8 +410,8 @@
         };
 
         const FLIGHT_DATA = [
-            { label: "去程 Outbound", date: "5/22 (五)", fCode: "TPE", tCode: "KIX", dTime: "08:30", aTime: "12:05", air: "STARLUX JX820", url: "https://www.starlux-airlines.com/zh-TW/check-in" },
-            { label: "回程 Inbound", date: "5/25 (一)", fCode: "KIX", tCode: "TPE", dTime: "13:15", aTime: "15:05", air: "STARLUX JX821", url: "https://www.starlux-airlines.com/zh-TW/check-in" }
+            { label: "去程 Outbound", date: "5/22 (五)", fCode: "TPE", tCode: "KIX", dTime: "08:30", aTime: "12:05", air: "CHINA AIRLINES CI152", url: "https://www.china-airlines.com/tw/zh/booking/check-in/flight-check-in" },
+            { label: "回程 Inbound", date: "5/25 (一)", fCode: "KIX", tCode: "TPE", dTime: "13:15", aTime: "15:05", air: "CHINA AIRLINES CI153", url: "https://www.china-airlines.com/tw/zh/booking/check-in/flight-check-in" }
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -637,21 +637,23 @@
             document.getElementById('total-primary').innerText = `NT$ ${totalTWD.toLocaleString()}`;
             document.getElementById('total-secondary').innerText = `≈ ¥ ${totalJPY.toLocaleString()}`;
 
-            // 🌟 渲染預算進度條
+            // 🌟 渲染預算進度條與顏色變換
             let spentPercent = (totalTWD / TOTAL_BUDGET) * 100;
             let remaining = TOTAL_BUDGET - totalTWD;
             const fillEl = document.getElementById('budget-fill');
             const remLabel = document.getElementById('budget-rem-label');
 
+            fillEl.style.width = `${Math.min(spentPercent, 100)}%`;
+
             if (remaining >= 0) {
                 remLabel.innerText = `剩餘 NT$ ${remaining.toLocaleString()}`;
-                fillEl.style.width = `${Math.min(spentPercent, 100)}%`;
-                // 顏色變化：超過 85% 變黃色警告，否則保持綠色
-                fillEl.style.background = spentPercent > 85 ? '#FFCC00' : '#34C759'; 
+                remLabel.style.color = 'rgba(255,255,255,0.8)';
+                // 超過 85% 變警告色(暖沙金)，正常是綠色
+                fillEl.style.background = spentPercent > 85 ? 'var(--accent)' : 'var(--color-success)'; 
             } else {
                 remLabel.innerText = `超支 NT$ ${Math.abs(remaining).toLocaleString()}`;
-                fillEl.style.width = `100%`;
-                fillEl.style.background = '#FF3B30'; // 超支變紅色
+                remLabel.style.color = '#FF4B4B'; // 超支文字變紅
+                fillEl.style.background = '#FF4B4B'; // 超支進度條變紅
             }
         }
 
