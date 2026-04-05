@@ -51,6 +51,16 @@
         button { cursor: pointer; transition: transform 0.15s ease, opacity 0.15s ease; }
         button:active { transform: scale(0.95); opacity: 0.8; }
 
+        /* 隱藏 type="number" 的上下箭頭 */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+
         /* =========================================
            2. 頂部狀態列 (Header)
            ========================================= */
@@ -195,8 +205,12 @@
         .s-jpy { font-size: 12px; font-weight: 600; color: var(--text-muted); }
 
         .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; width: 90%; pointer-events: none;}
-        .toast { background: rgba(28, 28, 30, 0.95); backdrop-filter: blur(10px); color: #FFF; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; animation: toastIn 0.3s forwards; }
+        .toast { background: rgba(28, 28, 30, 0.95); backdrop-filter: blur(10px); color: #FFF; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; animation: toastIn 0.3s forwards; margin-bottom: 10px; }
         @keyframes toastIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .toast.hide { animation: toastOut 0.3s ease forwards; }
+        @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-10px); } }
+        .toast.success i { color: #34C759; }
+        .toast.error i { color: #FF3B30; }
     </style>
 </head>
 <body>
@@ -280,13 +294,13 @@
             <h3 class="section-title">記下一筆</h3>
             <div class="input-composite">
                 <div class="input-row">
-                    <input type="text" inputmode="decimal" pattern="[0-9]*" id="item-name" placeholder="品項名稱 (選填)">
+                    <input type="text" id="item-name" placeholder="品項名稱 (選填)">
                 </div>
 
                 <div class="price-action-row">
                     <div class="price-input-wrapper">
                         <div class="curr-toggle" id="curr-toggle" onclick="toggleCurrency()">¥</div>
-                        <input type="number" id="item-price" placeholder="輸入日幣金額" min="0" step="0.01">
+                        <input type="number" inputmode="decimal" id="item-price" placeholder="輸入日幣金額" min="0" step="0.01">
                     </div>
                     <button class="submit-fab" onclick="addExpense()"><i class="ph-bold ph-plus"></i></button>
                 </div>
@@ -619,7 +633,6 @@
             document.getElementById('total-primary').innerText = `NT$ ${totalTWD.toLocaleString()}`;
             document.getElementById('total-secondary').innerText = `≈ ¥ ${totalJPY.toLocaleString()}`;
 
-            // 🌟 渲染預算進度條與顏色變換
             let spentPercent = (totalTWD / TOTAL_BUDGET) * 100;
             let remaining = TOTAL_BUDGET - totalTWD;
             const fillEl = document.getElementById('budget-fill');
@@ -630,12 +643,11 @@
             if (remaining >= 0) {
                 remLabel.innerText = `剩餘 NT$ ${remaining.toLocaleString()}`;
                 remLabel.style.color = 'rgba(255,255,255,0.8)';
-                // 超過 85% 變警告色(暖沙金)，正常是綠色
                 fillEl.style.background = spentPercent > 85 ? 'var(--accent)' : 'var(--color-success)'; 
             } else {
                 remLabel.innerText = `超支 NT$ ${Math.abs(remaining).toLocaleString()}`;
-                remLabel.style.color = '#FF4B4B'; // 超支文字變紅
-                fillEl.style.background = '#FF4B4B'; // 超支進度條變紅
+                remLabel.style.color = '#FF4B4B'; 
+                fillEl.style.background = '#FF4B4B'; 
             }
         }
 
@@ -684,32 +696,47 @@
             const newId = Date.now().toString();
             const newExpenseObj = { id: newId, date: Store.state.date, cat: Store.state.category, name: finalName, price: finalPriceTWD };
             
+            // 1. 樂觀 UI：先秒速更新畫面
             Store.updateExpenses([...Store.state.expenses, newExpenseObj]);
             renderExpenses();
             
             nameEl.value = ''; priceEl.value = ''; priceEl.blur(); 
-            showToast(`已新增一筆花費`);
+            showToast(`新增成功，背景同步中...`); // 提示使用者正在寫入雲端
 
+            // 2. 實際發送給 Google Apps Script
             try {
                 const params = new URLSearchParams({ action: 'add', ...newExpenseObj });
                 await fetch(SCRIPT_URL, { method: 'POST', body: params });
+                
+                // ✨ 雲端寫入成功通知！
+                showToast('✅ 已成功儲存至試算表'); 
                 fetchExpenses();
-            } catch (err) { showToast('背景同步失敗，已存於本機', 'error'); }
+            } catch (err) { 
+                showToast('背景同步失敗，目前僅存於本機', 'error'); 
+            }
         }
 
         async function deleteExpense(id) {
             if (!confirm('確定刪除此筆紀錄？')) return;
+            
             const original = [...Store.state.expenses]; 
+            
+            // 1. 樂觀 UI：先秒速從畫面移除
             Store.updateExpenses(Store.state.expenses.filter(item => String(item.id) !== String(id)));
             renderExpenses(); 
+            showToast('刪除中...');
 
+            // 2. 實際發送給 Google Apps Script
             try { 
                 await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'delete', id: String(id) }) }); 
-                showToast('紀錄已刪除');
+                
+                // ✨ 雲端刪除成功通知！
+                showToast('🗑️ 已從試算表永久刪除');
                 fetchExpenses();
             } catch (err) { 
-                Store.updateExpenses(original); renderExpenses(); 
-                showToast('刪除失敗', 'error');
+                Store.updateExpenses(original); 
+                renderExpenses(); 
+                showToast('刪除失敗，請檢查網路', 'error');
             }
         }
     </script>
