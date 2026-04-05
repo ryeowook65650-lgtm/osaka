@@ -633,6 +633,7 @@
             document.getElementById('total-primary').innerText = `NT$ ${totalTWD.toLocaleString()}`;
             document.getElementById('total-secondary').innerText = `≈ ¥ ${totalJPY.toLocaleString()}`;
 
+            // 🌟 渲染預算進度條與顏色變換 (已修復色碼問題)
             let spentPercent = (totalTWD / TOTAL_BUDGET) * 100;
             let remaining = TOTAL_BUDGET - totalTWD;
             const fillEl = document.getElementById('budget-fill');
@@ -643,13 +644,14 @@
             if (remaining >= 0) {
                 remLabel.innerText = `剩餘 NT$ ${remaining.toLocaleString()}`;
                 remLabel.style.color = 'rgba(255,255,255,0.8)';
-                // 這裡修正：直接換成實際的色碼。正常綠色 (#34C759)，超過85%顯示警告的橘黃色 (#FFCC00)
+                // 超過 85% 變成橘黃色警告，正常為綠色
                 fillEl.style.background = spentPercent > 85 ? '#FFCC00' : '#34C759'; 
             } else {
                 remLabel.innerText = `超支 NT$ ${Math.abs(remaining).toLocaleString()}`;
                 remLabel.style.color = '#FF4B4B'; // 超支文字變紅
                 fillEl.style.background = '#FF4B4B'; // 超支進度條變紅
             }
+        }
 
         async function fetchExchangeRate() {
             try {
