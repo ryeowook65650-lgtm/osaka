@@ -52,7 +52,6 @@
         button { cursor: pointer; transition: transform 0.15s ease, opacity 0.15s ease; }
         button:active { transform: scale(0.95); opacity: 0.8; }
 
-        /* 隱藏 type="number" 的上下箭頭 */
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type="number"] { -moz-appearance: textfield; }
@@ -88,15 +87,12 @@
         .tab-btn.active { color: var(--primary); }
         .tab-btn.active i { font-weight: bold; }
 
-        /* =========================================
-           4. 視圖容器
-           ========================================= */
         .view-container { display: none; padding: 0 20px; animation: fadeIn 0.3s ease forwards; }
         .view-container.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================================
-           5. 記帳版面 (Bento Box 網格佈局)
+           記帳版面
            ========================================= */
         .balance-card {
             background: linear-gradient(135deg, #1C1C1E 0%, #3A3A3C 100%);
@@ -159,7 +155,7 @@
         .h-del { color: #FF3B30; padding: 10px; margin-left: 5px; font-size: 20px; cursor: pointer; border: none; background: none;}
 
         /* =========================================
-           6. 行程與機票版面
+           行程與機票版面
            ========================================= */
         .trip-card { background: var(--card-bg); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow-card); }
         .t-img { width: 100%; height: 180px; object-fit: cover; }
@@ -180,7 +176,7 @@
         .f-val { font-size: 18px; font-weight: 800; color: var(--text-main); }
 
         /* =========================================
-           🌟 7. 新增：阿珊的代購版面設計 (VIP Shopping)
+           🌟 代購版面設計 (VIP Shopping)
            ========================================= */
         .profile-card {
             background: linear-gradient(135deg, var(--card-bg) 0%, var(--primary-light) 100%);
@@ -199,24 +195,28 @@
 
         .shop-item { 
             display: flex; background: var(--card-bg); border-radius: var(--radius-md); padding: 12px; gap: 16px; margin-bottom: 16px; 
-            box-shadow: var(--shadow-card); border: 1px solid transparent; transition: 0.2s; align-items: center;
+            box-shadow: var(--shadow-card); border: 1px solid transparent; transition: 0.2s; align-items: center; cursor: pointer;
         }
         .shop-item.purchased { border-color: var(--color-success); background: #F4FFF8; }
-        .shop-img-box { 
-            width: 80px; height: 80px; background: var(--bg-color); border-radius: 12px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            color: var(--text-muted); flex-shrink: 0; overflow: hidden; position: relative;
-        }
         
+        .shop-img-box { 
+            width: 80px; height: 80px; background: #E5E5EA; border-radius: 12px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            flex-shrink: 0; overflow: hidden; position: relative; cursor: zoom-in;
+        }
         .shop-img-box img { 
             width: 100%; height: 100%; object-fit: cover; 
             position: absolute; top:0; left:0; 
             opacity: 1; transition: 0.3s ease; 
         }
-        /* 買到後讓圖片稍微變暗、變灰，凸顯已完成的狀態 */
         .shop-item.purchased .shop-img-box img {
-            opacity: 0.6;
-            filter: grayscale(80%);
+            opacity: 0.6; filter: grayscale(80%);
+        }
+        .zoom-icon {
+            position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.5);
+            color: #FFF; width: 22px; height: 22px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 14px; pointer-events: none;
+            backdrop-filter: blur(2px);
         }
 
         .shop-info { flex: 1; }
@@ -224,13 +224,47 @@
         .shop-note { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 0 0 8px; }
         .shop-price { font-size: 14px; font-weight: 800; color: var(--primary); }
         
-        /* 購買打勾框 */
         .check-circle { 
             width: 28px; height: 28px; border: 2px solid var(--border-color); border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; color: transparent; 
-            transition: 0.2s; cursor: pointer; flex-shrink: 0;
+            transition: 0.2s; flex-shrink: 0;
         }
         .shop-item.purchased .check-circle { background: var(--color-success); border-color: var(--color-success); color: #FFF; }
+
+        /* =========================================
+           🌟 滿版圖片 Modal (Lightbox)
+           ========================================= */
+        .image-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 3000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            padding: 24px;
+        }
+        .image-modal-overlay.active { opacity: 1; pointer-events: all; }
+        .image-modal-content {
+            background: var(--card-bg); width: 100%; max-width: 400px;
+            border-radius: var(--radius-lg); overflow: hidden; position: relative;
+            transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1);
+            display: flex; flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .image-modal-overlay.active .image-modal-content { transform: scale(1); }
+        
+        .close-image-btn {
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(255,255,255,0.8); color: var(--text-main); border-radius: 50%;
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; border: none; cursor: pointer; z-index: 10; backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        #enlarged-img { width: 100%; max-height: 55vh; object-fit: contain; background: #F2F2F7; display: block; }
+        
+        .japanese-phrase {
+            padding: 24px 20px; text-align: center; font-size: 18px; font-weight: 800; color: var(--primary);
+            background: var(--primary-light); line-height: 1.4;
+        }
+        .japanese-phrase span { display: block; margin-top: 8px; font-size: 13px; color: var(--text-main); font-weight: 600; opacity: 0.8;}
 
 
         /* Modal / Toast */
@@ -364,8 +398,9 @@
             <h3 class="section-title">代購許願清單 (共 6 件)</h3>
             
             <div class="shop-item" onclick="toggleShopCheck(this)">
-                <div class="shop-img-box">
-                    <img src="IMG_0786.jpg" alt="代購衣服1">
+                <div class="shop-img-box" onclick="openImageModal('IMG_0786.jpg', event)">
+                    <img src="IMG_0786.jpg" alt="代購衣服1" onerror="this.style.display='none'">
+                    <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
                     <h4 class="shop-title">許願款式 A</h4>
@@ -376,8 +411,9 @@
             </div>
 
             <div class="shop-item" onclick="toggleShopCheck(this)">
-                <div class="shop-img-box">
-                    <img src="IMG_0787.jpg" alt="代購衣服2">
+                <div class="shop-img-box" onclick="openImageModal('IMG_0787.jpg', event)">
+                    <img src="IMG_0787.jpg" alt="代購衣服2" onerror="this.style.display='none'">
+                    <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
                     <h4 class="shop-title">許願款式 B</h4>
@@ -388,8 +424,9 @@
             </div>
             
             <div class="shop-item" onclick="toggleShopCheck(this)">
-                <div class="shop-img-box">
-                    <img src="IMG_0788.jpg" alt="代購衣服3">
+                <div class="shop-img-box" onclick="openImageModal('IMG_0788.jpg', event)">
+                    <img src="IMG_0788.jpg" alt="代購衣服3" onerror="this.style.display='none'">
+                    <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
                     <h4 class="shop-title">許願款式 C</h4>
@@ -400,8 +437,9 @@
             </div>
 
             <div class="shop-item" onclick="toggleShopCheck(this)">
-                <div class="shop-img-box">
-                    <img src="IMG_0790.jpg" alt="代購衣服4">
+                <div class="shop-img-box" onclick="openImageModal('IMG_0790.jpg', event)">
+                    <img src="IMG_0790.jpg" alt="代購衣服4" onerror="this.style.display='none'">
+                    <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
                     <h4 class="shop-title">許願款式 D</h4>
@@ -412,8 +450,9 @@
             </div>
 
             <div class="shop-item" onclick="toggleShopCheck(this)">
-                <div class="shop-img-box">
-                    <img src="IMG_0791.jpg" alt="代購衣服5">
+                <div class="shop-img-box" onclick="openImageModal('IMG_0791.jpg', event)">
+                    <img src="IMG_0791.jpg" alt="代購衣服5" onerror="this.style.display='none'">
+                    <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
                     <h4 class="shop-title">許願款式 E</h4>
@@ -424,8 +463,9 @@
             </div>
 
             <div class="shop-item" onclick="toggleShopCheck(this)">
-                <div class="shop-img-box">
-                    <img src="IMG_0792.jpg" alt="代購衣服6">
+                <div class="shop-img-box" onclick="openImageModal('IMG_0792.jpg', event)">
+                    <img src="IMG_0792.jpg" alt="代購衣服6" onerror="this.style.display='none'">
+                    <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
                     <h4 class="shop-title">許願款式 F</h4>
@@ -457,6 +497,17 @@
         </button>
     </nav>
 
+    <div class="image-modal-overlay" id="image-modal" onclick="closeImageModal()">
+        <div class="image-modal-content" onclick="event.stopPropagation()">
+            <button class="close-image-btn" onclick="closeImageModal()"><i class="ph-bold ph-x"></i></button>
+            <img id="enlarged-img" src="" alt="Enlarged Item">
+            <div class="japanese-phrase">
+                すみません、<br>これ（の在庫）はありますか？
+                <span>(不好意思，請問這個還有庫存嗎？)</span>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="stats-modal" onclick="closeStatsModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
             <div class="pull-indicator"></div>
@@ -477,9 +528,7 @@
             try {
                 const val = localStorage.getItem(key);
                 return val ? JSON.parse(val) : defaultVal;
-            } catch (e) {
-                return defaultVal;
-            }
+            } catch (e) { return defaultVal; }
         }
 
         const Store = {
@@ -546,13 +595,24 @@
             document.getElementById(`tab-${tabId}`).classList.add('active');
         }
 
-        // 🌟 新增：代購卡片點擊打勾的視覺切換功能
+        // 打勾狀態切換
         function toggleShopCheck(element) {
             element.classList.toggle('purchased');
-            if (element.classList.contains('purchased')) {
-                // 原本沒有震動 API，若支援的手機可以稍微震動給予回饋 (選用)
-                if(navigator.vibrate) navigator.vibrate(50);
+            if (element.classList.contains('purchased') && navigator.vibrate) {
+                navigator.vibrate(50);
             }
+        }
+
+        // 🌟 新增：開啟全螢幕圖片 + 日文詢問 Modal
+        function openImageModal(imgSrc, event) {
+            event.stopPropagation(); // 阻止點擊事件往上傳遞，避免誤觸打勾
+            document.getElementById('enlarged-img').src = imgSrc;
+            document.getElementById('image-modal').classList.add('active');
+        }
+
+        // 🌟 新增：關閉全螢幕圖片 Modal
+        function closeImageModal() {
+            document.getElementById('image-modal').classList.remove('active');
         }
 
         function switchDay(day, el) {
