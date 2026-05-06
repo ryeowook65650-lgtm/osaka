@@ -207,7 +207,18 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             color: var(--text-muted); flex-shrink: 0; overflow: hidden; position: relative;
         }
-        .shop-img-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; opacity:0; } /* 之後截圖放這，opacity改1 */
+        
+        .shop-img-box img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            position: absolute; top:0; left:0; 
+            opacity: 1; transition: 0.3s ease; 
+        }
+        /* 買到後讓圖片稍微變暗、變灰，凸顯已完成的狀態 */
+        .shop-item.purchased .shop-img-box img {
+            opacity: 0.6;
+            filter: grayscale(80%);
+        }
+
         .shop-info { flex: 1; }
         .shop-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin: 0 0 6px; }
         .shop-note { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 0 0 8px; }
@@ -350,16 +361,15 @@
                 </div>
             </div>
 
-            <h3 class="section-title">代購許願清單</h3>
+            <h3 class="section-title">代購許願清單 (共 6 件)</h3>
             
             <div class="shop-item" onclick="toggleShopCheck(this)">
                 <div class="shop-img-box">
-                    <i class="ph ph-image"></i>
-                    <span style="font-size: 10px; margin-top:4px;">等截圖</span>
-                    </div>
+                    <img src="IMG_0786.jpg" alt="代購衣服1">
+                </div>
                 <div class="shop-info">
-                    <h4 class="shop-title">點點薄長袖 A 款</h4>
-                    <p class="shop-note">尺寸: XL (如果沒有就算了)</p>
+                    <h4 class="shop-title">許願款式 A</h4>
+                    <p class="shop-note">尺寸: XL / 點點薄長袖優先</p>
                     <div class="shop-price">預算約 ¥2,500 內</div>
                 </div>
                 <div class="check-circle"><i class="ph-bold ph-check"></i></div>
@@ -367,24 +377,59 @@
 
             <div class="shop-item" onclick="toggleShopCheck(this)">
                 <div class="shop-img-box">
-                    <i class="ph ph-image"></i>
-                    <span style="font-size: 10px; margin-top:4px;">等截圖</span>
+                    <img src="IMG_0787.jpg" alt="代購衣服2">
                 </div>
                 <div class="shop-info">
-                    <h4 class="shop-title">日系圓點透氣罩衫</h4>
-                    <p class="shop-note">尺寸: XL / 顏色不限</p>
-                    <div class="shop-price">預算約 ¥3,000 內</div>
+                    <h4 class="shop-title">許願款式 B</h4>
+                    <p class="shop-note">尺寸: XL / 顏色皆可</p>
+                    <div class="shop-price">預算約 ¥2,500 內</div>
                 </div>
                 <div class="check-circle"><i class="ph-bold ph-check"></i></div>
             </div>
             
             <div class="shop-item" onclick="toggleShopCheck(this)">
                 <div class="shop-img-box">
-                    <i class="ph ph-gift"></i>
+                    <img src="IMG_0788.jpg" alt="代購衣服3">
                 </div>
                 <div class="shop-info">
-                    <h4 class="shop-title">其他好買的點點長袖</h4>
-                    <p class="shop-note">尺寸: XL / 看到覺得好看也可以買！</p>
+                    <h4 class="shop-title">許願款式 C</h4>
+                    <p class="shop-note">尺寸: XL / 舒適透氣材質</p>
+                    <div class="shop-price">預算約 ¥3,000 內</div>
+                </div>
+                <div class="check-circle"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="shop-item" onclick="toggleShopCheck(this)">
+                <div class="shop-img-box">
+                    <img src="IMG_0790.jpg" alt="代購衣服4">
+                </div>
+                <div class="shop-info">
+                    <h4 class="shop-title">許願款式 D</h4>
+                    <p class="shop-note">尺寸: XL / 如果沒有就算了</p>
+                    <div class="shop-price">預算約 ¥3,000 內</div>
+                </div>
+                <div class="check-circle"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="shop-item" onclick="toggleShopCheck(this)">
+                <div class="shop-img-box">
+                    <img src="IMG_0791.jpg" alt="代購衣服5">
+                </div>
+                <div class="shop-info">
+                    <h4 class="shop-title">許願款式 E</h4>
+                    <p class="shop-note">尺寸: XL / 看到好看的也行</p>
+                    <div class="shop-price">看心意報價</div>
+                </div>
+                <div class="check-circle"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="shop-item" onclick="toggleShopCheck(this)">
+                <div class="shop-img-box">
+                    <img src="IMG_0792.jpg" alt="代購衣服6">
+                </div>
+                <div class="shop-info">
+                    <h4 class="shop-title">許願款式 F</h4>
+                    <p class="shop-note">尺寸: XL / 備用清單</p>
                     <div class="shop-price">看心意報價</div>
                 </div>
                 <div class="check-circle"><i class="ph-bold ph-check"></i></div>
