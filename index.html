@@ -221,8 +221,9 @@
 
         .shop-info { flex: 1; }
         .shop-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin: 0 0 6px; }
-        .shop-note { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 0 0 8px; }
-        .shop-price { font-size: 14px; font-weight: 800; color: var(--primary); }
+        .shop-note { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 0 0 4px; line-height: 1.4; }
+        .shop-price { font-size: 14px; font-weight: 800; color: var(--primary); margin-top: 6px;}
+        .shop-price-sub { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-left: 4px;}
         
         .check-circle { 
             width: 28px; height: 28px; border: 2px solid var(--border-color); border-radius: 50%; 
@@ -387,90 +388,103 @@
         <section id="view-shopping" class="view-container">
             <div class="profile-card">
                 <h3 class="profile-title"><i class="ph-fill ph-hand-waving"></i> 委託人：阿珊</h3>
-                <p class="profile-desc">愛你們！如果逛街有看到請幫我留意以下特徵的衣服，買到請記得打勾唷！💖</p>
+                <p class="profile-desc">愛你們！如果逛街有看到請幫我留意以下特徵的商品，買到請記得打勾唷！💖</p>
                 <div class="pref-tags">
-                    <span class="pref-tag">⚫️ 點點控</span>
-                    <span class="pref-tag">🧥 薄長袖</span>
-                    <span class="pref-tag">📏 尺寸：一律 XL</span>
+                    <span class="pref-tag">🛍️ niko and</span>
+                    <span class="pref-tag">👕 uniqlo</span>
+                    <span class="pref-tag">🐧 堂吉訶德</span>
                 </div>
             </div>
 
-            <h3 class="section-title">代購許願清單 (共 6 件)</h3>
+            <h3 class="section-title">代購許願清單 (共 7 件)</h3>
             
             <div class="shop-item" onclick="toggleShopCheck(this)">
                 <div class="shop-img-box" onclick="openImageModal('IMG_0786.jpg', event)">
-                    <img src="IMG_0786.jpg" alt="代購衣服1" onerror="this.style.display='none'">
+                    <img src="IMG_0786.jpg" alt="niko and 服飾" onerror="this.style.display='none'">
                     <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
-                    <h4 class="shop-title">許願款式 A</h4>
-                    <p class="shop-note">尺寸: XL / 點點薄長袖優先</p>
-                    <div class="shop-price">預算約 ¥2,500 內</div>
+                    <h4 class="shop-title">niko and</h4>
+                    <p class="shop-note">尺寸：L<br>顏色：白、黑都可</p>
+                    <div class="shop-price">¥4,490 <span class="shop-price-sub">(台幣: $1990)</span></div>
                 </div>
                 <div class="check-circle"><i class="ph-bold ph-check"></i></div>
             </div>
 
             <div class="shop-item" onclick="toggleShopCheck(this)">
                 <div class="shop-img-box" onclick="openImageModal('IMG_0787.jpg', event)">
-                    <img src="IMG_0787.jpg" alt="代購衣服2" onerror="this.style.display='none'">
+                    <img src="IMG_0787.jpg" alt="niko and 服飾" onerror="this.style.display='none'">
                     <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
-                    <h4 class="shop-title">許願款式 B</h4>
-                    <p class="shop-note">尺寸: XL / 顏色皆可</p>
-                    <div class="shop-price">預算約 ¥2,500 內</div>
+                    <h4 class="shop-title">niko and</h4>
+                    <p class="shop-note">尺寸：L<br>顏色：白、黑都可</p>
+                    <div class="shop-price">¥4,490 <span class="shop-price-sub">(台幣: $1990)</span></div>
                 </div>
                 <div class="check-circle"><i class="ph-bold ph-check"></i></div>
             </div>
             
             <div class="shop-item" onclick="toggleShopCheck(this)">
-                <div class="shop-img-box" onclick="openImageModal('IMG_0788.jpg', event)">
-                    <img src="IMG_0788.jpg" alt="代購衣服3" onerror="this.style.display='none'">
-                    <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
-                </div>
-                <div class="shop-info">
-                    <h4 class="shop-title">許願款式 C</h4>
-                    <p class="shop-note">尺寸: XL / 舒適透氣材質</p>
-                    <div class="shop-price">預算約 ¥3,000 內</div>
-                </div>
-                <div class="check-circle"><i class="ph-bold ph-check"></i></div>
-            </div>
-
-            <div class="shop-item" onclick="toggleShopCheck(this)">
                 <div class="shop-img-box" onclick="openImageModal('IMG_0790.jpg', event)">
-                    <img src="IMG_0790.jpg" alt="代購衣服4" onerror="this.style.display='none'">
+                    <img src="IMG_0790.jpg" alt="uniqlo 服飾" onerror="this.style.display='none'">
                     <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
-                    <h4 class="shop-title">許願款式 D</h4>
-                    <p class="shop-note">尺寸: XL / 如果沒有就算了</p>
-                    <div class="shop-price">預算約 ¥3,000 內</div>
+                    <h4 class="shop-title">uniqlo 薄長袖</h4>
+                    <p class="shop-note">尺寸：XL<br>顏色：所有顏色都可<br>備註：圖片裡裡面那件</p>
+                    <div class="shop-price">¥1,290 <span class="shop-price-sub">(台幣沒賣)</span></div>
                 </div>
                 <div class="check-circle"><i class="ph-bold ph-check"></i></div>
             </div>
 
             <div class="shop-item" onclick="toggleShopCheck(this)">
                 <div class="shop-img-box" onclick="openImageModal('IMG_0791.jpg', event)">
-                    <img src="IMG_0791.jpg" alt="代購衣服5" onerror="this.style.display='none'">
+                    <img src="IMG_0791.jpg" alt="uniqlo 服飾" onerror="this.style.display='none'">
                     <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
-                    <h4 class="shop-title">許願款式 E</h4>
-                    <p class="shop-note">尺寸: XL / 看到好看的也行</p>
-                    <div class="shop-price">看心意報價</div>
+                    <h4 class="shop-title">uniqlo</h4>
+                    <p class="shop-note">尺寸：L 或 XL<br>顏色：白、黑都要</p>
+                    <div class="shop-price">¥2,990 <span class="shop-price-sub">(台幣: $990)</span></div>
                 </div>
                 <div class="check-circle"><i class="ph-bold ph-check"></i></div>
             </div>
 
             <div class="shop-item" onclick="toggleShopCheck(this)">
                 <div class="shop-img-box" onclick="openImageModal('IMG_0792.jpg', event)">
-                    <img src="IMG_0792.jpg" alt="代購衣服6" onerror="this.style.display='none'">
+                    <img src="IMG_0792.jpg" alt="uniqlo 服飾" onerror="this.style.display='none'">
                     <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
                 </div>
                 <div class="shop-info">
-                    <h4 class="shop-title">許願款式 F</h4>
-                    <p class="shop-note">尺寸: XL / 備用清單</p>
-                    <div class="shop-price">看心意報價</div>
+                    <h4 class="shop-title">uniqlo</h4>
+                    <p class="shop-note">尺寸：L 或 XL<br>顏色：白、黑都要</p>
+                    <div class="shop-price">¥2,990 <span class="shop-price-sub">(台幣: $990)</span></div>
+                </div>
+                <div class="check-circle"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="shop-item" onclick="toggleShopCheck(this)">
+                <div class="shop-img-box" onclick="openImageModal('639136651278130000.jpeg', event)">
+                    <img src="639136651278130000.jpeg" alt="堂吉訶德 粉撲" onerror="this.style.display='none'">
+                    <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
+                </div>
+                <div class="shop-info">
+                    <h4 class="shop-title">堂吉訶德 粉撲</h4>
+                    <p class="shop-note">數量：看看到時候可以買幾個</p>
+                    <div class="shop-price">¥975 <span class="shop-price-sub">(台幣: $239)</span></div>
+                </div>
+                <div class="check-circle"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="shop-item" onclick="toggleShopCheck(this)">
+                <div class="shop-img-box" onclick="openImageModal('original.webp', event)">
+                    <img src="original.webp" alt="堂吉訶德 涼感濕紙巾" onerror="this.style.display='none'">
+                    <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
+                </div>
+                <div class="shop-info">
+                    <h4 class="shop-title">堂吉訶德 涼感濕紙巾</h4>
+                    <p class="shop-note">數量：看看到時候可以買幾包</p>
+                    <div class="shop-price">¥375 <span class="shop-price-sub">(台幣: $138)</span></div>
                 </div>
                 <div class="check-circle"><i class="ph-bold ph-check"></i></div>
             </div>
@@ -595,7 +609,6 @@
             document.getElementById(`tab-${tabId}`).classList.add('active');
         }
 
-        // 打勾狀態切換
         function toggleShopCheck(element) {
             element.classList.toggle('purchased');
             if (element.classList.contains('purchased') && navigator.vibrate) {
@@ -603,14 +616,12 @@
             }
         }
 
-        // 🌟 新增：開啟全螢幕圖片 + 日文詢問 Modal
         function openImageModal(imgSrc, event) {
-            event.stopPropagation(); // 阻止點擊事件往上傳遞，避免誤觸打勾
+            event.stopPropagation(); 
             document.getElementById('enlarged-img').src = imgSrc;
             document.getElementById('image-modal').classList.add('active');
         }
 
-        // 🌟 新增：關閉全螢幕圖片 Modal
         function closeImageModal() {
             document.getElementById('image-modal').classList.remove('active');
         }
