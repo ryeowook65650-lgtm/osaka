@@ -462,11 +462,32 @@
         const EMOJI_MAP = { '交通': 'ph-train', '食物': 'ph-hamburger', '購物': 'ph-shopping-bag', '其他': 'ph-ticket' };
         const TOTAL_BUDGET = 30000; 
 
-        const ITINERARY_DATA = { /* 略，同前 */ };
-        const FLIGHT_DATA = [ /* 略，同前 */ ];
+        // ==========================================
+        // 資料區 (完全恢復不省略)
+        // ==========================================
+        const ITINERARY_DATA = {
+            day1: [
+                { time: "預估 50 分", title: "抵達關西機場 & 特急", address: "關西國際機場 (KIX)", icon: "ph-train", info: "南海電鐵特急 Rapi:t (¥1490)", mapUrl: "https://maps.google.com", imgUrl: "https://images.unsplash.com/photo-1590559899731-a38283b156b6?q=80&w=800&auto=format&fit=crop" },
+                { time: "下午", title: "Cross Hotel 寄行李", address: "心齋橋筋2-5-15", icon: "ph-suitcase", info: "難波站步行前往", mapUrl: "https://maps.google.com", imgUrl: "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=800&auto=format&fit=crop" }
+            ],
+            day2: [
+                { time: "全天", title: "日本環球影城 (USJ)", address: "此花區櫻島2丁目1-33", icon: "ph-ticket", info: "JR環狀線轉夢咲線 (¥360)", mapUrl: "https://maps.google.com", imgUrl: "https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?q=80&w=800&auto=format&fit=crop" }
+            ],
+            day3: [
+                { time: "早上", title: "京都: 嵐山 & 渡月橋", address: "右京區嵐山", icon: "ph-camera", info: "阪急電鐵至嵐山站 (¥410)", mapUrl: "https://maps.google.com", imgUrl: "https://images.unsplash.com/photo-1613010168345-429971ce9466?q=80&w=800&auto=format&fit=crop" },
+                { time: "下午", title: "清水寺 & 二年坂", address: "東山區清水", icon: "ph-bus", info: "京都市巴士 (¥230)", mapUrl: "https://maps.google.com", imgUrl: "https://images.unsplash.com/photo-1601625463674-884814d4bc22?q=80&w=800&auto=format&fit=crop" }
+            ],
+            day4: [
+                { time: "早上", title: "黑門市場吃海鮮", address: "中央區日本橋", icon: "ph-fish", info: "步行前往", mapUrl: "https://maps.google.com", imgUrl: "https://images.unsplash.com/photo-1583339824000-6421c435b860?q=80&w=800&auto=format&fit=crop" },
+                { time: "下午", title: "前往關西機場", address: "關西國際機場", icon: "ph-airplane", info: "準備回台", mapUrl: "https://maps.google.com", imgUrl: "https://images.unsplash.com/photo-1569154941061-e231b4732ef1?q=80&w=800&auto=format&fit=crop" }
+            ]
+        };
 
-        // 🌟 新增：代購清單的數據庫
-        // twd 若為 null 代表台灣未販售
+        const FLIGHT_DATA = [
+            { label: "去程 Outbound", date: "5/22 (五)", fCode: "TPE", tCode: "KIX", dTime: "08:30", aTime: "12:05", air: "CHINA AIRLINES CI152", url: "https://calec.china-airlines.com/eCheckin/eCheckin_home.aspx" },
+            { label: "回程 Inbound", date: "5/25 (一)", fCode: "KIX", tCode: "TPE", dTime: "13:15", aTime: "15:05", air: "CHINA AIRLINES CI153", url: "https://calec.china-airlines.com/eCheckin/eCheckin_home.aspx" }
+        ];
+
         const SHOPPING_DATA = [
             { img: 'IMG_0786.jpg', brand: 'niko and', note: '尺寸：L<br>顏色：白、黑都可', jpy: 4490, twd: 1990 },
             { img: 'IMG_0787.jpg', brand: 'niko and', note: '尺寸：L<br>顏色：白、黑都可', jpy: 4490, twd: 1990 },
@@ -477,30 +498,30 @@
             { img: 'original.webp', brand: '堂吉訶德 涼感濕紙巾', note: '數量：看看到時候可以買幾包', jpy: 375, twd: 138 }
         ];
 
+        // ==========================================
+        // 渲染與操作函式
+        // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             renderFlights();
             renderItinerary('day1');
             fetchExchangeRate();
             fetchOsakaWeather();
-            renderShopping(); // 初始化代購清單
+            renderShopping(); 
             try {
                 renderExpenses();
                 if (navigator.onLine) fetchExpenses();
             } catch (e) {}
         });
 
-        // 🌟 新增：動態渲染代購清單並計算價差
         function renderShopping() {
             const container = document.getElementById('shopping-list');
             let html = '';
             
             SHOPPING_DATA.forEach(item => {
-                // 自動以現在的匯率，計算出當下的台幣價格
                 const currentTwdPrice = Math.round(item.jpy * Store.state.rate);
                 let compareHtml = '';
 
                 if (item.twd) {
-                    // 如果台灣有賣，算出省了多少錢
                     const saveAmount = item.twd - currentTwdPrice;
                     compareHtml = `
                         <div class="shop-compare">
@@ -657,6 +678,7 @@
             }, 2500);
         }
 
+        // 🌟 恢復的行程渲染函式
         function renderItinerary(day) {
             const container = document.getElementById('itinerary-content');
             let html = '';
@@ -676,7 +698,29 @@
             container.innerHTML = html;
         }
 
-        function renderFlights() { /* 略 */ }
+        // 🌟 恢復的機票渲染函式
+        function renderFlights() {
+            const container = document.getElementById('view-flight');
+            let html = '';
+            FLIGHT_DATA.forEach(f => {
+                html += `
+                <div class="flight-card">
+                    <div class="f-top">
+                        <div><span class="f-code">${f.fCode}</span><span class="f-city">DEPARTURE</span></div>
+                        <i class="ph-fill ph-airplane-tilt f-icon"></i>
+                        <div style="text-align:right;"><span class="f-code">${f.tCode}</span><span class="f-city">ARRIVAL</span></div>
+                    </div>
+                    <div class="f-grid">
+                        <div><span class="f-label">Date</span><span class="f-val">${f.date}</span></div>
+                        <div><span class="f-label">Flight</span><span class="f-val">${f.air}</span></div>
+                        <div><span class="f-label">Time</span><span class="f-val">${f.dTime}</span></div>
+                        <div><span class="f-label">Arrive</span><span class="f-val">${f.aTime}</span></div>
+                    </div>
+                    <a href="${f.url}" class="map-btn" target="_blank" style="background:#007AFF; color:#FFF;">線上報到</a>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
 
         function renderExpenses() {
             let totalTWD = 0;
@@ -761,7 +805,6 @@
             } catch (e) {}
             document.getElementById('rate-display').innerText = `匯率 ${Store.state.rate.toFixed(4)}`;
             
-            // 🌟 新增：一抓到最新匯率，就把代購清單的台幣重新計算一遍！
             renderShopping(); 
             renderExpenses();
         }
