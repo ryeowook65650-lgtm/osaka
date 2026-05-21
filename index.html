@@ -149,42 +149,100 @@
         .h-del { color: #FF3B30; padding: 10px; margin-left: 5px; font-size: 20px; cursor: pointer; border: none; background: none;}
 
         /* =========================================
-           🌟 升級版 行程與交通排版
+           🌟 升級版 行程與交通排版 (黑紅主題 & 無圖片 & 清晰搭車指示)
            ========================================= */
-        .trip-card { background: var(--card-bg); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow-card); }
-        .t-img { width: 100%; height: 160px; object-fit: cover; }
-        .t-body { padding: 20px; }
-        .t-time { font-size: 12px; font-weight: 800; color: var(--secondary); background: #E5F1FF; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px; }
-        .t-title { font-size: 20px; font-weight: 800; margin: 0 0 16px; line-height: 1.4; color: var(--text-main); }
+        .trip-card { 
+            background: #1C1C1E; 
+            border-radius: var(--radius-lg); 
+            overflow: hidden; 
+            margin-bottom: 24px; 
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15); 
+            border: 1px solid #3A3A3C;
+        }
+        .t-body { padding: 24px; }
+        .t-time { 
+            font-size: 13px; font-weight: 800; color: #FFF; 
+            background: var(--primary); 
+            padding: 6px 14px; border-radius: 8px; 
+            display: inline-block; margin-bottom: 16px; 
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+            letter-spacing: 0.5px;
+        }
+        .t-title { font-size: 22px; font-weight: 800; margin: 0 0 20px; line-height: 1.4; color: #FFF; }
         
-        /* 交通區塊 */
-        .transit-box { background: #F9F9FB; border-radius: 12px; padding: 16px; margin-bottom: 16px; border: 1px solid #E5E5EA; }
-        .t-summary { font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .t-summary .sep { color: #C7C7CC; font-weight: 400; }
-        .t-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-        .t-steps li { font-size: 13px; font-weight: 600; color: var(--text-main); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
-        .t-steps li i { font-size: 16px; color: var(--text-muted); margin-top: 2px; }
-        .line-badge { padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 800; display: inline-block; white-space: nowrap; color: #FFF; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        /* 交通區塊 (深灰卡片質感) */
+        .transit-box { 
+            background: #242426; border-radius: 16px; padding: 20px; 
+            margin-bottom: 20px; border: 1px solid #3A3A3C; 
+        }
+        .t-summary { 
+            font-size: 15px; font-weight: 800; color: #FFF; 
+            margin-bottom: 16px; display: flex; align-items: center; gap: 12px; 
+            padding-bottom: 16px; border-bottom: 1px dashed #3A3A3C;
+        }
+        .t-summary i { color: var(--primary); font-size: 18px; }
+        .t-summary .sep { color: #8E8E93; font-weight: 400; }
         
-        .t-note-box { background: #FFF4E5; padding: 12px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; line-height: 1.5; margin-bottom: 16px; border-left: 4px solid #FF9500; color: var(--text-main); }
+        /* 時間軸設計 (Timeline) */
+        .t-steps { 
+            list-style: none; margin: 0; padding: 0; padding-left: 28px;
+            display: flex; flex-direction: column; gap: 20px; 
+            position: relative;
+        }
+        .t-steps::before {
+            content: ''; position: absolute; left: 9px; top: 4px; bottom: 4px;
+            width: 2px; background: #3A3A3C;
+        }
+        .t-steps li { 
+            font-size: 14px; font-weight: 600; color: #E5E5EA; 
+            display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; 
+            position: relative;
+        }
+        .step-icon {
+            position: absolute; left: -36px; top: -2px;
+            width: 20px; height: 20px; background: #242426;
+            color: var(--primary); font-size: 18px;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2;
+        }
+        .step-content { flex: 1; }
         
-        /* 地點清單區塊與按鈕 */
+        .line-badge { 
+            padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 800; 
+            display: inline-block; white-space: nowrap; color: #FFF; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+        }
+        
+        .t-note-box { 
+            background: rgba(211, 47, 47, 0.05); padding: 14px 16px; border-radius: 12px; 
+            font-size: 13px; font-weight: 600; line-height: 1.6; margin-bottom: 20px; 
+            border-left: 4px solid var(--primary); color: #E5E5EA; 
+        }
+        
+        /* 地點清單區塊與按鈕 (配合暗色調) */
         .loc-list { display: flex; flex-direction: column; gap: 12px; }
-        .loc-item { background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-        .loc-name { font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 6px; }
-        .loc-addr { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4; word-break: break-all; }
+        .loc-item { 
+            background: #2C2C2E; border: 1px solid #3A3A3C; 
+            border-radius: 12px; padding: 16px; 
+        }
+        .loc-name { font-size: 16px; font-weight: 800; color: #FFF; margin-bottom: 6px; }
+        .loc-addr { font-size: 13px; font-weight: 600; color: #8E8E93; margin-bottom: 16px; line-height: 1.4; word-break: break-all; }
         .loc-actions { display: flex; gap: 8px; }
-        .loc-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 800; text-decoration: none; cursor: pointer; transition: 0.2s; border: none; }
-        .btn-copy { background: #E5E5EA; color: var(--text-main); }
-        .btn-copy:active { background: #D1D1D6; transform: scale(0.95); }
-        .btn-map { background: var(--secondary); color: #FFF; box-shadow: 0 4px 12px rgba(0,122,255,0.2); }
-        .btn-map:active { transform: scale(0.95); }
+        .loc-btn { 
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; 
+            padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 800; 
+            text-decoration: none; cursor: pointer; transition: 0.2s; border: none; 
+        }
+        .btn-copy { background: #3A3A3C; color: #FFF; }
+        .btn-copy:active { background: #48484A; transform: scale(0.95); }
+        .btn-map { background: var(--primary); color: #FFF; box-shadow: 0 4px 12px rgba(211,47,47,0.2); }
+        .btn-map:active { transform: scale(0.95); box-shadow: 0 2px 6px rgba(211,47,47,0.1); }
 
-        .flight-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-card); border-top: 6px solid var(--secondary); }
+        .flight-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-card); border-top: 6px solid var(--primary); }
         .f-top { display: flex; justify-content: space-between; margin-bottom: 24px; }
         .f-code { font-size: 36px; font-weight: 800; display: block; }
         .f-city { font-size: 13px; color: var(--text-muted); font-weight: 600; }
-        .f-icon { font-size: 32px; color: var(--secondary); transform: rotate(45deg); opacity: 0.5; }
+        .f-icon { font-size: 32px; color: var(--primary); transform: rotate(45deg); opacity: 0.5; }
         .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--bg-color); padding: 16px; border-radius: 12px; margin-bottom: 16px; }
         .f-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; display: block; }
         .f-val { font-size: 18px; font-weight: 800; color: var(--text-main); }
@@ -445,41 +503,37 @@
                 { 
                     time: "12:40 - 14:00", 
                     title: "前往飯店交通", 
-                    transit: [ { type: 'car', text: '包車前往飯店' } ],
+                    transit: [ { type: 'car', text: '預約包車直達飯店' } ],
                     duration: "約 45 分鐘", cost: "包車",
                     locations: [ { name: "Vessel Inn 心齋橋 (ベッセルイン心斎橋)", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ],
-                    note: "💡 可以先寄放行李，15:00 check in。",
-                    imgUrl: "https://images.unsplash.com/photo-1503387837-B154D5074BD2?q=80&w=800&auto=format&fit=crop"
+                    note: "💡 可以先寄放行李，15:00 才開放 check in。"
                 },
                 { 
                     time: "15:00 - 22:00", 
                     title: "逛街、晚餐｜心齋橋筋 & 道頓堀", 
-                    transit: [ { type: 'walk', text: '從飯店步行約 8 分鐘。心齋橋和道頓堀緊密相連。' } ],
+                    transit: [ { type: 'walk', text: '從飯店步行，心齋橋和道頓堀為連通商圈。' } ],
                     duration: "步行約 8 分鐘", cost: "無",
                     locations: [ 
                         { name: "心齋橋筋", address: "中央區大阪市大阪府 542-0085" },
                         { name: "道頓堀", address: "中央區大阪市大阪府 542-0071" }
                     ],
-                    note: "❗ 固力果跑跑人位於戎橋旁，最佳拍照地點是站在道頓堀河對岸的行人區，從這裡可以完整捕捉到整面招牌。",
-                    imgUrl: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=800&auto=format&fit=crop"
+                    note: "❗ 固力果跑跑人位於戎橋旁，最佳拍照地點是站在道頓堀河對岸的行人區，從這裡可以完整捕捉到整面招牌。"
                 },
                 { 
                     time: "22:00", 
                     title: "回飯店休息", 
                     transit: [ { type: 'walk', text: '從道頓堀步行回飯店' } ],
                     duration: "約 8 分鐘", cost: "無",
-                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ],
-                    imgUrl: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800&auto=format&fit=crop"
+                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ]
                 },
                 { 
                     time: "🌙 深夜", 
                     title: "飯店附近 24H 購物好去處", 
-                    transit: [ { type: 'walk', text: '皆為步行即可到達' } ],
+                    transit: [ { type: 'walk', text: '皆為飯店附近步行即可到達' } ],
                     locations: [ 
                         { name: "💊 松本清 (道頓堀DOTONE ZA店)", address: "日本〒542-0071 Osaka, Chuo Ward, Dotonbori, 1 Chome−8−22 DOTONE ZA" },
                         { name: "🐧 唐吉訶德 (道頓堀御堂筋店)", address: "2 Chome-5-9 Nishishinsaibashi, Chuo Ward, Osaka, 542-0086日本" }
-                    ],
-                    imgUrl: "https://images.unsplash.com/photo-1582236124795-5df07df2a611?q=80&w=800&auto=format&fit=crop"
+                    ]
                 }
             ],
             day2: [
@@ -488,21 +542,20 @@
                     title: "景點｜大阪城", 
                     transit: [ 
                         { type: 'walk', text: '步行 5 分鐘到「長堀橋站」' },
-                        { type: 'subway', line: '長堀鶴見綠地線', color: '#A9CC51', detail: '普通門真南', to: '大阪商務園區站' },
-                        { type: 'walk', text: '再步行 20 分鐘抵達大阪城' }
+                        { type: 'subway', line: '長堀鶴見綠地線', color: '#A9CC51', detail: '普通 門真南 行', to: '大阪商務園區站' },
+                        { type: 'walk', text: '出站後步行約 20 分鐘抵達大阪城' }
                     ],
                     duration: "約 35 分鐘", cost: "¥240",
-                    locations: [ { name: "大阪城", address: "1-1 Osakajo, Chuo Ward, Osaka, 540-0002日本" } ],
-                    imgUrl: "https://images.unsplash.com/photo-1542640244-7e672d6cef21?q=80&w=800&auto=format&fit=crop"
+                    locations: [ { name: "大阪城", address: "1-1 Osakajo, Chuo Ward, Osaka, 540-0002日本" } ]
                 },
                 { 
                     time: "11:30 - 17:00", 
                     title: "購物與午餐｜近鐵百貨 & 天王寺MIO", 
                     transit: [ 
                         { type: 'walk', text: '步行 7 分鐘到「大阪城公園車站」' },
-                        { type: 'train', line: '大阪環狀線', color: '#F05622', detail: '關西機場線快速電車天王寺', to: '鶴橋站' },
-                        { type: 'walk', text: '步行 1 分鐘轉乘' },
-                        { type: 'train', line: '近鐵奈良線', color: '#A13329', detail: '快速急行神戶三宮(阪神)', to: '大阪上本町' },
+                        { type: 'train', line: '大阪環狀線', color: '#F05622', detail: '關西機場線快速電車 天王寺 行', to: '鶴橋站' },
+                        { type: 'walk', text: '步行 1 分鐘轉乘近鐵線' },
+                        { type: 'train', line: '近鐵奈良線', color: '#A13329', detail: '快速急行 神戶三宮(阪神) 行', to: '大阪上本町' },
                         { type: 'walk', text: '步行 2 分鐘到近鐵百貨店' }
                     ],
                     duration: "約 30 分鐘", cost: "¥310",
@@ -510,32 +563,29 @@
                         { name: "近鉄百貨店 上本町店", address: "6 Chome-1-55 Uehonmachi, Tennoji Ward, Osaka, 543-8543日本" },
                         { name: "天王寺MIO (內有montbell, muji)", address: "10-39 Hidenincho, Tennoji Ward, Osaka, 543-0055日本" }
                     ],
-                    note: "💡 近鐵百貨旁邊的「上本町YUFURA」（白色、外牆覆蓋密集垂直格柵那棟）一樓有 studio clip。<br>💡 前往天王寺MIO交通：步行6分鐘到「谷町九丁目」➔ 搭乘🚇谷町線(普通八尾南)到「天王寺站」➔ 步行6分鐘。花費¥190，約16分。",
-                    imgUrl: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=800&auto=format&fit=crop"
+                    note: "💡 近鐵百貨旁邊的「上本町YUFURA」（外牆覆蓋密集垂直格柵那棟）一樓有 studio clip。<br><br>💡 從近鐵百貨到天王寺MIO交通：步行6分鐘到「谷町九丁目」➔ 搭乘🚇谷町線(普通八尾南)到「天王寺站」➔ 步行6分鐘。車資¥190，約需16分。"
                 },
                 { 
                     time: "17:00 - 22:00", 
                     title: "逛街、晚餐｜通天閣 / 新世界商店街", 
                     transit: [ 
-                        { type: 'walk', text: '步行 5 分鐘到「天王寺站」' },
+                        { type: 'walk', text: '從天王寺步行 5 分鐘到「天王寺站」搭車' },
                         { type: 'train', line: '大阪環狀線', color: '#F05622', detail: '普通外環線', to: '新今宮站' },
                         { type: 'walk', text: '步行 8 分鐘抵達通天閣' }
                     ],
                     duration: "約 16 分鐘", cost: "¥150",
-                    locations: [ { name: "通天閣", address: "1 Chome-18-6 Ebisuhigashi, Naniwa Ward, Osaka, 556-0002日本" } ],
-                    imgUrl: "https://images.unsplash.com/photo-1590253697193-c4e9be9db933?q=80&w=800&auto=format&fit=crop"
+                    locations: [ { name: "通天閣", address: "1 Chome-18-6 Ebisuhigashi, Naniwa Ward, Osaka, 556-0002日本" } ]
                 },
                 { 
                     time: "22:00", 
                     title: "回飯店休息", 
                     transit: [ 
                         { type: 'walk', text: '步行 6 分鐘到「惠美須町站」' },
-                        { type: 'subway', line: '堺筋線', color: '#814F2E', detail: '普通正雀', to: '長堀橋站' },
-                        { type: 'walk', text: '步行 3 分鐘到飯店' }
+                        { type: 'subway', line: '堺筋線', color: '#814F2E', detail: '普通 正雀 行', to: '長堀橋站' },
+                        { type: 'walk', text: '步行 3 分鐘回到飯店' }
                     ],
                     duration: "約 15 分鐘", cost: "¥190",
-                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ],
-                    imgUrl: "https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?q=80&w=800&auto=format&fit=crop"
+                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ]
                 }
             ],
             day3: [
@@ -544,32 +594,29 @@
                     title: "景點｜難波八阪神社", 
                     transit: [ 
                         { type: 'walk', text: '步行 6 分鐘到「心齋橋站」' },
-                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通中百舌鳥(大阪市營)', to: '難波站' },
+                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通 中百舌鳥 行', to: '難波站' },
                         { type: 'walk', text: '步行 10 分鐘到難波八阪神社' }
                     ],
                     duration: "約 20 分鐘", cost: "¥190",
-                    locations: [ { name: "難波八阪神社", address: "2 Chome-9-19 Motomachi, Naniwa Ward, Osaka, 556-0016日本" } ],
-                    imgUrl: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=800&auto=format&fit=crop"
+                    locations: [ { name: "難波八阪神社", address: "2 Chome-9-19 Motomachi, Naniwa Ward, Osaka, 556-0016日本" } ]
                 },
                 { 
                     time: "11:30 - 14:00", 
                     title: "午餐｜黑門市場", 
-                    transit: [ { type: 'walk', text: '從八阪神社直接步行前往' } ],
+                    transit: [ { type: 'walk', text: '從八阪神社直接步行前往，跟著導航走約 16 分鐘' } ],
                     duration: "約 16 分鐘", cost: "無",
-                    locations: [ { name: "黑門市場", address: "2 Chome-21 Nipponbashi, Chuo Ward, Osaka, 542-0073日本" } ],
-                    imgUrl: "https://images.unsplash.com/photo-1534482421-64566f976cfa?q=80&w=800&auto=format&fit=crop"
+                    locations: [ { name: "黑門市場", address: "2 Chome-21 Nipponbashi, Chuo Ward, Osaka, 542-0073日本" } ]
                 },
                 { 
                     time: "14:00 - 16:30", 
                     title: "景點｜梅田藍天大廈", 
                     transit: [ 
-                        { type: 'walk', text: '步行 9 分鐘到「難波站」' },
-                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通江坂', to: '梅田站' },
+                        { type: 'walk', text: '返回步行 9 分鐘到「難波站」' },
+                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通 江坂 行', to: '梅田站' },
                         { type: 'walk', text: '步行 13 分鐘到梅田藍天大樓' }
                     ],
                     duration: "約 35 分鐘", cost: "¥240",
-                    locations: [ { name: "梅田藍天大廈 (梅田スカイビル)", address: "1 Chome-1-88 Oyodonaka, Kita Ward, Osaka, 531-6023日本" } ],
-                    imgUrl: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=800&auto=format&fit=crop"
+                    locations: [ { name: "梅田藍天大廈 (梅田スカイビル)", address: "1 Chome-1-88 Oyodonaka, Kita Ward, Osaka, 531-6023日本" } ]
                 },
                 { 
                     time: "16:30 - 20:00", 
@@ -577,32 +624,29 @@
                     transit: [ { type: 'walk', text: '從藍天大廈步行前往商圈' } ],
                     duration: "約 15 分鐘", cost: "無",
                     locations: [ { name: "梅田商圈 (以阪急百貨為地標)", address: "8-7 Kakudacho, Kita Ward, Osaka, 530-8350日本" } ],
-                    note: "💡 梅田商圈超大，包含 lucua 百貨、lucua 1100、HEP FIVE 皆在附近。",
-                    imgUrl: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=800&auto=format&fit=crop"
+                    note: "💡 梅田商圈非常大且像迷宮，包含 lucua 百貨、lucua 1100、HEP FIVE 皆在附近，請緊盯導航以免迷路。"
                 },
                 { 
                     time: "20:00 - 22:00", 
                     title: "超市採買｜LIFE超市", 
                     transit: [ 
-                        { type: 'walk', text: '前往「梅田站」' },
-                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通中百舌鳥(大阪市營)', to: '本町站' },
-                        { type: 'walk', text: '步行 13 分鐘到超市' }
+                        { type: 'walk', text: '前往「梅田站」搭車' },
+                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通 中百舌鳥 行', to: '本町站' },
+                        { type: 'walk', text: '步行 13 分鐘到 LIFE 超市' }
                     ],
                     duration: "約 16 分鐘", cost: "¥190",
-                    locations: [ { name: "LIFE超市 堺筋本町店", address: "1 Chome-7-5 Kyutaromachi, Chuo Ward, Osaka, 541-0056日本" } ],
-                    imgUrl: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=800&auto=format&fit=crop"
+                    locations: [ { name: "LIFE超市 堺筋本町店", address: "1 Chome-7-5 Kyutaromachi, Chuo Ward, Osaka, 541-0056日本" } ]
                 },
                 { 
                     time: "22:00", 
                     title: "回飯店休息", 
                     transit: [ 
                         { type: 'walk', text: '步行 4 分鐘到「堺筋本町站」' },
-                        { type: 'subway', line: '堺筋線', color: '#814F2E', detail: '普通天下茶屋', to: '長堀橋站' },
-                        { type: 'walk', text: '步行 3 分鐘到飯店' }
+                        { type: 'subway', line: '堺筋線', color: '#814F2E', detail: '普通 天下茶屋 行', to: '長堀橋站' },
+                        { type: 'walk', text: '步行 3 分鐘回飯店' }
                     ],
                     duration: "約 10 分鐘", cost: "¥190",
-                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ],
-                    imgUrl: "https://images.unsplash.com/photo-1569154941061-e231b4732ef1?q=80&w=800&auto=format&fit=crop"
+                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ]
                 }
             ]
         };
@@ -663,23 +707,34 @@
             
             (ITINERARY_DATA[day] || []).forEach(item => {
                 
-                // 動態生成交通步驟
+                // 動態生成升級版的 Timeline 交通步驟
                 let transitHtml = '';
                 if(item.transit && item.transit.length > 0) {
                     let stepsHtml = item.transit.map(step => {
-                        if(step.type === 'walk') return `<li><i class="ph-bold ph-person-walking"></i> ${step.text}</li>`;
+                        if(step.type === 'walk') {
+                            return `<li><div class="step-icon"><i class="ph-bold ph-person-walking"></i></div> <div class="step-content">${step.text}</div></li>`;
+                        }
                         if(step.type === 'subway' || step.type === 'train') {
                             let icon = step.type === 'subway' ? '🚇 地鐵' : '🚆 電車';
-                            return `<li><i class="ph-bold ph-train"></i> <div><span class="line-badge" style="background:${step.color};">${icon}：${step.line}</span> (${step.detail}) ➔ <b>${step.to}</b></div></li>`;
+                            return `<li>
+                                <div class="step-icon"><i class="ph-bold ph-train"></i></div>
+                                <div class="step-content">
+                                    <div style="margin-bottom: 6px;"><span class="line-badge" style="background:${step.color};">${icon}：${step.line}</span></div>
+                                    <div style="font-size:13px; color: #8E8E93; margin-bottom: 4px;">方向：${step.detail}</div>
+                                    <div style="font-weight: 800; font-size:16px; color: #FFF; letter-spacing: 0.5px;">➔ ${step.to}</div>
+                                </div>
+                            </li>`;
                         }
-                        if(step.type === 'car') return `<li><i class="ph-bold ph-car-profile"></i> 🚙 <b>包車：</b>${step.text}</li>`;
-                        return `<li>${step.text}</li>`;
+                        if(step.type === 'car') {
+                            return `<li><div class="step-icon"><i class="ph-bold ph-car-profile"></i></div> <div class="step-content"><span style="color:#FFF;font-weight:800;">🚙 包車：</span>${step.text}</div></li>`;
+                        }
+                        return `<li><div class="step-icon"><i class="ph-bold ph-map-pin"></i></div> <div class="step-content">${step.text}</div></li>`;
                     }).join('');
 
                     let summary = '';
                     if(item.duration || item.cost) {
-                        let dur = item.duration ? `⏳ ${item.duration}` : '';
-                        let cst = item.cost ? `💴 ${item.cost}` : '';
+                        let dur = item.duration ? `<i class="ph-bold ph-clock"></i> ${item.duration}` : '';
+                        let cst = item.cost ? `<i class="ph-bold ph-coins"></i> ${item.cost}` : '';
                         let sep = (dur && cst) ? '<span class="sep">|</span>' : '';
                         summary = `<div class="t-summary">${dur} ${sep} ${cst}</div>`;
                     }
@@ -707,7 +762,6 @@
 
                 html += `
                 <div class="trip-card">
-                    <img src="${item.imgUrl}" class="t-img" loading="lazy">
                     <div class="t-body">
                         <span class="t-time">${item.time}</span>
                         <h3 class="t-title">${item.title}</h3>
@@ -782,7 +836,7 @@
                         <div><span class="f-label">Time</span><span class="f-val">${f.dTime}</span></div>
                         <div><span class="f-label">Arrive</span><span class="f-val">${f.aTime}</span></div>
                     </div>
-                    <a href="${f.url}" class="map-btn" target="_blank" style="display:block; width:100%; text-align:center; background:var(--secondary); color:#FFF; padding:14px; border-radius:12px; font-weight:600; font-size:14px; text-decoration:none; margin-top:16px; box-shadow:0 4px 12px rgba(0,122,255,0.2);">線上報到選位</a>
+                    <a href="${f.url}" class="map-btn" target="_blank" style="display:block; width:100%; text-align:center; background:var(--primary); color:#FFF; padding:14px; border-radius:12px; font-weight:600; font-size:14px; text-decoration:none; margin-top:16px; box-shadow:0 4px 12px rgba(211,47,47,0.3);">線上報到選位</a>
                 </div>`;
             });
             container.innerHTML = html;
