@@ -85,6 +85,9 @@
         .view-container.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* =========================================
+           記帳版面
+           ========================================= */
         .balance-card {
             background: linear-gradient(135deg, #1C1C1E 0%, #3A3A3C 100%);
             border-radius: var(--radius-lg); padding: 24px; color: #FFF; margin-top: 10px; margin-bottom: 24px;
@@ -146,17 +149,36 @@
         .h-del { color: #FF3B30; padding: 10px; margin-left: 5px; font-size: 20px; cursor: pointer; border: none; background: none;}
 
         /* =========================================
-           行程與機票版面
+           🌟 升級版 行程與交通排版
            ========================================= */
         .trip-card { background: var(--card-bg); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow-card); }
-        .t-img { width: 100%; height: 140px; object-fit: cover; }
+        .t-img { width: 100%; height: 160px; object-fit: cover; }
         .t-body { padding: 20px; }
         .t-time { font-size: 12px; font-weight: 800; color: var(--secondary); background: #E5F1FF; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px; }
-        .t-title { font-size: 20px; font-weight: 800; margin: 0 0 16px; line-height: 1.4; }
-        .t-row { display: flex; gap: 12px; margin-bottom: 12px; font-size: 14px; font-weight: 600; color: var(--text-muted); align-items: flex-start; line-height: 1.5; }
-        .t-row i { font-size: 20px; color: var(--text-main); margin-top: 2px; }
-        .t-note-box { background: #F2F2F7; padding: 12px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; line-height: 1.5; margin-top: 12px; border-left: 4px solid var(--secondary); color: var(--text-main); }
-        .map-btn { display: block; width: 100%; text-align: center; background: var(--secondary); color: #FFF; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 14px; text-decoration: none; margin-top: 16px; box-shadow: 0 4px 12px rgba(0,122,255,0.2); }
+        .t-title { font-size: 20px; font-weight: 800; margin: 0 0 16px; line-height: 1.4; color: var(--text-main); }
+        
+        /* 交通區塊 */
+        .transit-box { background: #F9F9FB; border-radius: 12px; padding: 16px; margin-bottom: 16px; border: 1px solid #E5E5EA; }
+        .t-summary { font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .t-summary .sep { color: #C7C7CC; font-weight: 400; }
+        .t-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+        .t-steps li { font-size: 13px; font-weight: 600; color: var(--text-main); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+        .t-steps li i { font-size: 16px; color: var(--text-muted); margin-top: 2px; }
+        .line-badge { padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 800; display: inline-block; white-space: nowrap; color: #FFF; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
+        .t-note-box { background: #FFF4E5; padding: 12px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; line-height: 1.5; margin-bottom: 16px; border-left: 4px solid #FF9500; color: var(--text-main); }
+        
+        /* 地點清單區塊與按鈕 */
+        .loc-list { display: flex; flex-direction: column; gap: 12px; }
+        .loc-item { background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .loc-name { font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 6px; }
+        .loc-addr { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4; word-break: break-all; }
+        .loc-actions { display: flex; gap: 8px; }
+        .loc-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 800; text-decoration: none; cursor: pointer; transition: 0.2s; border: none; }
+        .btn-copy { background: #E5E5EA; color: var(--text-main); }
+        .btn-copy:active { background: #D1D1D6; transform: scale(0.95); }
+        .btn-map { background: var(--secondary); color: #FFF; box-shadow: 0 4px 12px rgba(0,122,255,0.2); }
+        .btn-map:active { transform: scale(0.95); }
 
         .flight-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-card); border-top: 6px solid var(--secondary); }
         .f-top { display: flex; justify-content: space-between; margin-bottom: 24px; }
@@ -168,46 +190,20 @@
         .f-val { font-size: 18px; font-weight: 800; color: var(--text-main); }
 
         /* =========================================
-           🌟 代購版面設計 (動態比價排版)
+           代購版面設計 (動態比價排版)
            ========================================= */
-        .profile-card {
-            background: linear-gradient(135deg, var(--card-bg) 0%, var(--primary-light) 100%);
-            border: 1px solid rgba(211, 47, 47, 0.1);
-            border-radius: var(--radius-lg); padding: 20px; margin-top: 10px; margin-bottom: 24px;
-            box-shadow: var(--shadow-card);
-        }
+        .profile-card { background: linear-gradient(135deg, var(--card-bg) 0%, var(--primary-light) 100%); border: 1px solid rgba(211, 47, 47, 0.1); border-radius: var(--radius-lg); padding: 20px; margin-top: 10px; margin-bottom: 24px; box-shadow: var(--shadow-card); }
         .profile-title { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; color: var(--primary); margin: 0 0 8px; }
         .profile-desc { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 0 0 16px; line-height: 1.5; }
         .pref-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .pref-tag { 
-            background: #FFF; color: var(--primary); padding: 6px 12px; border-radius: 12px; 
-            font-size: 12px; font-weight: 800; box-shadow: 0 2px 8px rgba(211, 47, 47, 0.08); 
-            border: 1px solid rgba(211, 47, 47, 0.1);
-        }
+        .pref-tag { background: #FFF; color: var(--primary); padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 800; box-shadow: 0 2px 8px rgba(211, 47, 47, 0.08); border: 1px solid rgba(211, 47, 47, 0.1); }
 
-        .shop-item { 
-            display: flex; background: var(--card-bg); border-radius: var(--radius-md); padding: 12px; gap: 16px; margin-bottom: 16px; 
-            box-shadow: var(--shadow-card); border: 1px solid transparent; transition: 0.2s; align-items: center; cursor: pointer;
-        }
+        .shop-item { display: flex; background: var(--card-bg); border-radius: var(--radius-md); padding: 12px; gap: 16px; margin-bottom: 16px; box-shadow: var(--shadow-card); border: 1px solid transparent; transition: 0.2s; align-items: center; cursor: pointer; }
         .shop-item.purchased { border-color: var(--color-success); background: #F4FFF8; }
-        
-        .shop-img-box { 
-            width: 80px; height: 80px; background: #E5E5EA; border-radius: 12px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            flex-shrink: 0; overflow: hidden; position: relative; cursor: zoom-in;
-        }
-        .shop-img-box img { 
-            width: 100%; height: 100%; object-fit: cover; 
-            position: absolute; top:0; left:0; 
-            opacity: 1; transition: 0.3s ease; 
-        }
+        .shop-img-box { width: 80px; height: 80px; background: #E5E5EA; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; position: relative; cursor: zoom-in; }
+        .shop-img-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; opacity: 1; transition: 0.3s ease; }
         .shop-item.purchased .shop-img-box img { opacity: 0.6; filter: grayscale(80%); }
-        .zoom-icon {
-            position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.5);
-            color: #FFF; width: 22px; height: 22px; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; font-size: 14px; pointer-events: none;
-            backdrop-filter: blur(2px);
-        }
+        .zoom-icon { position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.5); color: #FFF; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; pointer-events: none; backdrop-filter: blur(2px); }
 
         .shop-info { flex: 1; }
         .shop-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin: 0 0 4px; }
@@ -221,43 +217,17 @@
         .compare-badge { background: #E5E5EA; color: var(--text-main); padding: 4px 6px; border-radius: 6px; font-size: 11px; font-weight: 800; }
         .save-badge { background: #FFEBEE; color: var(--primary); padding: 4px 6px; border-radius: 6px; font-size: 11px; font-weight: 800; display: flex; align-items: center; gap: 2px;}
 
-        .check-circle { 
-            width: 28px; height: 28px; border: 2px solid var(--border-color); border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; color: transparent; 
-            transition: 0.2s; flex-shrink: 0;
-        }
+        .check-circle { width: 28px; height: 28px; border: 2px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: transparent; transition: 0.2s; flex-shrink: 0; }
         .shop-item.purchased .check-circle { background: var(--color-success); border-color: var(--color-success); color: #FFF; }
 
-        .image-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            z-index: 3000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-            padding: 24px;
-        }
+        /* Modal / Toast */
+        .image-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 24px; }
         .image-modal-overlay.active { opacity: 1; pointer-events: all; }
-        .image-modal-content {
-            background: var(--card-bg); width: 100%; max-width: 400px;
-            border-radius: var(--radius-lg); overflow: hidden; position: relative;
-            transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1);
-            display: flex; flex-direction: column;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
+        .image-modal-content { background: var(--card-bg); width: 100%; max-width: 400px; border-radius: var(--radius-lg); overflow: hidden; position: relative; transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .image-modal-overlay.active .image-modal-content { transform: scale(1); }
-        
-        .close-image-btn {
-            position: absolute; top: 12px; right: 12px;
-            background: rgba(255,255,255,0.8); color: var(--text-main); border-radius: 50%;
-            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; border: none; cursor: pointer; z-index: 10; backdrop-filter: blur(4px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
+        .close-image-btn { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.8); color: var(--text-main); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 18px; border: none; cursor: pointer; z-index: 10; backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         #enlarged-img { width: 100%; max-height: 55vh; object-fit: contain; background: #F2F2F7; display: block; }
-        
-        .japanese-phrase {
-            padding: 24px 20px; text-align: center; font-size: 18px; font-weight: 800; color: var(--primary);
-            background: var(--primary-light); line-height: 1.4;
-        }
+        .japanese-phrase { padding: 24px 20px; text-align: center; font-size: 18px; font-weight: 800; color: var(--primary); background: var(--primary-light); line-height: 1.4; }
         .japanese-phrase span { display: block; margin-top: 8px; font-size: 13px; color: var(--text-main); font-weight: 600; opacity: 0.8;}
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; display: flex; align-items: flex-end; }
@@ -468,73 +438,103 @@
         const TOTAL_BUDGET = 30000; 
 
         // ==========================================
-        // 核心資料庫 (更新為全新完整行程明細)
+        // 🌟 核心資料庫 (全新升級版：詳細交通、獨立地址)
         // ==========================================
         const ITINERARY_DATA = {
             day1: [
                 { 
                     time: "12:40 - 14:00", 
                     title: "前往飯店交通", 
-                    address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本", 
-                    icon: "ph-car-profile", 
-                    info: "🚙 <b>【包車】</b>交通前往飯店（乘車時間約 45 分鐘）", 
-                    note: "可以先寄放行李，15:00 check in 物業。<br><b>飯店名稱：</b>ベッセルイン心斎橋 (Vessel Inn 心齋橋)",
+                    transit: [ { type: 'car', text: '包車前往飯店' } ],
+                    duration: "約 45 分鐘", cost: "包車",
+                    locations: [ { name: "Vessel Inn 心齋橋 (ベッセルイン心斎橋)", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ],
+                    note: "💡 可以先寄放行李，15:00 check in。",
                     imgUrl: "https://images.unsplash.com/photo-1503387837-B154D5074BD2?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "15:00 - 22:00", 
                     title: "逛街、晚餐｜心齋橋筋 & 道頓堀", 
-                    address: "大阪府大阪市中央區心齋橋筋 542-0085", 
-                    icon: "ph-person-walking", 
-                    info: "🚶 <b>【步行】</b>約 8 分鐘抵達。心齋橋和道頓堀緊密相連，適合徒步慢逛。", 
-                    note: "❗ <b>拍照秘訣：</b>固力果跑跑人位於戎橋旁，最佳拍照地點是站在道頓堀河對岸的行人區，從這裡可以完整捕捉到整面招牌。<br><b>道頓堀位置：</b>中央區大阪市大阪府 542-0071",
+                    transit: [ { type: 'walk', text: '從飯店步行約 8 分鐘。心齋橋和道頓堀緊密相連。' } ],
+                    duration: "步行約 8 分鐘", cost: "無",
+                    locations: [ 
+                        { name: "心齋橋筋", address: "中央區大阪市大阪府 542-0085" },
+                        { name: "道頓堀", address: "中央區大阪市大阪府 542-0071" }
+                    ],
+                    note: "❗ 固力果跑跑人位於戎橋旁，最佳拍照地點是站在道頓堀河對岸的行人區，從這裡可以完整捕捉到整面招牌。",
                     imgUrl: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "22:00", 
-                    title: "返回飯店休息", 
-                    address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本", 
-                    icon: "ph-house-line", 
-                    info: "🚶 <b>【步行】</b>回飯店 (ベッセルイン心斎橋) 約 8 分鐘。", 
-                    note: "<b>🌙 附近的 24 小時營業店：</b><br>• 💊<b>【松本清】</b>薬マツモトキヨシ 道頓堀DOTONE ZA店：日本〒542-0071 Osaka, Chuo Ward, Dotonbori, 1 Chome−8−22 DOTONE ZA<br>• 🐧<b>【唐吉訶德】</b>ドン·キホーテ 道頓堀御堂筋店：2 Chome-5-9 Nishishinsaibashi, Chuo Ward, Osaka, 542-0086日本",
+                    title: "回飯店休息", 
+                    transit: [ { type: 'walk', text: '從道頓堀步行回飯店' } ],
+                    duration: "約 8 分鐘", cost: "無",
+                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ],
                     imgUrl: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800&auto=format&fit=crop"
+                },
+                { 
+                    time: "🌙 深夜", 
+                    title: "飯店附近 24H 購物好去處", 
+                    transit: [ { type: 'walk', text: '皆為步行即可到達' } ],
+                    locations: [ 
+                        { name: "💊 松本清 (道頓堀DOTONE ZA店)", address: "日本〒542-0071 Osaka, Chuo Ward, Dotonbori, 1 Chome−8−22 DOTONE ZA" },
+                        { name: "🐧 唐吉訶德 (道頓堀御堂筋店)", address: "2 Chome-5-9 Nishishinsaibashi, Chuo Ward, Osaka, 542-0086日本" }
+                    ],
+                    imgUrl: "https://images.unsplash.com/photo-1582236124795-5df07df2a611?q=80&w=800&auto=format&fit=crop"
                 }
             ],
             day2: [
                 { 
                     time: "09:00 - 11:30", 
                     title: "景點｜大阪城", 
-                    address: "1-1 Osakajo, Chuo Ward, Osaka, 540-0002日本", 
-                    icon: "ph-train", 
-                    info: "🚶 <b>【步行】</b>5 分鐘至「長堀橋站」 ➔ 🚇 <b>【地鐵：<span style='color: #61B329;'>長堀鶴見綠地線</span>】</b>（普通門真南）搭到「大阪商務園區站」 ➔ 🚶 再<b>【步行】</b>20 分鐘抵達大阪城。", 
-                    note: "<b>交通明細：</b>乘車與步行總計約 35 分鐘，地鐵票價共 <b>¥240</b>。",
+                    transit: [ 
+                        { type: 'walk', text: '步行 5 分鐘到「長堀橋站」' },
+                        { type: 'subway', line: '長堀鶴見綠地線', color: '#A9CC51', detail: '普通門真南', to: '大阪商務園區站' },
+                        { type: 'walk', text: '再步行 20 分鐘抵達大阪城' }
+                    ],
+                    duration: "約 35 分鐘", cost: "¥240",
+                    locations: [ { name: "大阪城", address: "1-1 Osakajo, Chuo Ward, Osaka, 540-0002日本" } ],
                     imgUrl: "https://images.unsplash.com/photo-1542640244-7e672d6cef21?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "11:30 - 17:00", 
-                    title: "購物與午餐｜近鐵百貨店 上本町店 & 天王寺MIO", 
-                    address: "6 Chome-1-55 Uehonmachi, Tennoji Ward, Osaka, 543-8543日本", 
-                    icon: "ph-shopping-bag", 
-                    info: "🚶 <b>【步行】</b>7 分鐘到「大阪城公園車站」 ➔ 🚇 <b>【地鐵：<span style='color: #E67E22;'>大阪環狀線</span>】</b>（關西機場線快速電車天王寺）搭到「鶴橋站」 ➔ 🚶 <b>【步行】</b>1 分鐘轉乘 🚇 <b>【地鐵：<span style='color: #00A0E9;'>近鐵奈良線</span>】</b>（快速急行神戶三宮（阪神））到「大阪上本町」，再<b>【步行】</b>2 分鐘。", 
-                    note: "<b>商圈指南：</b><br>• <b>近鐵百貨：</b>花費 ¥310，交通約 30 分鐘。旁邊的上本町YUFURA（白色、外牆覆蓋著密集垂直格柵那棟）一樓有 studio clip。<br>• <b>天王寺MIO交通：</b>從近鐵步行 6 分鐘到「谷町九丁目」，搭 🚇 <b>【地鐵：<span style='color: #9B59B6;'>谷町線</span>】</b>（普通八尾南）到「天王寺」，再<b>【步行】</b>6 分鐘抵達（花費 ¥190，約 16 分鐘）。內有 mont-bell、MUJI 等品牌。<br><b>天王寺MIO地址：</b>10-39 Hidenincho, Tennoji Ward, Osaka, 543-0055日本",
+                    title: "購物與午餐｜近鐵百貨 & 天王寺MIO", 
+                    transit: [ 
+                        { type: 'walk', text: '步行 7 分鐘到「大阪城公園車站」' },
+                        { type: 'train', line: '大阪環狀線', color: '#F05622', detail: '關西機場線快速電車天王寺', to: '鶴橋站' },
+                        { type: 'walk', text: '步行 1 分鐘轉乘' },
+                        { type: 'train', line: '近鐵奈良線', color: '#A13329', detail: '快速急行神戶三宮(阪神)', to: '大阪上本町' },
+                        { type: 'walk', text: '步行 2 分鐘到近鐵百貨店' }
+                    ],
+                    duration: "約 30 分鐘", cost: "¥310",
+                    locations: [ 
+                        { name: "近鉄百貨店 上本町店", address: "6 Chome-1-55 Uehonmachi, Tennoji Ward, Osaka, 543-8543日本" },
+                        { name: "天王寺MIO (內有montbell, muji)", address: "10-39 Hidenincho, Tennoji Ward, Osaka, 543-0055日本" }
+                    ],
+                    note: "💡 近鐵百貨旁邊的「上本町YUFURA」（白色、外牆覆蓋密集垂直格柵那棟）一樓有 studio clip。<br>💡 前往天王寺MIO交通：步行6分鐘到「谷町九丁目」➔ 搭乘🚇谷町線(普通八尾南)到「天王寺站」➔ 步行6分鐘。花費¥190，約16分。",
                     imgUrl: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "17:00 - 22:00", 
                     title: "逛街、晚餐｜通天閣 / 新世界商店街", 
-                    address: "1 Chome-18-6 Ebisuhigashi, Naniwa Ward, Osaka, 556-0002日本", 
-                    icon: "ph-storefront", 
-                    info: "🚶 <b>【步行】</b>5 分鐘到「天王寺站」 ➔ 🚇 <b>【地鐵：<span style='color: #E67E22;'>大阪環狀線</span>】</b>（普通外環線）搭至「新今宮站」 ➔ 🚶 轉乘<b>【步行】</b>8 分鐘抵達通天閣。", 
-                    note: "<b>交通明細：</b>整趟耗時約 16 分鐘，交通費總共 <b>¥150</b>。",
+                    transit: [ 
+                        { type: 'walk', text: '步行 5 分鐘到「天王寺站」' },
+                        { type: 'train', line: '大阪環狀線', color: '#F05622', detail: '普通外環線', to: '新今宮站' },
+                        { type: 'walk', text: '步行 8 分鐘抵達通天閣' }
+                    ],
+                    duration: "約 16 分鐘", cost: "¥150",
+                    locations: [ { name: "通天閣", address: "1 Chome-18-6 Ebisuhigashi, Naniwa Ward, Osaka, 556-0002日本" } ],
                     imgUrl: "https://images.unsplash.com/photo-1590253697193-c4e9be9db933?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "22:00", 
-                    title: "回飯店休整", 
-                    address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本", 
-                    icon: "ph-house-line", 
-                    info: "🚶 <b>【步行】</b>6 分鐘到「惠美須町站」 ➔ 🚇 <b>【地鐵：<span style='color: #814F2E;'>堺筋線</span>】</b>（普通正雀）搭至「長堀橋站」 ➔ 🚶 順向<b>【步行】</b>3 分鐘回到飯店。", 
-                    note: "<b>交通明細：</b>回程流暢，總時間約 15 分鐘，單程車資 <b>¥190</b>。",
+                    title: "回飯店休息", 
+                    transit: [ 
+                        { type: 'walk', text: '步行 6 分鐘到「惠美須町站」' },
+                        { type: 'subway', line: '堺筋線', color: '#814F2E', detail: '普通正雀', to: '長堀橋站' },
+                        { type: 'walk', text: '步行 3 分鐘到飯店' }
+                    ],
+                    duration: "約 15 分鐘", cost: "¥190",
+                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ],
                     imgUrl: "https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?q=80&w=800&auto=format&fit=crop"
                 }
             ],
@@ -542,55 +542,66 @@
                 { 
                     time: "09:30 - 11:30", 
                     title: "景點｜難波八阪神社", 
-                    address: "2 Chome-9-19 Motomachi, Naniwa Ward, Osaka, 556-0016日本", 
-                    icon: "ph-mosque", 
-                    info: "🚶 <b>【步行】</b>6 分鐘到「心齋橋站」 ➔ 🚇 <b>【地鐵：<span style='color: #E51E2B;'>御堂筋線</span>】</b>（普通中百舌鳥（大阪市營））到「難波站」 ➔ 🚶 順風再<b>【步行】</b>10 分鐘抵達大獅子頭神社。", 
-                    note: "<b>交通明細：</b>出發至熱門景點全程約 20 分鐘，車資 <b>¥190</b>。",
+                    transit: [ 
+                        { type: 'walk', text: '步行 6 分鐘到「心齋橋站」' },
+                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通中百舌鳥(大阪市營)', to: '難波站' },
+                        { type: 'walk', text: '步行 10 分鐘到難波八阪神社' }
+                    ],
+                    duration: "約 20 分鐘", cost: "¥190",
+                    locations: [ { name: "難波八阪神社", address: "2 Chome-9-19 Motomachi, Naniwa Ward, Osaka, 556-0016日本" } ],
                     imgUrl: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "11:30 - 14:00", 
-                    title: "午餐饗宴｜黑門市場", 
-                    address: "2 Chome-21 Nipponbashi, Chuo Ward, Osaka, 542-0073日本", 
-                    icon: "ph-fish", 
-                    info: "🚶 <b>【步行】</b>探索街景，直接步行約 16 分鐘即可直接抵達黑門市場。", 
-                    note: "<b>用餐提示：</b>黑門市場海鮮與各類和牛、串燒美食雲集，建議空腹徒步前來品嚐最佳！",
+                    title: "午餐｜黑門市場", 
+                    transit: [ { type: 'walk', text: '從八阪神社直接步行前往' } ],
+                    duration: "約 16 分鐘", cost: "無",
+                    locations: [ { name: "黑門市場", address: "2 Chome-21 Nipponbashi, Chuo Ward, Osaka, 542-0073日本" } ],
                     imgUrl: "https://images.unsplash.com/photo-1534482421-64566f976cfa?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "14:00 - 16:30", 
-                    title: "景點｜梅田藍天大廈 (梅田スカイビル)", 
-                    address: "1 Chome-1-88 Oyodonaka, Kita Ward, Osaka, 531-6023日本", 
-                    icon: "ph-buildings", 
-                    info: "🚶 <b>【步行】</b>9 分鐘到「難波站」 ➔ 🚇 <b>【地鐵：<span style='color: #E51E2B;'>御堂筋線</span>】</b>（普通江坂）搭至「梅田站」 ➔ 🚶 順出站地下道再<b>【步行】</b>13 分鐘抵達藍天大廈。", 
-                    note: "<b>交通明細：</b>由南往北跨區行進，總時程約 35 分鐘，地鐵票價為 <b>¥240</b>。",
+                    title: "景點｜梅田藍天大廈", 
+                    transit: [ 
+                        { type: 'walk', text: '步行 9 分鐘到「難波站」' },
+                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通江坂', to: '梅田站' },
+                        { type: 'walk', text: '步行 13 分鐘到梅田藍天大樓' }
+                    ],
+                    duration: "約 35 分鐘", cost: "¥240",
+                    locations: [ { name: "梅田藍天大廈 (梅田スカイビル)", address: "1 Chome-1-88 Oyodonaka, Kita Ward, Osaka, 531-6023日本" } ],
                     imgUrl: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "16:30 - 20:00", 
-                    title: "逛街、晚餐｜梅田商圈（以阪急百貨為地標）", 
-                    address: "8-7 Kakudacho, Kita Ward, Osaka, 530-8350日本", 
-                    icon: "ph-shopping-cart", 
-                    info: "🚶 <b>【步行】</b>串連商圈步道，慢步約 15 分鐘即可切換至核心核心商圈。", 
-                    note: "<b>商圈備註：</b>梅田為大阪最大購物重鎮，包含 LUCUA 百貨、LUCUA 1100、HEP FIVE 地標紅摩天輪等大型綜合商場都在此處緊密相連。",
+                    title: "逛街、晚餐｜梅田商圈", 
+                    transit: [ { type: 'walk', text: '從藍天大廈步行前往商圈' } ],
+                    duration: "約 15 分鐘", cost: "無",
+                    locations: [ { name: "梅田商圈 (以阪急百貨為地標)", address: "8-7 Kakudacho, Kita Ward, Osaka, 530-8350日本" } ],
+                    note: "💡 梅田商圈超大，包含 lucua 百貨、lucua 1100、HEP FIVE 皆在附近。",
                     imgUrl: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "20:00 - 22:00", 
-                    title: "超市採購｜LIFE超市 堺筋本町店", 
-                    address: "1 Chome-7-5 Kyutaromachi, Chuo Ward, Osaka, 541-0056日本", 
-                    icon: "ph-basket", 
-                    info: "🚶 前往「梅田站」 ➔ 🚇 <b>【地鐵：<span style='color: #E51E2B;'>御堂筋線</span>】</b>（普通中百舌鳥（大阪市營））搭到「本町站」 ➔ 🚶 出站再<b>【步行】</b>13 分鐘至 LIFE 超市採買伴手禮與水果。", 
-                    note: "<b>交通明細：</b>回程採購大超市十分流暢，總計約 16 分鐘，單程車資 <b>¥190</b>。",
+                    title: "超市採買｜LIFE超市", 
+                    transit: [ 
+                        { type: 'walk', text: '前往「梅田站」' },
+                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通中百舌鳥(大阪市營)', to: '本町站' },
+                        { type: 'walk', text: '步行 13 分鐘到超市' }
+                    ],
+                    duration: "約 16 分鐘", cost: "¥190",
+                    locations: [ { name: "LIFE超市 堺筋本町店", address: "1 Chome-7-5 Kyutaromachi, Chuo Ward, Osaka, 541-0056日本" } ],
                     imgUrl: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=800&auto=format&fit=crop"
                 },
                 { 
                     time: "22:00", 
-                    title: "載譽返回飯店", 
-                    address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本", 
-                    icon: "ph-house-line", 
-                    info: "🚶 <b>【步行】</b>4 分鐘到「堺筋本町站」 ➔ 🚇 <b>【地鐵：<span style='color: #814F2E;'>堺筋線</span>】</b>（普通天下茶屋）搭到「長堀橋站」 ➔ 🚶 全面出站再<b>【步行】</b>3 分鐘回到 Vessel Inn 飯店。", 
-                    note: "<b>交通明細：</b>提著戰利品也能輕鬆移動，總計約 10 分鐘，車資 <b>¥190</b>。",
+                    title: "回飯店休息", 
+                    transit: [ 
+                        { type: 'walk', text: '步行 4 分鐘到「堺筋本町站」' },
+                        { type: 'subway', line: '堺筋線', color: '#814F2E', detail: '普通天下茶屋', to: '長堀橋站' },
+                        { type: 'walk', text: '步行 3 分鐘到飯店' }
+                    ],
+                    duration: "約 10 分鐘", cost: "¥190",
+                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ],
                     imgUrl: "https://images.unsplash.com/photo-1569154941061-e231b4732ef1?q=80&w=800&auto=format&fit=crop"
                 }
             ]
@@ -612,15 +623,87 @@
         ];
 
         // ==========================================
-        // 核心動態渲染機制
+        // 渲染與操作函式
         // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFlights();
+            renderItinerary('day1');
+            fetchExchangeRate();
+            fetchOsakaWeather();
+            renderShopping(); 
+            try {
+                renderExpenses();
+                if (navigator.onLine) fetchExpenses();
+            } catch (e) {}
+        });
+
+        // 🌟 複製地址的魔法函式
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('📍 地址已成功複製！', 'success');
+                }).catch(err => { fallbackCopy(text); });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+        function fallbackCopy(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            showToast('📍 地址已成功複製！', 'success');
+        }
+
         function renderItinerary(day) {
             const container = document.getElementById('itinerary-content');
             let html = '';
             
             (ITINERARY_DATA[day] || []).forEach(item => {
-                const encodedAddress = encodeURIComponent(item.address);
-                const dynamicMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+                
+                // 動態生成交通步驟
+                let transitHtml = '';
+                if(item.transit && item.transit.length > 0) {
+                    let stepsHtml = item.transit.map(step => {
+                        if(step.type === 'walk') return `<li><i class="ph-bold ph-person-walking"></i> ${step.text}</li>`;
+                        if(step.type === 'subway' || step.type === 'train') {
+                            let icon = step.type === 'subway' ? '🚇 地鐵' : '🚆 電車';
+                            return `<li><i class="ph-bold ph-train"></i> <div><span class="line-badge" style="background:${step.color};">${icon}：${step.line}</span> (${step.detail}) ➔ <b>${step.to}</b></div></li>`;
+                        }
+                        if(step.type === 'car') return `<li><i class="ph-bold ph-car-profile"></i> 🚙 <b>包車：</b>${step.text}</li>`;
+                        return `<li>${step.text}</li>`;
+                    }).join('');
+
+                    let summary = '';
+                    if(item.duration || item.cost) {
+                        let dur = item.duration ? `⏳ ${item.duration}` : '';
+                        let cst = item.cost ? `💴 ${item.cost}` : '';
+                        let sep = (dur && cst) ? '<span class="sep">|</span>' : '';
+                        summary = `<div class="t-summary">${dur} ${sep} ${cst}</div>`;
+                    }
+
+                    transitHtml = `<div class="transit-box">${summary}<ul class="t-steps">${stepsHtml}</ul></div>`;
+                }
+
+                // 動態生成地址與按鈕模塊
+                let locHtml = '';
+                if(item.locations && item.locations.length > 0) {
+                    locHtml = '<div class="loc-list">' + item.locations.map(loc => {
+                        const safeAddrForJs = loc.address.replace(/'/g, "\\'");
+                        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}`;
+                        return `
+                        <div class="loc-item">
+                            <div class="loc-name">📍 ${loc.name}</div>
+                            <div class="loc-addr">${loc.address}</div>
+                            <div class="loc-actions">
+                                <button class="loc-btn btn-copy" onclick="copyToClipboard('${safeAddrForJs}')"><i class="ph-bold ph-copy"></i> 複製</button>
+                                <a class="loc-btn btn-map" href="${mapUrl}" target="_blank"><i class="ph-bold ph-map-trifold"></i> Google 地圖</a>
+                            </div>
+                        </div>`;
+                    }).join('') + '</div>';
+                }
 
                 html += `
                 <div class="trip-card">
@@ -628,10 +711,9 @@
                     <div class="t-body">
                         <span class="t-time">${item.time}</span>
                         <h3 class="t-title">${item.title}</h3>
-                        <div class="t-row"><i class="ph-bold ${item.icon}"></i> <div>${item.info}</div></div>
-                        <div class="t-row"><i class="ph-bold ph-map-pin"></i> <div>${item.address}</div></div>
+                        ${transitHtml}
                         ${item.note ? `<div class="t-note-box">${item.note}</div>` : ''}
-                        <a href="${dynamicMapUrl}" class="map-btn" target="_blank"><i class="ph-bold ph-navigation-arrow"></i> Google 地圖導航</a>
+                        ${locHtml}
                     </div>
                 </div>`;
             });
@@ -700,26 +782,17 @@
                         <div><span class="f-label">Time</span><span class="f-val">${f.dTime}</span></div>
                         <div><span class="f-label">Arrive</span><span class="f-val">${f.aTime}</span></div>
                     </div>
-                    <a href="${f.url}" class="map-btn" target="_blank" style="background:#007AFF; color:#FFF; box-shadow:0 4px 12px rgba(0,122,255,0.2);">線上報到選位</a>
+                    <a href="${f.url}" class="map-btn" target="_blank" style="display:block; width:100%; text-align:center; background:var(--secondary); color:#FFF; padding:14px; border-radius:12px; font-weight:600; font-size:14px; text-decoration:none; margin-top:16px; box-shadow:0 4px 12px rgba(0,122,255,0.2);">線上報到選位</a>
                 </div>`;
             });
             container.innerHTML = html;
         }
 
-        // ==========================================
-        // UI 操作邏輯（記帳、切換與串接）
-        // ==========================================
         function switchTab(tabId) {
             document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`view-${tabId}`).classList.add('active');
             document.getElementById(`tab-${tabId}`).classList.add('active');
-        }
-
-        function switchDay(day, el) {
-            document.querySelectorAll('#view-itinerary .seg-btn').forEach(btn => btn.classList.remove('active'));
-            el.classList.add('active');
-            renderItinerary(day);
         }
 
         function toggleShopCheck(element) {
@@ -733,12 +806,14 @@
             document.getElementById('image-modal').classList.add('active');
         }
 
-        document.getElementById('image-modal').onclick = function() {
-            this.classList.remove('active');
-        };
-
         function closeImageModal() {
             document.getElementById('image-modal').classList.remove('active');
+        }
+
+        function switchDay(day, el) {
+            document.querySelectorAll('#view-itinerary .seg-btn').forEach(btn => btn.classList.remove('active'));
+            el.classList.add('active');
+            renderItinerary(day);
         }
 
         function selectDate(date, el) {
@@ -777,29 +852,60 @@
         }
 
         function manualSync() {
-            showToast('正在即時更新雲端資料...', 'success');
+            showToast('正在同步資料...', 'success');
             fetchExpenses();
             fetchExchangeRate();
         }
 
-        async function fetchExchangeRate() {
-            try {
-                const res = await fetch('https://open.er-api.com/v6/latest/JPY');
-                const data = await res.json();
-                if (data?.rates?.TWD) Store.updateRate(data.rates.TWD);
-            } catch (e) {}
-            document.getElementById('rate-display').innerText = `匯率 ${Store.state.rate.toFixed(4)}`;
-            renderShopping(); 
-            renderExpenses();
+        function openStatsModal() {
+            const container = document.getElementById('stats-content');
+            let stats = { '交通': 0, '食物': 0, '購物': 0, '其他': 0 };
+            let totalTWD = 0;
+            Store.state.expenses.forEach(item => {
+                let price = Math.round(parseFloat(item.price) || 0);
+                stats[item.cat] = (stats[item.cat] || 0) + price;
+                totalTWD += price;
+            });
+
+            let html = '';
+            const cats = ['交通', '食物', '購物', '其他'];
+            cats.forEach(cat => {
+                let valTWD = stats[cat];
+                let valJPY = Math.round(valTWD / Store.state.rate);
+                let icon = EMOJI_MAP[cat] || 'ph-ticket';
+                let percent = totalTWD === 0 ? 0 : Math.round((valTWD / totalTWD) * 100);
+                html += `
+                <div class="stat-item">
+                    <div class="stat-left">
+                        <div class="stat-icon"><i class="ph-fill ${icon}"></i></div>
+                        <div class="stat-info">
+                            <h4>${cat}</h4>
+                            <span class="stat-percent">${percent}% 佔比</span>
+                        </div>
+                    </div>
+                    <div class="stat-right">
+                        <span class="s-twd">$${valTWD.toLocaleString()}</span>
+                        <span class="s-jpy">≈ ¥${valJPY.toLocaleString()}</span>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+            document.getElementById('stats-modal').classList.add('active');
         }
 
-        async function fetchOsakaWeather() {
-            const badge = document.getElementById('weather-badge');
-            try {
-                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=34.6937&longitude=135.5023&current_weather=true&timezone=Asia%2FTokyo`);
-                const data = await res.json();
-                badge.innerHTML = `🇯🇵 大阪 ${Math.round(data.current_weather.temperature)}°C`;
-            } catch (e) { badge.innerHTML = `🇯🇵 天氣異常`; }
+        function closeStatsModal() {
+            document.getElementById('stats-modal').classList.remove('active');
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<i class="ph-fill ${type === 'success' ? 'ph-check-circle' : 'ph-warning-circle'}"></i> <span>${msg}</span>`;
+            document.getElementById('toast-container').appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
         }
 
         function renderExpenses() {
@@ -811,11 +917,15 @@
                 const sheetDate = String(item.date).trim();
                 const targetDate = Store.state.date; 
                 if (sheetDate === targetDate || sheetDate.includes(targetDate)) return true;
+                if (sheetDate.includes('T') || sheetDate.includes('-')) {
+                    const d = new Date(sheetDate);
+                    return `${d.getMonth() + 1}/${d.getDate()}` === targetDate;
+                }
                 return false;
             });
 
             if (todayItems.length === 0) {
-                listEl.innerHTML = `<div style="text-align:center; padding: 40px 20px; color: var(--text-muted); font-weight:600;">本日尚無明細紀錄</div>`;
+                listEl.innerHTML = `<div style="text-align:center; padding: 40px 20px; color: var(--text-muted); font-weight:600;">本日尚無紀錄</div>`;
             } else {
                 todayItems.forEach(item => {
                     const price = Math.round(parseFloat(item.price));
@@ -871,13 +981,35 @@
             }
         }
 
+        async function fetchExchangeRate() {
+            try {
+                const res = await fetch('https://open.er-api.com/v6/latest/JPY');
+                const data = await res.json();
+                if (data?.rates?.TWD) {
+                    Store.updateRate(data.rates.TWD);
+                }
+            } catch (e) {}
+            document.getElementById('rate-display').innerText = `匯率 ${Store.state.rate.toFixed(4)}`;
+            
+            renderShopping(); 
+            renderExpenses();
+        }
+
+        async function fetchOsakaWeather() {
+            const badge = document.getElementById('weather-badge');
+            try {
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=34.6937&longitude=135.5023&current_weather=true&timezone=Asia%2FTokyo`);
+                const data = await res.json();
+                badge.innerHTML = `🇯🇵 大阪 ${Math.round(data.current_weather.temperature)}°C`;
+            } catch (e) { badge.innerHTML = `🇯🇵 天氣異常`; }
+        }
+
         async function fetchExpenses() {
             try {
                 const res = await fetch(`${SCRIPT_URL}?action=read&t=${Date.now()}`);
                 const freshData = await res.json();
                 if (Array.isArray(freshData)) {
-                    Store.state.expenses = freshData;
-                    localStorage.setItem('cached_expenses', JSON.stringify(freshData));
+                    Store.updateExpenses(freshData);
                     renderExpenses();
                 }
             } catch (err) {}
@@ -896,79 +1028,32 @@
             const newId = Date.now().toString();
             const newExpenseObj = { id: newId, date: Store.state.date, cat: Store.state.category, name: finalName, price: finalPriceTWD };
             
-            Store.state.expenses.push(newExpenseObj);
-            localStorage.setItem('cached_expenses', JSON.stringify(Store.state.expenses));
+            Store.updateExpenses([...Store.state.expenses, newExpenseObj]);
             renderExpenses();
             nameEl.value = ''; priceEl.value = ''; priceEl.blur(); 
-            showToast(`成功記下明細筆記`);
+            showToast(`已新增一筆花費`);
 
             try {
                 const params = new URLSearchParams({ action: 'add', ...newExpenseObj });
                 await fetch(SCRIPT_URL, { method: 'POST', body: params });
                 fetchExpenses();
-            } catch (err) { showToast('本地同步成功，待網路連接後上傳雲端', 'error'); }
+            } catch (err) { showToast('背景同步失敗，已存於本機', 'error'); }
         }
 
         async function deleteExpense(id) {
             if (!confirm('確定刪除此筆紀錄？')) return;
-            Store.state.expenses = Store.state.expenses.filter(item => String(item.id) !== String(id));
-            localStorage.setItem('cached_expenses', JSON.stringify(Store.state.expenses));
+            const original = [...Store.state.expenses]; 
+            Store.updateExpenses(Store.state.expenses.filter(item => String(item.id) !== String(id)));
             renderExpenses(); 
 
             try { 
                 await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'delete', id: String(id) }) }); 
-                showToast('紀錄已同步刪除');
+                showToast('紀錄已刪除');
                 fetchExpenses();
-            } catch (err) { showToast('本地刪除成功', 'error'); }
-        }
-
-        function openStatsModal() {
-            const container = document.getElementById('stats-content');
-            let stats = { '交通': 0, '食物': 0, '購物': 0, '其他': 0 };
-            let totalTWD = 0;
-            Store.state.expenses.forEach(item => {
-                let price = Math.round(parseFloat(item.price) || 0);
-                stats[item.cat] = (stats[item.cat] || 0) + price;
-                totalTWD += price;
-            });
-
-            let html = '';
-            const cats = ['交通', '食物', '購物', '其他'];
-            cats.forEach(cat => {
-                let valTWD = stats[cat];
-                let valJPY = Math.round(valTWD / Store.state.rate);
-                let icon = EMOJI_MAP[cat] || 'ph-ticket';
-                let percent = totalTWD === 0 ? 0 : Math.round((valTWD / totalTWD) * 100);
-                html += `
-                <div class="stat-item">
-                    <div class="stat-left">
-                        <div class="stat-icon"><i class="ph-fill ${icon}"></i></div>
-                        <div class="stat-info">
-                            <h4>${cat}</h4>
-                            <span class="stat-percent">${percent}% 佔比</span>
-                        </div>
-                    </div>
-                    <div class="stat-right">
-                        <span class="s-twd">$${valTWD.toLocaleString()}</span>
-                        <span class="s-jpy">≈ ¥${valJPY.toLocaleString()}</span>
-                    </div>
-                </div>`;
-            });
-            container.innerHTML = html;
-            document.getElementById('stats-modal').classList.add('active');
-        }
-
-        function closeStatsModal() { document.getElementById('stats-modal').classList.remove('active'); }
-
-        function showToast(msg, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `<i class="ph-fill ${type === 'success' ? 'ph-check-circle' : 'ph-warning-circle'}"></i> <span>${msg}</span>`;
-            document.getElementById('toast-container').appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('hide');
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
+            } catch (err) { 
+                Store.updateExpenses(original); renderExpenses(); 
+                showToast('刪除失敗', 'error');
+            }
         }
     </script>
 </body>
