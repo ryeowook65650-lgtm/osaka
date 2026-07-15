@@ -3,348 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Osaka Trip 2026</title>
+    <title>首爾旅遊 2026</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#F2F2F7">
+    <meta name="theme-color" content="#d8d8d0">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+TC:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;600;800&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
         /* =========================================
-           1. 現代原生 App 變數設定 (iOS/Bento Style)
+           1. 高級原生 App 變數設定
            ========================================= */
         :root {
-            --bg-color: #F2F2F7;
-            --card-bg: #FFFFFF;
-            --primary: #D32F2F;
-            --primary-light: #FFEBEE;
-            --secondary: #007AFF;
-            --text-main: #1C1C1E;
-            --text-muted: #8E8E93;
-            --border-color: #E5E5EA;
+            --bg-color: #d8d8d0;         
+            --card-bg: #FCFAFA;          
+            --primary: #713e18;          
+            --primary-light: rgba(113, 62, 24, 0.08); 
+            --secondary: #b78f64;        
+            --accent: #f4c07d;           
+            --text-main: #382615;        
+            --text-muted: #857262;       
+            --border-color: rgba(56, 38, 21, 0.1);
+            
+            --color-success: #6b8c65;
+            --color-danger: #A04000;
             
             --radius-lg: 24px;
             --radius-md: 16px;
             --radius-sm: 10px;
             
-            --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.04);
-            --shadow-btn: 0 4px 12px rgba(211, 47, 47, 0.3);
-            --color-success: #34C759;
+            --shadow-card: 0 8px 24px rgba(56, 38, 21, 0.06), 0 2px 8px rgba(56, 38, 21, 0.03);
+            --shadow-btn: 0 6px 16px rgba(113, 62, 24, 0.2);
+            --border-inner: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
             
-            --font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            --font-sans: 'Inter', 'Noto Sans TC', sans-serif;
+            --font-serif: 'Noto Serif TC', serif;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: var(--font-family); }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: var(--font-sans); }
 
         body { 
             margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main);
             padding-bottom: calc(100px + env(safe-area-inset-bottom));
             overscroll-behavior-y: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
         }
 
-        button, input, select { appearance: none; -webkit-appearance: none; border: none; background: none; outline: none; margin: 0; padding: 0; touch-action: manipulation; }
-        button { cursor: pointer; transition: transform 0.15s ease, opacity 0.15s ease; }
-        button:active { transform: scale(0.95); opacity: 0.8; }
+        button, input, select { appearance: none; -webkit-appearance: none; border: none; background: none; outline: none; margin: 0; padding: 0; touch-action: manipulation;}
+        button { cursor: pointer; transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.15), opacity 0.2s; }
+        button:active { transform: scale(0.94); opacity: 0.8; }
 
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type="number"] { -moz-appearance: textfield; }
 
+        /* =========================================
+           2. 頂部狀態列
+           ========================================= */
         .app-header {
             position: sticky; top: 0; z-index: 100;
-            background: rgba(242, 242, 247, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            background: rgba(216, 216, 208, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             padding: calc(16px + env(safe-area-inset-top)) 24px 16px;
             display: flex; justify-content: space-between; align-items: flex-end;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .app-header h1 { margin: 0; font-size: 28px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
-        .app-header .subtitle { font-size: 13px; color: var(--text-muted); font-weight: 600; margin-top: 4px; display: block; }
+        .app-header h1 { margin: 0; font-family: var(--font-serif); font-size: 28px; font-weight: 900; color: var(--text-main); letter-spacing: 0.5px; }
+        .app-header .subtitle { font-size: 13px; color: var(--text-muted); font-weight: 600; margin-top: 4px; display: block; letter-spacing: 1px; text-transform: uppercase;}
         
-        .header-actions { display: flex; align-items: center; gap: 8px; }
-        .weather-pill { background: var(--card-bg); padding: 8px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-card); display: flex; align-items: center; gap: 6px; }
-        .refresh-fab { background: var(--card-bg); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-card); color: var(--text-main); font-size: 18px; }
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+        .weather-pill { background: var(--card-bg); padding: 8px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; box-shadow: var(--border-inner), var(--shadow-card); display: flex; align-items: center; gap: 6px; border: 1px solid var(--border-color);}
+        .refresh-fab { background: var(--card-bg); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--border-inner), var(--shadow-card); color: var(--text-main); font-size: 18px; border: 1px solid var(--border-color);}
 
+        /* =========================================
+           3. 底部導覽列
+           ========================================= */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(0,0,0,0.05); z-index: 999;
+            background: rgba(252, 250, 250, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(56, 38, 21, 0.05); z-index: 999;
             display: flex; justify-content: space-around; padding: 12px 10px calc(12px + env(safe-area-inset-bottom));
         }
         .tab-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); }
-        .tab-btn i { font-size: 24px; }
-        .tab-btn span { font-size: 11px; font-weight: 600; }
+        .tab-btn i { font-size: 24px; transition: 0.2s; }
+        .tab-btn span { font-size: 11px; font-weight: 700; }
         .tab-btn.active { color: var(--primary); }
-        .tab-btn.active i { font-weight: bold; }
-
-        .view-container { display: none; padding: 0 20px; animation: fadeIn 0.3s ease forwards; }
-        .view-container.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================================
-           記帳版面
+           4. 視圖容器
+           ========================================= */
+        .view-container { 
+            display: none; padding: 15px 20px 120px; flex-direction: column; gap: 20px; 
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+        }
+        .view-container.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); filter: blur(4px);} to { opacity: 1; transform: translateY(0); filter: blur(0);} }
+
+        .balance-card, .segment-wrapper, .bento-grid, .input-composite, .trip-card { margin: 0 !important; }
+
+        /* =========================================
+           5. 記帳與餘額
            ========================================= */
         .balance-card {
-            background: linear-gradient(135deg, #1C1C1E 0%, #3A3A3C 100%);
-            border-radius: var(--radius-lg); padding: 24px; color: #FFF; margin-top: 10px; margin-bottom: 24px;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.15); position: relative; overflow: hidden;
+            background: linear-gradient(135deg, #382615 0%, #20140A 100%);
+            border-radius: var(--radius-lg); padding: 24px; color: #FFF; 
+            box-shadow: 0 16px 32px rgba(56, 38, 21, 0.2); position: relative; overflow: hidden;
         }
-        .balance-card::after { content: ''; position: absolute; right: -20px; top: -20px; width: 120px; height: 120px; background: rgba(255,255,255,0.05); border-radius: 50%; pointer-events: none;}
-        
-        .b-title { font-size: 13px; font-weight: 600; opacity: 0.8; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2;}
+        .b-title { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.7); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: 1px; position: relative; z-index: 2;}
         .b-title-right { display: flex; align-items: center; gap: 8px; }
-        .rate-badge { background: rgba(255,255,255,0.15); padding: 4px 8px; border-radius: 8px; font-size: 11px; backdrop-filter: blur(5px); }
-        
-        .stats-btn { background: rgba(255,255,255,0.2); border-radius: 8px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; color: #FFF; font-size: 16px; backdrop-filter: blur(5px); transition: 0.2s; }
-        .stats-btn:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
+        .rate-badge { background: rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 8px; font-size: 11px; color: var(--accent); border: 1px solid rgba(244, 192, 125, 0.2);}
 
-        .b-amount { font-size: 40px; font-weight: 800; margin: 0 0 4px; letter-spacing: -1px; position: relative; z-index: 2;}
-        .b-sub { font-size: 15px; opacity: 0.8; font-weight: 600; position: relative; z-index: 2;}
+        .b-amount { font-family: var(--font-serif); font-size: 42px; font-weight: 900; margin: 8px 0 4px; line-height: 1.1; background: linear-gradient(135deg, #FFF 0%, #E2DDD5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; z-index: 2;}
+        .b-sub { font-size: 15px; color: var(--secondary); font-weight: 600; position: relative; z-index: 2;}
 
-        .budget-wrapper { margin-top: 20px; position: relative; z-index: 2; }
-        .budget-info { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; margin-bottom: 8px; opacity: 0.9; }
-        .budget-tot { opacity: 0.6; }
-        .budget-track { height: 6px; background: rgba(255,255,255,0.15); border-radius: 99px; overflow: hidden; backdrop-filter: blur(4px); box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);}
-        .budget-fill { height: 100%; width: 0%; background: #34C759; border-radius: 99px; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease; }
+        .budget-wrapper { margin-top: 20px; position: relative; z-index: 2;}
+        .budget-info { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; margin-bottom: 8px; color: rgba(255,255,255,0.8); }
+        .budget-track { height: 6px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; }
+        .budget-fill { height: 100%; width: 0%; background: var(--color-success); border-radius: 99px; transition: width 1s ease, background-color 0.4s ease; }
 
-        .segment-wrapper { background: #E5E5EA; border-radius: 12px; display: flex; padding: 4px; margin-bottom: 20px; }
-        .seg-btn { flex: 1; text-align: center; padding: 10px 0; font-size: 13px; font-weight: 600; color: var(--text-muted); border-radius: 8px; transition: 0.2s; }
-        .seg-btn.active { background: #FFF; color: var(--text-main); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .segment-wrapper { background: rgba(56, 38, 21, 0.06); border-radius: 12px; display: flex; padding: 4px; box-shadow: inset 0 1px 3px rgba(56, 38, 21, 0.05); overflow-x: auto;}
+        .seg-btn { flex: 1; text-align: center; padding: 10px 12px; font-size: 13px; font-weight: 700; color: var(--text-muted); border-radius: 8px; transition: 0.3s; cursor: pointer; white-space: nowrap;}
+        .seg-btn.active { background: var(--card-bg); color: var(--text-main); box-shadow: 0 2px 8px rgba(56, 38, 21, 0.08); }
+        /* 隱藏滾動條 */
+        .segment-wrapper::-webkit-scrollbar { display: none; }
 
-        .section-title { font-size: 15px; font-weight: 800; margin: 0 0 12px; color: var(--text-main); }
-        .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
-        .bento-box { background: var(--card-bg); border-radius: var(--radius-md); padding: 16px; text-align: center; border: 2px solid transparent; box-shadow: var(--shadow-card); transition: 0.2s; }
-        .bento-box.active { border-color: var(--primary); background: var(--primary-light); }
-        .bento-icon { font-size: 32px; display: block; margin-bottom: 8px; color: var(--text-main); }
-        .bento-box.active .bento-icon { color: var(--primary); }
-        .bento-label { font-size: 14px; font-weight: 600; color: var(--text-main); }
+        .section-title { font-size: 15px; font-weight: 800; margin: 5px 0 -5px; color: var(--text-main); }
+        .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .bento-box { background: var(--card-bg); border-radius: var(--radius-md); padding: 16px; text-align: center; border: 1px solid var(--border-color); box-shadow: var(--border-inner), var(--shadow-card); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.2s;}
+        .bento-box.active { border: 2px solid var(--primary); color: var(--primary); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(113, 62, 24, 0.12);}
+        .bento-icon { font-size: 32px; display: block; margin-bottom: 8px; color: var(--text-muted); transition: 0.2s;}
+        .bento-box.active .bento-icon { color: var(--primary); transform: scale(1.1);}
+        .bento-label { font-size: 14px; font-weight: 700; color: var(--text-muted); }
         .bento-box.active .bento-label { color: var(--primary); }
 
-        .input-composite { background: var(--card-bg); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-card); margin-bottom: 30px; border: 1px solid var(--border-color); }
+        .input-composite { background: var(--card-bg); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--border-inner), var(--shadow-card); border: 1px solid var(--border-color); }
         .input-row { display: flex; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; }
-        .input-row input { flex: 1; font-size: 16px; font-weight: 600; padding: 8px; color: var(--text-main); }
-        .input-row input::placeholder { color: #C7C7CC; }
-        
+        .input-row input { flex: 1; font-size: 16px; font-weight: 600; color: var(--text-main); }
+        .input-row input::placeholder { color: #B4ACA6; font-weight: 500;}
         .price-action-row { display: flex; align-items: center; justify-content: space-between; }
-        .price-input-wrapper { display: flex; align-items: center; background: #F2F2F7; border-radius: 12px; padding: 12px 16px; flex: 1; margin-right: 12px; }
-        .curr-toggle { font-weight: 800; font-size: 20px; color: var(--primary); margin-right: 12px; padding-right: 12px; border-right: 2px solid #D1D1D6; cursor: pointer; transition: 0.2s; user-select: none; }
-        .curr-toggle:active { transform: scale(0.85); opacity: 0.7; }
+        .price-input-wrapper { display: flex; align-items: center; background: var(--bg-color); border-radius: 12px; padding: 12px 16px; flex: 1; margin-right: 12px; border: inset 1px rgba(0,0,0,0.02);}
+        .curr-toggle { font-weight: 800; font-size: 18px; color: var(--primary); margin-right: 12px; padding-right: 12px; border-right: 2px solid rgba(56, 38, 21, 0.15); user-select: none; }
         .price-input-wrapper input { font-size: 24px; font-weight: 800; width: 100%; color: var(--text-main); }
-        .price-input-wrapper input::placeholder { color: #C7C7CC; }
-        .submit-fab { width: 54px; height: 54px; border-radius: 16px; background: var(--primary); color: #FFF; font-size: 24px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-btn); flex-shrink: 0;}
+        .price-input-wrapper input::placeholder { color: #B4ACA6; font-weight: 500;}
+        .submit-fab { width: 54px; height: 54px; border-radius: 16px; background: linear-gradient(135deg, var(--primary) 0%, #5A3113 100%); color: #FFF; font-size: 24px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), var(--shadow-btn); flex-shrink: 0;}
 
-        .history-list { display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px;}
-        .h-item { background: var(--card-bg); padding: 16px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-card); }
+        .history-list { display: flex; flex-direction: column; gap: 12px; }
+        .h-item { background: var(--card-bg); padding: 16px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-card);}
         .h-left { display: flex; align-items: center; gap: 12px; }
-        .h-icon { width: 44px; height: 44px; background: var(--bg-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-        .h-info h4 { margin: 0 0 4px; font-size: 15px; font-weight: 600; }
-        .h-tag { font-size: 10px; background: #E5E5EA; padding: 3px 6px; border-radius: 4px; font-weight: 800; color: var(--text-muted); }
-        .h-right { text-align: right; }
-        .h-price { font-size: 17px; font-weight: 800; color: var(--primary); margin-bottom: 2px; }
+        .h-icon { width: 44px; height: 44px; background: var(--bg-color); color: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+        .h-info h4 { margin: 0 0 4px; font-size: 15px; font-weight: 700; }
+        .h-tag { font-size: 10px; background: var(--accent); color: var(--text-main); padding: 3px 6px; border-radius: 4px; font-weight: 800; letter-spacing: 0.5px;}
+        .h-right { text-align: right; display: flex; align-items: center;}
+        .h-price-box { display: flex; flex-direction: column; align-items: flex-end;}
+        .h-price { font-family: var(--font-serif); font-size: 18px; font-weight: 900; color: var(--primary); margin-bottom: 2px;}
         .h-jpy { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-        .h-del { color: #FF3B30; padding: 10px; margin-left: 5px; font-size: 20px; cursor: pointer; border: none; background: none;}
+        .h-del { color: var(--text-muted); padding: 10px; margin-left: 5px; font-size: 20px; transition: 0.2s; border:none; background:none; cursor:pointer;}
+        .h-del:active { color: var(--color-danger); }
 
         /* =========================================
-           🌟 升級版 行程與交通排版 (黑紅主題 & 無圖片 & 清晰搭車指示)
+           6. 行程版面
            ========================================= */
-        .trip-card { 
-            background: #1C1C1E; 
-            border-radius: var(--radius-lg); 
-            overflow: hidden; 
-            margin-bottom: 24px; 
-            box-shadow: 0 12px 32px rgba(0,0,0,0.15); 
-            border: 1px solid #3A3A3C;
-        }
+        .trip-card { background: var(--card-bg); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--border-inner), var(--shadow-card); border: 1px solid var(--border-color);}
+        .t-img { width: 100%; height: 200px; object-fit: cover; filter: sepia(0.05) contrast(0.95);}
         .t-body { padding: 24px; }
-        .t-time { 
-            font-size: 13px; font-weight: 800; color: #FFF; 
-            background: var(--primary); 
-            padding: 6px 14px; border-radius: 8px; 
-            display: inline-block; margin-bottom: 16px; 
-            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
-            letter-spacing: 0.5px;
-        }
-        .t-title { font-size: 22px; font-weight: 800; margin: 0 0 20px; line-height: 1.4; color: #FFF; }
+        .t-time { font-size: 11px; font-weight: 800; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+        .t-title { font-family: var(--font-serif); font-size: 24px; font-weight: 900; margin: 0 0 20px; line-height: 1.3; color: var(--text-main); }
         
-        /* 交通區塊 (深灰卡片質感) */
-        .transit-box { 
-            background: #242426; border-radius: 16px; padding: 20px; 
-            margin-bottom: 20px; border: 1px solid #3A3A3C; 
-        }
-        .t-summary { 
-            font-size: 15px; font-weight: 800; color: #FFF; 
-            margin-bottom: 16px; display: flex; align-items: center; gap: 12px; 
-            padding-bottom: 16px; border-bottom: 1px dashed #3A3A3C;
-        }
-        .t-summary i { color: var(--primary); font-size: 18px; }
-        .t-summary .sep { color: #8E8E93; font-weight: 400; }
+        .info-block { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; padding: 14px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 1px solid var(--border-color); }
+        .info-block.addr-block { background: rgba(255,255,255,0.5); }
+        .info-block.transport-block { background: rgba(183, 143, 100, 0.08); border-color: rgba(183, 143, 100, 0.2); }
+        .info-block.note-block { background: rgba(244, 192, 125, 0.15); border-color: rgba(244, 192, 125, 0.3); }
         
-        /* 時間軸設計 (Timeline) */
-        .t-steps { 
-            list-style: none; margin: 0; padding: 0; padding-left: 28px;
-            display: flex; flex-direction: column; gap: 20px; 
-            position: relative;
-        }
-        .t-steps::before {
-            content: ''; position: absolute; left: 9px; top: 4px; bottom: 4px;
-            width: 2px; background: #3A3A3C;
-        }
-        .t-steps li { 
-            font-size: 14px; font-weight: 600; color: #E5E5EA; 
-            display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; 
-            position: relative;
-        }
-        .step-icon {
-            position: absolute; left: -36px; top: -2px;
-            width: 20px; height: 20px; background: #242426;
-            color: var(--primary); font-size: 18px;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 2;
-        }
-        .step-content { flex: 1; }
-        
-        .line-badge { 
-            padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 800; 
-            display: inline-block; white-space: nowrap; color: #FFF; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
-        }
-        
-        .t-note-box { 
-            background: rgba(211, 47, 47, 0.05); padding: 14px 16px; border-radius: 12px; 
-            font-size: 13px; font-weight: 600; line-height: 1.6; margin-bottom: 20px; 
-            border-left: 4px solid var(--primary); color: #E5E5EA; 
-        }
-        
-        /* 地點清單區塊與按鈕 (配合暗色調) */
-        .loc-list { display: flex; flex-direction: column; gap: 12px; }
-        .loc-item { 
-            background: #2C2C2E; border: 1px solid #3A3A3C; 
-            border-radius: 12px; padding: 16px; 
-        }
-        .loc-name { font-size: 16px; font-weight: 800; color: #FFF; margin-bottom: 6px; }
-        .loc-addr { font-size: 13px; font-weight: 600; color: #8E8E93; margin-bottom: 16px; line-height: 1.4; word-break: break-all; }
-        .loc-actions { display: flex; gap: 8px; }
-        .loc-btn { 
-            flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; 
-            padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 800; 
-            text-decoration: none; cursor: pointer; transition: 0.2s; border: none; 
-        }
-        .btn-copy { background: #3A3A3C; color: #FFF; }
-        .btn-copy:active { background: #48484A; transform: scale(0.95); }
-        .btn-map { background: var(--primary); color: #FFF; box-shadow: 0 4px 12px rgba(211,47,47,0.2); }
-        .btn-map:active { transform: scale(0.95); box-shadow: 0 2px 6px rgba(211,47,47,0.1); }
+        .i-icon { font-size: 22px; color: var(--secondary); margin-top: 2px; }
+        .transport-block .i-icon { color: var(--primary); }
+        .note-block .i-icon { color: var(--primary); }
+        .i-text { flex: 1; font-size: 14px; font-weight: 600; color: var(--text-main); line-height: 1.6; }
 
-        .flight-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-card); border-top: 6px solid var(--primary); }
-        .f-top { display: flex; justify-content: space-between; margin-bottom: 24px; }
-        .f-code { font-size: 36px; font-weight: 800; display: block; }
-        .f-city { font-size: 13px; color: var(--text-muted); font-weight: 600; }
-        .f-icon { font-size: 32px; color: var(--primary); transform: rotate(45deg); opacity: 0.5; }
-        .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--bg-color); padding: 16px; border-radius: 12px; margin-bottom: 16px; }
-        .f-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; display: block; }
-        .f-val { font-size: 18px; font-weight: 800; color: var(--text-main); }
+        .subway-step { display: block; position: relative; padding-left: 16px; margin-bottom: 10px; border-left: 2px solid var(--border-color); line-height: 1.5; }
+        .subway-step:last-child { border-left-color: transparent; margin-bottom: 0; }
+        .subway-step::before { content: ''; position: absolute; left: -5px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--secondary); border: 2px solid #fff; }
+        .subway-station { font-weight: 800; color: var(--text-main); background: #fff; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 12px; margin: 0 4px; display: inline-block;}
+        .subway-line { color: var(--primary); font-weight: 800; font-size: 13px; }
 
-        /* =========================================
-           代購版面設計 (動態比價排版)
-           ========================================= */
-        .profile-card { background: linear-gradient(135deg, var(--card-bg) 0%, var(--primary-light) 100%); border: 1px solid rgba(211, 47, 47, 0.1); border-radius: var(--radius-lg); padding: 20px; margin-top: 10px; margin-bottom: 24px; box-shadow: var(--shadow-card); }
-        .profile-title { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; color: var(--primary); margin: 0 0 8px; }
-        .profile-desc { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 0 0 16px; line-height: 1.5; }
-        .pref-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .pref-tag { background: #FFF; color: var(--primary); padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 800; box-shadow: 0 2px 8px rgba(211, 47, 47, 0.08); border: 1px solid rgba(211, 47, 47, 0.1); }
-
-        .shop-item { display: flex; background: var(--card-bg); border-radius: var(--radius-md); padding: 12px; gap: 16px; margin-bottom: 16px; box-shadow: var(--shadow-card); border: 1px solid transparent; transition: 0.2s; align-items: center; cursor: pointer; }
-        .shop-item.purchased { border-color: var(--color-success); background: #F4FFF8; }
-        .shop-img-box { width: 80px; height: 80px; background: #E5E5EA; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; position: relative; cursor: zoom-in; }
-        .shop-img-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; opacity: 1; transition: 0.3s ease; }
-        .shop-item.purchased .shop-img-box img { opacity: 0.6; filter: grayscale(80%); }
-        .zoom-icon { position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.5); color: #FFF; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; pointer-events: none; backdrop-filter: blur(2px); }
-
-        .shop-info { flex: 1; }
-        .shop-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin: 0 0 4px; }
-        .shop-note { font-size: 12px; font-weight: 600; color: var(--text-muted); margin: 0 0 6px; line-height: 1.4; }
-        
-        .shop-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
-        .shop-jpy { font-size: 16px; font-weight: 800; color: var(--primary); }
-        .shop-twd { font-size: 12px; font-weight: 600; color: var(--text-muted); }
-        
-        .shop-compare { display: flex; gap: 6px; flex-wrap: wrap; }
-        .compare-badge { background: #E5E5EA; color: var(--text-main); padding: 4px 6px; border-radius: 6px; font-size: 11px; font-weight: 800; }
-        .save-badge { background: #FFEBEE; color: var(--primary); padding: 4px 6px; border-radius: 6px; font-size: 11px; font-weight: 800; display: flex; align-items: center; gap: 2px;}
-
-        .check-circle { width: 28px; height: 28px; border: 2px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: transparent; transition: 0.2s; flex-shrink: 0; }
-        .shop-item.purchased .check-circle { background: var(--color-success); border-color: var(--color-success); color: #FFF; }
-
-        /* Modal / Toast */
-        .image-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 24px; }
-        .image-modal-overlay.active { opacity: 1; pointer-events: all; }
-        .image-modal-content { background: var(--card-bg); width: 100%; max-width: 400px; border-radius: var(--radius-lg); overflow: hidden; position: relative; transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        .image-modal-overlay.active .image-modal-content { transform: scale(1); }
-        .close-image-btn { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.8); color: var(--text-main); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 18px; border: none; cursor: pointer; z-index: 10; backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-        #enlarged-img { width: 100%; max-height: 55vh; object-fit: contain; background: #F2F2F7; display: block; }
-        .japanese-phrase { padding: 24px 20px; text-align: center; font-size: 18px; font-weight: 800; color: var(--primary); background: var(--primary-light); line-height: 1.4; }
-        .japanese-phrase span { display: block; margin-top: 8px; font-size: 13px; color: var(--text-main); font-weight: 600; opacity: 0.8;}
-
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; display: flex; align-items: flex-end; }
-        .modal-overlay.active { opacity: 1; pointer-events: all; }
-        .modal-card { background: var(--bg-color); width: 100%; max-height: 85vh; overflow-y: auto; border-radius: 24px 24px 0 0; padding: 24px; padding-bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1); }
-        .modal-overlay.active .modal-card { transform: translateY(0); }
-        .pull-indicator { width: 40px; height: 5px; background: #D1D1D6; border-radius: 3px; margin: 0 auto 16px; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .modal-header h3 { margin: 0; font-size: 20px; font-weight: 800; color: var(--text-main); }
-        .close-btn { background: #E5E5EA; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: var(--text-main); font-size: 16px; cursor: pointer; border: none;}
-        .stat-item { background: var(--card-bg); padding: 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: var(--shadow-card); }
-        .stat-left { display: flex; align-items: center; gap: 12px; }
-        .stat-icon { width: 44px; height: 44px; background: var(--primary-light); color: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
-        .stat-info h4 { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: var(--text-main); }
-        .stat-percent { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-        .stat-right { text-align: right; }
-        .s-twd { font-size: 17px; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 2px;}
-        .s-jpy { font-size: 12px; font-weight: 600; color: var(--text-muted); }
-
-        .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 9999; width: 90%; max-width: 350px; pointer-events: none;}
-        .toast { background: rgba(28, 28, 30, 0.95); backdrop-filter: blur(10px); color: #FFF; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .toast.hide { animation: toastOut 0.3s ease forwards; }
-        .toast i { font-size: 20px; }
-        .toast.success i { color: #34C759; }
-        .toast.error i { color: #FF3B30; }
-        @keyframes toastIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-10px); } }
+        .cost-tag { display: inline-block; background-color: #fff; color: var(--primary); padding: 4px 8px; font-size: 12px; font-weight: 800; border-radius: 6px; margin-top: 10px; border: 1px solid rgba(113, 62, 24, 0.2); letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
 
     <header class="app-header">
         <div>
-            <h1>Osaka 2026</h1>
-            <span class="subtitle">5月22日 - 5月25日</span>
+            <h1>Seoul 2026</h1>
+            <span class="subtitle">7月16日 - 7月20日</span>
         </div>
         <div class="header-actions">
-            <button class="refresh-fab" onclick="manualSync()">
-                <i class="ph-bold ph-arrows-clockwise"></i>
-            </button>
-            <div class="weather-pill" id="weather-badge" onclick="fetchOsakaWeather()">
-                🇯🇵 載入中
-            </div>
+            <div class="weather-pill">🇰🇷 首爾 28°C</div>
         </div>
     </header>
 
     <main>
+        <!-- =========================================
+             視圖：記帳
+             ========================================= -->
         <section id="view-accounting" class="view-container active">
             <div class="balance-card">
                 <div class="b-title">
                     <span>Total Expenses</span>
                     <div class="b-title-right">
-                        <span class="rate-badge" id="rate-display">匯率 0.21</span>
-                        <button class="stats-btn" onclick="openStatsModal()"><i class="ph-bold ph-chart-pie-slice"></i></button>
+                        <span class="rate-badge">匯率 0.024</span>
                     </div>
                 </div>
                 <h2 class="b-amount" id="total-primary">NT$ 0</h2>
-                <div class="b-sub" id="total-secondary">≈ ¥ 0</div>
-
+                <div class="b-sub" id="total-secondary">≈ ₩ 0</div>
                 <div class="budget-wrapper">
                     <div class="budget-info">
                         <span id="budget-rem-label">剩餘 NT$ 30,000</span>
@@ -354,26 +227,29 @@
                 </div>
             </div>
 
+            <!-- 日期選擇 -->
             <div class="segment-wrapper" id="date-segment">
-                <button class="seg-btn active" onclick="selectDate('5/22', this)">5/22</button>
-                <button class="seg-btn" onclick="selectDate('5/23', this)">5/23</button>
-                <button class="seg-btn" onclick="selectDate('5/24', this)">5/24</button>
-                <button class="seg-btn" onclick="selectDate('5/25', this)">5/25</button>
+                <button class="seg-btn active" onclick="selectDate('7/16', this)">7/16</button>
+                <button class="seg-btn" onclick="selectDate('7/17', this)">7/17</button>
+                <button class="seg-btn" onclick="selectDate('7/18', this)">7/18</button>
+                <button class="seg-btn" onclick="selectDate('7/19', this)">7/19</button>
+                <button class="seg-btn" onclick="selectDate('7/20', this)">7/20</button>
             </div>
 
+            <!-- 人員選擇 -->
             <div class="segment-wrapper" id="person-segment">
                 <button class="seg-btn active" onclick="selectPerson('', this)">👥 共用</button>
                 <button class="seg-btn" onclick="selectPerson('小爸', this)">🦭 小爸</button>
                 <button class="seg-btn" onclick="selectPerson('阿馨', this)">🐹 阿馨</button>
-                <button class="seg-btn" onclick="selectPerson('阿偉', this)">🐵 阿偉</button>
+                <button class="seg-btn" onclick="selectPerson('阿雪', this)">🐵 阿雪</button>
             </div>
 
             <h3 class="section-title">選擇分類</h3>
             <div class="bento-grid" id="category-container">
-                <button class="bento-box active" onclick="selectCategory('交通', this)"><i class="ph-fill ph-train bento-icon"></i><span class="bento-label">交通</span></button>
+                <button class="bento-box active" onclick="selectCategory('交通', this)"><i class="ph-fill ph-taxi bento-icon"></i><span class="bento-label">交通</span></button>
                 <button class="bento-box" onclick="selectCategory('食物', this)"><i class="ph-fill ph-hamburger bento-icon"></i><span class="bento-label">食物</span></button>
-                <button class="bento-box" onclick="selectCategory('購物', this)"><i class="ph-fill ph-shopping-bag bento-icon"></i><span class="bento-label">購物</span></button>
-                <button class="bento-box" onclick="selectCategory('其他', this)"><i class="ph-fill ph-ticket bento-icon"></i><span class="bento-label">其他</span></button>
+                <button class="bento-box" onclick="selectCategory('購物', this)"><i class="ph-fill ph-tote bento-icon"></i><span class="bento-label">購物</span></button>
+                <button class="bento-box" onclick="selectCategory('其他', this)"><i class="ph-fill ph-sparkle bento-icon"></i><span class="bento-label">其他</span></button>
             </div>
 
             <h3 class="section-title">記下一筆</h3>
@@ -381,747 +257,322 @@
                 <div class="input-row"><input type="text" id="item-name" placeholder="品項名稱 (選填)"></div>
                 <div class="price-action-row">
                     <div class="price-input-wrapper">
-                        <div class="curr-toggle" id="curr-toggle" onclick="toggleCurrency()">¥</div>
-                        <input type="number" inputmode="decimal" id="item-price" placeholder="輸入日幣金額" min="0" step="0.01">
+                        <div class="curr-toggle">₩</div>
+                        <input type="number" id="item-price" placeholder="輸入韓元" min="0" step="1">
                     </div>
                     <button class="submit-fab" onclick="addExpense()"><i class="ph-bold ph-plus"></i></button>
                 </div>
             </div>
 
             <h3 class="section-title">今日紀錄</h3>
-            <div id="expense-list" class="history-list"></div>
+            <div id="expense-list" class="history-list">
+                <!-- JS動態生成 -->
+            </div>
         </section>
 
+        <!-- =========================================
+             視圖：行程
+             ========================================= -->
         <section id="view-itinerary" class="view-container">
-            <div class="segment-wrapper" style="margin-top: 10px;">
+            <div class="segment-wrapper">
                 <button class="seg-btn active" onclick="switchDay('day1', this)">D1</button>
                 <button class="seg-btn" onclick="switchDay('day2', this)">D2</button>
                 <button class="seg-btn" onclick="switchDay('day3', this)">D3</button>
+                <button class="seg-btn" onclick="switchDay('day4', this)">D4</button>
+                <button class="seg-btn" onclick="switchDay('day5', this)">D5</button>
             </div>
-            <div id="itinerary-content"></div>
-        </section>
-
-        <section id="view-flight" class="view-container" style="padding-top: 10px;"></section>
-
-        <section id="view-shopping" class="view-container">
-            <div class="profile-card">
-                <h3 class="profile-title"><i class="ph-fill ph-hand-waving"></i> 委託人：阿珊</h3>
-                <p class="profile-desc">愛你們！如果逛街有看到請幫我留意以下特徵的商品，買到請記得打勾唷！💖</p>
-                <div class="pref-tags">
-                    <span class="pref-tag">🛍️ niko and</span>
-                    <span class="pref-tag">👕 uniqlo</span>
-                    <span class="pref-tag">🐧 堂吉訶德</span>
-                </div>
+            <div id="itinerary-content">
+                <!-- JS動態生成 -->
             </div>
-
-            <h3 class="section-title">代購許願清單 (共 9 件)</h3>
-            <div id="shopping-list"></div>
         </section>
     </main>
 
+    <!-- =========================================
+         底部導覽列 (只保留記帳與行程)
+         ========================================= -->
     <nav class="bottom-nav">
-        <button class="tab-btn active" id="tab-accounting" onclick="switchTab('accounting')">
-            <i class="ph-fill ph-wallet"></i>
-            <span>記帳</span>
-        </button>
-        <button class="tab-btn" id="tab-itinerary" onclick="switchTab('itinerary')">
-            <i class="ph-fill ph-map-trifold"></i>
-            <span>行程</span>
-        </button>
-        <button class="tab-btn" id="tab-flight" onclick="switchTab('flight')">
-            <i class="ph-fill ph-airplane-tilt"></i>
-            <span>機票</span>
-        </button>
-        <button class="tab-btn" id="tab-shopping" onclick="switchTab('shopping')">
-            <i class="ph-fill ph-shopping-cart"></i>
-            <span>代購</span>
-        </button>
+        <button class="tab-btn active" id="tab-accounting" onclick="switchTab('accounting')"><i class="ph-fill ph-wallet"></i><span>記帳</span></button>
+        <button class="tab-btn" id="tab-itinerary" onclick="switchTab('itinerary')"><i class="ph-fill ph-map-trifold"></i><span>行程</span></button>
     </nav>
 
-    <div class="image-modal-overlay" id="image-modal" onclick="closeImageModal()">
-        <div class="image-modal-content" onclick="event.stopPropagation()">
-            <button class="close-image-btn" onclick="closeImageModal()"><i class="ph-bold ph-x"></i></button>
-            <img id="enlarged-img" src="" alt="Enlarged Item">
-            <div class="japanese-phrase">
-                すみません、<br>これ（の在庫）はありますか？
-                <span>(不好意思，請問這個還有庫存嗎？)</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="stats-modal" onclick="closeStatsModal()">
-        <div class="modal-card" onclick="event.stopPropagation()">
-            <div class="pull-indicator"></div>
-            <div class="modal-header">
-                <h3>分類花費統計</h3>
-                <button onclick="closeStatsModal()" class="close-btn"><i class="ph-bold ph-x"></i></button>
-            </div>
-            <div id="stats-content"></div>
-        </div>
-    </div>
-
-    <div id="toast-container" class="toast-container"></div>
-
+    <!-- =========================================
+         JavaScript 邏輯區
+         ========================================= -->
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9QRzDsOKhw89lgS03-oOhGpUcfd6szO3-QZ78w_6Mpz18rLnszsFHNyyfzEJntg1m/exec';
+        // 匯率設定 (1 韓元約等於 0.024 台幣)
+        const KRW_RATE = 0.024;
+        const BUDGET = 30000;
 
-        function getSafeStorage(key, defaultVal) {
-            try {
-                const val = localStorage.getItem(key);
-                return val ? JSON.parse(val) : defaultVal;
-            } catch (e) { return defaultVal; }
-        }
-
-        const Store = {
-            state: {
-                rate: parseFloat(localStorage.getItem('cached_rate')) || 0.21, 
-                expenses: getSafeStorage('cached_expenses', []),
-                date: '5/22',
-                person: '',     
-                category: '交通',
-                currency: 'JPY', 
-                activeDay: 'day1'
-            },
-            updateRate(newRate) {
-                this.state.rate = newRate;
-                localStorage.setItem('cached_rate', newRate);
-            },
-            updateExpenses(newData) {
-                this.state.expenses = newData;
-                localStorage.setItem('cached_expenses', JSON.stringify(newData));
-            }
-        };
-
-        const EMOJI_MAP = { '交通': 'ph-train', '食物': 'ph-hamburger', '購物': 'ph-shopping-bag', '其他': 'ph-ticket' };
-        const TOTAL_BUDGET = 30000; 
-
-        // ==========================================
-        // 🌟 核心資料庫 (全新升級版：詳細交通、獨立地址)
-        // ==========================================
+        // 首爾五天四夜行程資料 (飯店：PJ Hotel)
         const ITINERARY_DATA = {
             day1: [
                 { 
-                    time: "12:40 - 14:00", 
-                    title: "前往飯店交通", 
-                    transit: [ { type: 'car', text: '預約包車直達飯店' } ],
-                    duration: "約 45 分鐘", cost: "包車",
-                    locations: [ { name: "Vessel Inn 心齋橋 (ベッセルイン心斎橋)", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ],
-                    note: "💡 可以先寄放行李，15:00 才開放 check in。"
+                    time: "下午抵達", title: "Check in: 首爾 PJ 酒店", address: "首爾特別市中區乾川路71", 
+                    icon1: "<i class='ph-fill ph-taxi'></i>", info1: "從機場搭乘 機場巴士 或 包車 前往<br><span class=\"cost-tag\">近地鐵 乙支路4街站 / 忠武路站</span>", 
+                    icon2: "<i class='ph-fill ph-suitcase'></i>", info2: "辦理入住並寄放行李休息", 
+                    imgUrl: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/337190135.jpg?k=6a3b047a0ebdb69dfc9850f3b46cf3f9905213d2f2b3b7c250320a4b0dcf8676&o=&hp=1" 
                 },
                 { 
-                    time: "15:00 - 22:00", 
-                    title: "逛街、晚餐｜心齋橋筋 & 道頓堀", 
-                    transit: [ { type: 'walk', text: '從飯店步行，心齋橋和道頓堀為連通商圈。' } ],
-                    duration: "步行約 8 分鐘", cost: "無",
-                    locations: [ 
-                        { name: "心齋橋筋", address: "中央區大阪市大阪府 542-0085" },
-                        { name: "道頓堀", address: "中央區大阪市大阪府 542-0071" }
-                    ],
-                    note: "❗ 固力果跑跑人位於戎橋旁，最佳拍照地點是站在道頓堀河對岸的行人區，從這裡可以完整捕捉到整面招牌。"
-                },
-                { 
-                    time: "22:00", 
-                    title: "回飯店休息", 
-                    transit: [ { type: 'walk', text: '從道頓堀步行回飯店' } ],
-                    duration: "約 8 分鐘", cost: "無",
-                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ]
-                },
-                { 
-                    time: "🌙 深夜", 
-                    title: "飯店附近 24H 購物好去處", 
-                    transit: [ { type: 'walk', text: '皆為飯店附近步行即可到達' } ],
-                    locations: [ 
-                        { name: "💊 松本清 (道頓堀DOTONE ZA店)", address: "日本〒542-0071 Osaka, Chuo Ward, Dotonbori, 1 Chome−8−22 DOTONE ZA" },
-                        { name: "🐧 唐吉訶德 (道頓堀御堂筋店)", address: "2 Chome-5-9 Nishishinsaibashi, Chuo Ward, Osaka, 542-0086日本" }
-                    ]
+                    time: "預估 15 分鐘", title: "明洞商圈逛街吃晚餐", address: "首爾特別市中區明洞", 
+                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">步行到 <span class=\"subway-station\">忠武路站</span></span><span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵4號線</span></span><span class=\"subway-step\">搭到 <span class=\"subway-station\">明洞站</span></span>", 
+                    icon2: "<i class='ph-fill ph-bowl-food'></i>", info2: "推薦：明洞餃子、神仙雪濃湯、路邊攤小吃", 
+                    imgUrl: "https://images.unsplash.com/photo-1590372648787-010e9649b80b?w=800&q=80" 
                 }
             ],
             day2: [
                 { 
-                    time: "09:00 - 11:30", 
-                    title: "景點｜大阪城", 
-                    transit: [ 
-                        { type: 'walk', text: '步行 5 分鐘到「長堀橋站」' },
-                        { type: 'subway', line: '長堀鶴見綠地線', color: '#A9CC51', detail: '普通 門真南 行', to: '大阪商務園區站' },
-                        { type: 'walk', text: '出站後步行約 20 分鐘抵達大阪城' }
-                    ],
-                    duration: "約 35 分鐘", cost: "¥240",
-                    locations: [ { name: "大阪城", address: "1-1 Osakajo, Chuo Ward, Osaka, 540-0002日本" } ]
+                    time: "預估 20 分鐘", title: "景點: 景福宮 & 韓服體驗", address: "首爾特別市鐘路區社稷路161", 
+                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵3號線</span></span><span class=\"subway-step\">搭到 <span class=\"subway-station\">景福宮站</span></span>", 
+                    icon2: "<i class='ph-fill ph-camera'></i>", info2: "穿韓服可免費進入景福宮", 
+                    imgUrl: "https://images.unsplash.com/photo-1578589318433-39b5a169b183?w=800&q=80" 
                 },
                 { 
-                    time: "11:30 - 14:00", 
-                    title: "購物與午餐｜近鐵百貨", 
-                    transit: [ 
-                        { type: 'walk', text: '步行 7 分鐘到「大阪城公園車站」' },
-                        { type: 'train', line: '大阪環狀線', color: '#F05622', detail: '關西機場線快速電車 天王寺 行', to: '鶴橋站' },
-                        { type: 'walk', text: '步行 1 分鐘轉乘近鐵線' },
-                        { type: 'train', line: '近鐵奈良線', color: '#A13329', detail: '快速急行 神戶三宮(阪神) 行', to: '大阪上本町' },
-                        { type: 'walk', text: '步行 2 分鐘到近鐵百貨店' }
-                    ],
-                    duration: "約 30 分鐘", cost: "¥310",
-                    locations: [ 
-                        { name: "近鉄百貨店 上本町店", address: "6 Chome-1-55 Uehonmachi, Tennoji Ward, Osaka, 543-8543日本" }
-                    ],
-                    note: "💡 近鐵百貨旁邊的「上本町YUFURA」（外牆覆蓋密集垂直格柵那棟）一樓有 studio clip。"
-                },
-                { 
-                    time: "14:00 - 17:00", 
-                    title: "購物｜天王寺MIO", 
-                    transit: [ 
-                        { type: 'walk', text: '從近鐵百貨步行 6 分鐘到地鐵「谷町九丁目站」' },
-                        { type: 'subway', line: '谷町線', color: '#6A2C70', detail: '普通 八尾南 行', to: '天王寺站' },
-                        { type: 'walk', text: '出站後步行 6 分鐘抵達天王寺MIO' }
-                    ],
-                    duration: "約 16 分鐘", cost: "¥190",
-                    locations: [ 
-                        { name: "天王寺MIO (內有montbell, muji)", address: "10-39 Hidenincho, Tennoji Ward, Osaka, 543-0055日本" }
-                    ]
-                },
-                { 
-                    time: "17:00 - 22:00", 
-                    title: "逛街、晚餐｜通天閣 / 新世界商店街", 
-                    transit: [ 
-                        { type: 'walk', text: '從天王寺步行 5 分鐘到「天王寺站」搭車' },
-                        { type: 'train', line: '大阪環狀線', color: '#F05622', detail: '普通外環線', to: '新今宮站' },
-                        { type: 'walk', text: '步行 8 分鐘抵達通天閣' }
-                    ],
-                    duration: "約 16 分鐘", cost: "¥150",
-                    locations: [ { name: "通天閣", address: "1 Chome-18-6 Ebisuhigashi, Naniwa Ward, Osaka, 556-0002日本" } ]
-                },
-                { 
-                    time: "22:00", 
-                    title: "回飯店休息", 
-                    transit: [ 
-                        { type: 'walk', text: '步行 6 分鐘到「惠美須町站」' },
-                        { type: 'subway', line: '堺筋線', color: '#814F2E', detail: '普通 正雀 行', to: '長堀橋站' },
-                        { type: 'walk', text: '步行 3 分鐘回到飯店' }
-                    ],
-                    duration: "約 15 分鐘", cost: "¥190",
-                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ]
+                    time: "步行 15 分鐘", title: "景點: 北村韓屋村", address: "首爾特別市鐘路區桂洞街", 
+                    icon1: "<i class='ph-fill ph-sneaker'></i>", info1: "從景福宮步行前往", 
+                    icon2: "<i class='ph-fill ph-coffee'></i>", info2: "找間傳統韓屋咖啡廳休息", 
+                    imgUrl: "https://images.unsplash.com/photo-1614088921808-01389b3f49ff?w=800&q=80" 
                 }
             ],
             day3: [
                 { 
-                    time: "09:30 - 11:30", 
-                    title: "景點｜難波八阪神社", 
-                    transit: [ 
-                        { type: 'walk', text: '步行 6 分鐘到「心齋橋站」' },
-                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通 中百舌鳥 行', to: '難波站' },
-                        { type: 'walk', text: '步行 10 分鐘到難波八阪神社' }
-                    ],
-                    duration: "約 20 分鐘", cost: "¥190",
-                    locations: [ { name: "難波八阪神社", address: "2 Chome-9-19 Motomachi, Naniwa Ward, Osaka, 556-0016日本" } ]
+                    time: "預估 30 分鐘", title: "購物: 弘大商圈", address: "首爾特別市麻浦區弘益大學周邊", 
+                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵2號線</span> (乙支路4街站上車)</span><span class=\"subway-step\">搭到 <span class=\"subway-station\">弘大入口站</span> 9號出口</span>", 
+                    icon2: "<i class='ph-fill ph-tote'></i>", info2: "美妝、服飾、街頭表演", 
+                    imgUrl: "https://images.unsplash.com/photo-1591873113170-c8f35213fdf1?w=800&q=80" 
                 },
                 { 
-                    time: "11:30 - 14:00", 
-                    title: "午餐｜黑門市場", 
-                    transit: [ { type: 'walk', text: '從八阪神社直接步行前往，跟著導航走約 16 分鐘' } ],
-                    duration: "約 16 分鐘", cost: "無",
-                    locations: [ { name: "黑門市場", address: "2 Chome-21 Nipponbashi, Chuo Ward, Osaka, 542-0073日本" } ]
+                    time: "傍晚", title: "景點: 首爾塔 (南山)", address: "首爾特別市龍山區南山公園路105", 
+                    icon1: "<i class='ph-fill ph-taxi'></i>", info1: "傍晚搭車/纜車上山看夜景", 
+                    icon2: "<i class='ph-fill ph-moon-stars'></i>", info2: "首爾絕佳夜景地", 
+                    imgUrl: "https://images.unsplash.com/photo-1563297127-d0dcc028f0fb?w=800&q=80" 
+                }
+            ],
+            day4: [
+                { 
+                    time: "預估 35 分鐘", title: "打卡: 星空圖書館 (COEX)", address: "首爾特別市江南區永東大路513", 
+                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵2號線</span></span><span class=\"subway-step\">搭到 <span class=\"subway-station\">三成站</span> 5/6號出口</span>", 
+                    icon2: "<i class='ph-fill ph-camera'></i>", info2: "超巨型書牆打卡拍照", 
+                    imgUrl: "https://images.unsplash.com/photo-1650389146194-e3fb63990666?w=800&q=80" 
                 },
                 { 
-                    time: "14:00 - 16:30", 
-                    title: "景點｜梅田藍天大廈", 
-                    transit: [ 
-                        { type: 'walk', text: '返回步行 9 分鐘到「難波站」' },
-                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通 江坂 行', to: '梅田站' },
-                        { type: 'walk', text: '步行 13 分鐘到梅田藍天大樓' }
-                    ],
-                    duration: "約 35 分鐘", cost: "¥240",
-                    locations: [ { name: "梅田藍天大廈 (梅田スカイビル)", address: "1 Chome-1-88 Oyodonaka, Kita Ward, Osaka, 531-6023日本" } ]
+                    time: "下午", title: "逛街: 聖水洞", address: "首爾特別市城東區聖水洞", 
+                    icon1: "<i class='ph-fill ph-train'></i>", info1: "文青咖啡廳、手工皮鞋街、香氛店", 
+                    icon2: "<i class='ph-fill ph-coffee'></i>", info2: "推薦去 Dior 聖水概念店外拍照", 
+                    imgUrl: "https://images.unsplash.com/photo-1616422206899-7f7e9f3b5a16?w=800&q=80" 
+                }
+            ],
+            day5: [
+                { 
+                    time: "預估 20 分鐘", title: "採買: 樂天超市 (首爾站店)", address: "首爾特別市中區青坡路426", 
+                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵4號線</span> (忠武路站上車)</span><span class=\"subway-step\">搭到 <span class=\"subway-station\">首爾站</span> 1號出口</span>", 
+                    icon2: "<i class='ph-fill ph-tote'></i>", info2: "買零食、伴手禮 (滿額可直接退稅)", 
+                    imgUrl: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80" 
                 },
                 { 
-                    time: "16:30 - 20:00", 
-                    title: "逛街、晚餐｜梅田商圈", 
-                    transit: [ { type: 'walk', text: '從藍天大廈步行前往商圈' } ],
-                    duration: "約 15 分鐘", cost: "無",
-                    locations: [ { name: "梅田商圈 (以阪急百貨為地標)", address: "8-7 Kakudacho, Kita Ward, Osaka, 530-8350日本" } ],
-                    note: "💡 梅田商圈非常大且像迷宮，包含 lucua 百貨、lucua 1100、HEP FIVE 皆在附近，請緊盯導航以免迷路。"
-                },
-                { 
-                    time: "20:00 - 22:00", 
-                    title: "超市採買｜LIFE超市", 
-                    transit: [ 
-                        { type: 'walk', text: '前往「梅田站」搭車' },
-                        { type: 'subway', line: '御堂筋線', color: '#E51E2B', detail: '普通 中百舌鳥 行', to: '本町站' },
-                        { type: 'walk', text: '步行 13 分鐘到 LIFE 超市' }
-                    ],
-                    duration: "約 16 分鐘", cost: "¥190",
-                    locations: [ { name: "LIFE超市 堺筋本町店", address: "1 Chome-7-5 Kyutaromachi, Chuo Ward, Osaka, 541-0056日本" } ]
-                },
-                { 
-                    time: "22:00", 
-                    title: "回飯店休息", 
-                    transit: [ 
-                        { type: 'walk', text: '步行 4 分鐘到「堺筋本町站」' },
-                        { type: 'subway', line: '堺筋線', color: '#814F2E', detail: '普通 天下茶屋 行', to: '長堀橋站' },
-                        { type: 'walk', text: '步行 3 分鐘回飯店' }
-                    ],
-                    duration: "約 10 分鐘", cost: "¥190",
-                    locations: [ { name: "Vessel Inn 心齋橋", address: "2 Chome-12-11 Minamisenba, Chuo Ward, Osaka, 542-0081日本" } ]
+                    time: "行程結束", title: "前往機場準備回程", address: "仁川國際機場", 
+                    icon1: "<i class='ph-fill ph-airplane-tilt'></i>", info1: "搭乘機場快線(AREX)或機場巴士", 
+                    icon2: "<i class='ph-fill ph-heart'></i>", info2: "首爾之旅圓滿結束", 
+                    imgUrl: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80" 
                 }
             ]
         };
 
-        const FLIGHT_DATA = [
-            { label: "去程 Outbound", date: "5/22 (五)", fCode: "TPE", tCode: "KIX", dTime: "08:30", aTime: "12:05", air: "CHINA AIRLINES CI152", url: "https://calec.china-airlines.com/eCheckin/eCheckin_home.aspx" },
-            { label: "回程 Inbound", date: "5/25 (一)", fCode: "KIX", tCode: "TPE", dTime: "13:15", aTime: "15:05", air: "CHINA AIRLINES CI153", url: "https://calec.china-airlines.com/eCheckin/eCheckin_home.aspx" }
-        ];
+        // 狀態管理
+        let state = {
+            date: '7/16',
+            person: '',
+            category: '交通',
+            expenses: [] // 格式 { id, date, person, category, name, krw, twd }
+        };
 
-        const SHOPPING_DATA = [
-            { img: 'IMG_0786.jpg', brand: 'niko and', note: '尺寸：L<br>顏色：白、黑都可', jpy: 4490, twd: 1990 },
-            { img: 'IMG_0787.jpg', brand: 'niko and', note: '尺寸：L<br>顏色：白、黑都可', jpy: 4490, twd: 1990 },
-            { img: 'IMG_0790.jpeg', brand: 'uniqlo 薄長袖', note: '尺寸：XL<br>顏色：所有顏色都可<br>備註：是圖片裡面那件薄長袖', jpy: 1290, twd: null },
-            { img: 'IMG_0791.jpeg', brand: 'uniqlo', note: '尺寸：L 或 XL<br>顏色：白、黑都要', jpy: 2990, twd: 990 },
-            { img: 'IMG_0792.jpeg', brand: 'uniqlo', note: '尺寸：L 或 XL<br>顏色：白、黑都要', jpy: 2990, twd: 990 },
-            { img: '639136651278130000.jpeg', brand: '堂吉訶德 粉撲', note: '數量：看看到時候可以買幾個', jpy: 975, twd: 239 },
-            { img: 'original.webp', brand: '堂吉訶德 涼感濕紙巾', note: '數量：看看到時候可以買幾包', jpy: 375, twd: 138 },
-            { img: '截圖 2026-05-22 05.18.05.jpg', brand: 'JINS', note: '【媽媽要】Combination Titanium ［中顔面短縮メガネ］', jpy: 18200, twd: 6980 },
-            { img: '截圖 2026-05-22 05.17.50.jpg', brand: 'uniqlo', note: '【媽媽要】デニムキュロッ', jpy: 3990, twd: 1290 }
-        ];
-
-        // ==========================================
-        // 渲染與操作函式
-        // ==========================================
+        // DOM 元素載入後初始化
         document.addEventListener('DOMContentLoaded', () => {
-            renderFlights();
+            // 從 LocalStorage 讀取資料
+            const stored = localStorage.getItem('seoul_expenses');
+            if (stored) {
+                state.expenses = JSON.parse(stored);
+            }
+            updateExpenseList();
             renderItinerary('day1');
-            fetchExchangeRate();
-            fetchOsakaWeather();
-            renderShopping(); 
-            try {
-                renderExpenses();
-                if (navigator.onLine) fetchExpenses();
-            } catch (e) {}
         });
 
-        // 🌟 複製地址的魔法函式
-        function copyToClipboard(text) {
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showToast('📍 地址已成功複製！', 'success');
-                }).catch(err => { fallbackCopy(text); });
-            } else {
-                fallbackCopy(text);
-            }
-        }
-        function fallbackCopy(text) {
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            showToast('📍 地址已成功複製！', 'success');
-        }
-
-        function renderItinerary(day) {
-            const container = document.getElementById('itinerary-content');
-            let html = '';
-            
-            (ITINERARY_DATA[day] || []).forEach(item => {
-                
-                // 動態生成升級版的 Timeline 交通步驟
-                let transitHtml = '';
-                if(item.transit && item.transit.length > 0) {
-                    let stepsHtml = item.transit.map(step => {
-                        if(step.type === 'walk') {
-                            return `<li><div class="step-icon"><i class="ph-bold ph-person-walking"></i></div> <div class="step-content">${step.text}</div></li>`;
-                        }
-                        if(step.type === 'subway' || step.type === 'train') {
-                            let icon = step.type === 'subway' ? '🚇 地鐵' : '🚆 電車';
-                            return `<li>
-                                <div class="step-icon"><i class="ph-bold ph-train"></i></div>
-                                <div class="step-content">
-                                    <div style="margin-bottom: 6px;"><span class="line-badge" style="background:${step.color};">${icon}：${step.line}</span></div>
-                                    <div style="font-size:13px; color: #8E8E93; margin-bottom: 4px;">方向：${step.detail}</div>
-                                    <div style="font-weight: 800; font-size:16px; color: #FFF; letter-spacing: 0.5px;">➔ ${step.to}</div>
-                                </div>
-                            </li>`;
-                        }
-                        if(step.type === 'car') {
-                            return `<li><div class="step-icon"><i class="ph-bold ph-car-profile"></i></div> <div class="step-content"><span style="color:#FFF;font-weight:800;">🚙 包車：</span>${step.text}</div></li>`;
-                        }
-                        return `<li><div class="step-icon"><i class="ph-bold ph-map-pin"></i></div> <div class="step-content">${step.text}</div></li>`;
-                    }).join('');
-
-                    let summary = '';
-                    if(item.duration || item.cost) {
-                        let dur = item.duration ? `<i class="ph-bold ph-clock"></i> ${item.duration}` : '';
-                        let cst = item.cost ? `<i class="ph-bold ph-coins"></i> ${item.cost}` : '';
-                        let sep = (dur && cst) ? '<span class="sep">|</span>' : '';
-                        summary = `<div class="t-summary">${dur} ${sep} ${cst}</div>`;
-                    }
-
-                    transitHtml = `<div class="transit-box">${summary}<ul class="t-steps">${stepsHtml}</ul></div>`;
-                }
-
-                // 動態生成地址與按鈕模塊
-                let locHtml = '';
-                if(item.locations && item.locations.length > 0) {
-                    locHtml = '<div class="loc-list">' + item.locations.map(loc => {
-                        const safeAddrForJs = loc.address.replace(/'/g, "\\'");
-                        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}`;
-                        return `
-                        <div class="loc-item">
-                            <div class="loc-name">📍 ${loc.name}</div>
-                            <div class="loc-addr">${loc.address}</div>
-                            <div class="loc-actions">
-                                <button class="loc-btn btn-copy" onclick="copyToClipboard('${safeAddrForJs}')"><i class="ph-bold ph-copy"></i> 複製</button>
-                                <a class="loc-btn btn-map" href="${mapUrl}" target="_blank"><i class="ph-bold ph-map-trifold"></i> Google 地圖</a>
-                            </div>
-                        </div>`;
-                    }).join('') + '</div>';
-                }
-
-                html += `
-                <div class="trip-card">
-                    <div class="t-body">
-                        <span class="t-time">${item.time}</span>
-                        <h3 class="t-title">${item.title}</h3>
-                        ${transitHtml}
-                        ${item.note ? `<div class="t-note-box">${item.note}</div>` : ''}
-                        ${locHtml}
-                    </div>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function renderShopping() {
-            const container = document.getElementById('shopping-list');
-            let html = '';
-            
-            SHOPPING_DATA.forEach(item => {
-                const currentTwdPrice = Math.round(item.jpy * Store.state.rate);
-                let compareHtml = '';
-
-                if (item.twd) {
-                    const saveAmount = item.twd - currentTwdPrice;
-                    compareHtml = `
-                        <div class="shop-compare">
-                            <span class="compare-badge">台灣售價 $${item.twd.toLocaleString()}</span>
-                            ${saveAmount > 0 ? `<span class="save-badge"><i class="ph-fill ph-fire"></i> 省約 NT$ ${saveAmount.toLocaleString()}</span>` : ''}
-                        </div>
-                    `;
-                } else {
-                    compareHtml = `
-                        <div class="shop-compare">
-                            <span class="compare-badge" style="background: #F2F2F7; color: var(--text-muted);">台灣無販售</span>
-                        </div>
-                    `;
-                }
-
-                html += `
-                <div class="shop-item" onclick="toggleShopCheck(this)">
-                    <div class="shop-img-box" onclick="openImageModal('${item.img}', event)">
-                        <img src="${item.img}" alt="${item.brand}" onerror="this.style.display='none'">
-                        <div class="zoom-icon"><i class="ph-bold ph-magnifying-glass-plus"></i></div>
-                    </div>
-                    <div class="shop-info">
-                        <h4 class="shop-title">${item.brand}</h4>
-                        <p class="shop-note">${item.note}</p>
-                        <div class="shop-price-row">
-                            <span class="shop-jpy">¥${item.jpy.toLocaleString()}</span>
-                            <span class="shop-twd">約 NT$ ${currentTwdPrice.toLocaleString()}</span>
-                        </div>
-                        ${compareHtml}
-                    </div>
-                    <div class="check-circle"><i class="ph-bold ph-check"></i></div>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function renderFlights() {
-            const container = document.getElementById('view-flight');
-            let html = '';
-            FLIGHT_DATA.forEach(f => {
-                html += `
-                <div class="flight-card">
-                    <div class="f-top">
-                        <div><span class="f-code">${f.fCode}</span><span class="f-city">DEPARTURE</span></div>
-                        <i class="ph-fill ph-airplane-tilt f-icon"></i>
-                        <div style="text-align:right;"><span class="f-code">${f.tCode}</span><span class="f-city">ARRIVAL</span></div>
-                    </div>
-                    <div class="f-grid">
-                        <div><span class="f-label">Date</span><span class="f-val">${f.date}</span></div>
-                        <div><span class="f-label">Flight</span><span class="f-val">${f.air}</span></div>
-                        <div><span class="f-label">Time</span><span class="f-val">${f.dTime}</span></div>
-                        <div><span class="f-label">Arrive</span><span class="f-val">${f.aTime}</span></div>
-                    </div>
-                    <a href="${f.url}" class="map-btn" target="_blank" style="display:block; width:100%; text-align:center; background:var(--primary); color:#FFF; padding:14px; border-radius:12px; font-weight:600; font-size:14px; text-decoration:none; margin-top:16px; box-shadow:0 4px 12px rgba(211,47,47,0.3);">線上報到選位</a>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
-
+        /* ================= 切換主 Tab ================= */
         function switchTab(tabId) {
-            document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
+            // 切換下方按鈕樣式
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`view-${tabId}`).classList.add('active');
-            document.getElementById(`tab-${tabId}`).classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+
+            // 切換上方內容視圖
+            document.querySelectorAll('.view-container').forEach(view => view.classList.remove('active'));
+            document.getElementById('view-' + tabId).classList.add('active');
         }
 
-        function toggleShopCheck(element) {
-            element.classList.toggle('purchased');
-            if (element.classList.contains('purchased') && navigator.vibrate) navigator.vibrate(50);
-        }
-
-        function openImageModal(imgSrc, event) {
-            event.stopPropagation(); 
-            document.getElementById('enlarged-img').src = imgSrc;
-            document.getElementById('image-modal').classList.add('active');
-        }
-
-        function closeImageModal() {
-            document.getElementById('image-modal').classList.remove('active');
-        }
-
-        function switchDay(day, el) {
-            document.querySelectorAll('#view-itinerary .seg-btn').forEach(btn => btn.classList.remove('active'));
-            el.classList.add('active');
-            renderItinerary(day);
-        }
-
+        /* ================= 記帳表單操作 ================= */
         function selectDate(date, el) {
-            Store.state.date = date;
+            state.date = date;
             document.querySelectorAll('#date-segment .seg-btn').forEach(btn => btn.classList.remove('active'));
             el.classList.add('active');
-            renderExpenses();
+            updateExpenseList();
         }
 
         function selectPerson(person, el) {
-            Store.state.person = person;
+            state.person = person;
             document.querySelectorAll('#person-segment .seg-btn').forEach(btn => btn.classList.remove('active'));
             el.classList.add('active');
         }
 
         function selectCategory(cat, el) {
-            Store.state.category = cat;
-            document.querySelectorAll('.bento-box').forEach(box => box.classList.remove('active'));
+            state.category = cat;
+            document.querySelectorAll('#category-container .bento-box').forEach(box => box.classList.remove('active'));
             el.classList.add('active');
         }
 
-        function toggleCurrency() {
-            const toggleBtn = document.getElementById('curr-toggle');
-            const inputField = document.getElementById('item-price');
-            if (Store.state.currency === 'JPY') {
-                Store.state.currency = 'TWD';
-                toggleBtn.innerText = '$';
-                toggleBtn.style.color = 'var(--secondary)';
-                inputField.placeholder = "輸入台幣金額";
-            } else {
-                Store.state.currency = 'JPY';
-                toggleBtn.innerText = '¥';
-                toggleBtn.style.color = 'var(--primary)';
-                inputField.placeholder = "輸入日幣金額";
+        function addExpense() {
+            const priceInput = document.getElementById('item-price');
+            const nameInput = document.getElementById('item-name');
+            const krwVal = parseFloat(priceInput.value);
+            
+            if (isNaN(krwVal) || krwVal <= 0) {
+                alert('請輸入正確的韓元金額');
+                return;
+            }
+
+            const twdVal = Math.round(krwVal * KRW_RATE);
+            const nameVal = nameInput.value.trim() || state.category;
+
+            const newExpense = {
+                id: Date.now().toString(),
+                date: state.date,
+                person: state.person,
+                category: state.category,
+                name: nameVal,
+                krw: krwVal,
+                twd: twdVal
+            };
+
+            state.expenses.push(newExpense);
+            localStorage.setItem('seoul_expenses', JSON.stringify(state.expenses));
+
+            // 清空輸入框
+            priceInput.value = '';
+            nameInput.value = '';
+
+            updateExpenseList();
+        }
+
+        function deleteExpense(id) {
+            if(confirm('確定要刪除這筆花費嗎？')){
+                state.expenses = state.expenses.filter(e => e.id !== id);
+                localStorage.setItem('seoul_expenses', JSON.stringify(state.expenses));
+                updateExpenseList();
             }
         }
 
-        function manualSync() {
-            showToast('正在同步資料...', 'success');
-            fetchExpenses();
-            fetchExchangeRate();
-        }
-
-        function openStatsModal() {
-            const container = document.getElementById('stats-content');
-            let stats = { '交通': 0, '食物': 0, '購物': 0, '其他': 0 };
-            let totalTWD = 0;
-            Store.state.expenses.forEach(item => {
-                let price = Math.round(parseFloat(item.price) || 0);
-                stats[item.cat] = (stats[item.cat] || 0) + price;
-                totalTWD += price;
-            });
-
-            let html = '';
-            const cats = ['交通', '食物', '購物', '其他'];
-            cats.forEach(cat => {
-                let valTWD = stats[cat];
-                let valJPY = Math.round(valTWD / Store.state.rate);
-                let icon = EMOJI_MAP[cat] || 'ph-ticket';
-                let percent = totalTWD === 0 ? 0 : Math.round((valTWD / totalTWD) * 100);
-                html += `
-                <div class="stat-item">
-                    <div class="stat-left">
-                        <div class="stat-icon"><i class="ph-fill ${icon}"></i></div>
-                        <div class="stat-info">
-                            <h4>${cat}</h4>
-                            <span class="stat-percent">${percent}% 佔比</span>
-                        </div>
-                    </div>
-                    <div class="stat-right">
-                        <span class="s-twd">$${valTWD.toLocaleString()}</span>
-                        <span class="s-jpy">≈ ¥${valJPY.toLocaleString()}</span>
-                    </div>
-                </div>`;
-            });
-            container.innerHTML = html;
-            document.getElementById('stats-modal').classList.add('active');
-        }
-
-        function closeStatsModal() {
-            document.getElementById('stats-modal').classList.remove('active');
-        }
-
-        function showToast(msg, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `<i class="ph-fill ${type === 'success' ? 'ph-check-circle' : 'ph-warning-circle'}"></i> <span>${msg}</span>`;
-            document.getElementById('toast-container').appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('hide');
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
-        }
-
-        function renderExpenses() {
-            let totalTWD = 0;
+        /* ================= 更新記帳列表與總額 ================= */
+        function updateExpenseList() {
             const listEl = document.getElementById('expense-list');
             listEl.innerHTML = '';
-            
-            const todayItems = Store.state.expenses.filter(item => {
-                const sheetDate = String(item.date).trim();
-                const targetDate = Store.state.date; 
-                if (sheetDate === targetDate || sheetDate.includes(targetDate)) return true;
-                if (sheetDate.includes('T') || sheetDate.includes('-')) {
-                    const d = new Date(sheetDate);
-                    return `${d.getMonth() + 1}/${d.getDate()}` === targetDate;
-                }
-                return false;
+
+            let totalTwd = 0;
+            let totalKrw = 0;
+
+            // 總額計算 (計算所有天的總和)
+            state.expenses.forEach(e => {
+                totalTwd += e.twd;
+                totalKrw += e.krw;
             });
 
-            if (todayItems.length === 0) {
-                listEl.innerHTML = `<div style="text-align:center; padding: 40px 20px; color: var(--text-muted); font-weight:600;">本日尚無紀錄</div>`;
-            } else {
-                todayItems.forEach(item => {
-                    const price = Math.round(parseFloat(item.price));
-                    const safeName = String(item.name).replace(/[<>]/g, "");
-                    const icon = EMOJI_MAP[item.cat] || 'ph-ticket';
-                    
-                    let personTagHtml = '';
-                    let displayName = safeName;
-                    const tagMatch = safeName.match(/^【(.*?)】(.*)/);
-                    if (tagMatch) {
-                        personTagHtml = `<span class="h-tag">${tagMatch[1]}</span>`;
-                        displayName = tagMatch[2].trim();
-                    }
+            // 更新儀表板
+            document.getElementById('total-primary').innerText = `NT$ ${totalTwd.toLocaleString()}`;
+            document.getElementById('total-secondary').innerText = `≈ ₩ ${totalKrw.toLocaleString()}`;
+            
+            let rem = BUDGET - totalTwd;
+            document.getElementById('budget-rem-label').innerText = `剩餘 NT$ ${rem.toLocaleString()}`;
+            
+            let percent = Math.min((totalTwd / BUDGET) * 100, 100);
+            const fillEl = document.getElementById('budget-fill');
+            fillEl.style.width = percent + '%';
+            fillEl.style.backgroundColor = percent > 90 ? 'var(--color-danger)' : 'var(--color-success)';
 
-                    listEl.innerHTML += `
+            // 過濾出目前選取日期的花費來顯示
+            const todaysExpenses = state.expenses.filter(e => e.date === state.date).reverse();
+
+            if (todaysExpenses.length === 0) {
+                listEl.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:20px; font-size:14px;">今日尚無花費紀錄</div>';
+                return;
+            }
+
+            // 繪製列表
+            todaysExpenses.forEach(item => {
+                let iconClass = 'ph-sparkle';
+                if (item.category === '交通') iconClass = 'ph-taxi';
+                if (item.category === '食物') iconClass = 'ph-hamburger';
+                if (item.category === '購物') iconClass = 'ph-tote';
+
+                const personTag = item.person ? `<span class="h-tag">${item.person}</span>` : `<span class="h-tag">共用</span>`;
+
+                const html = `
                     <div class="h-item">
                         <div class="h-left">
-                            <div class="h-icon"><i class="ph-fill ${icon}"></i></div>
+                            <div class="h-icon"><i class="ph-fill ${iconClass}"></i></div>
                             <div class="h-info">
-                                <h4>${displayName} ${personTagHtml}</h4>
-                                <span class="h-jpy">${item.cat}</span>
+                                <h4>${item.name}</h4>
+                                ${personTag}
                             </div>
                         </div>
                         <div class="h-right">
-                            <div class="h-price">$${price}</div>
+                            <div class="h-price-box">
+                                <div class="h-price">NT$ ${item.twd.toLocaleString()}</div>
+                                <div class="h-jpy">₩ ${item.krw.toLocaleString()}</div>
+                            </div>
                             <button class="h-del" onclick="deleteExpense('${item.id}')"><i class="ph-bold ph-trash"></i></button>
                         </div>
-                    </div>`;
-                });
-            }
-
-            Store.state.expenses.forEach(item => { totalTWD += Math.round(parseFloat(item.price) || 0); });
-            const totalJPY = Math.round(totalTWD / Store.state.rate);
-            
-            document.getElementById('total-primary').innerText = `NT$ ${totalTWD.toLocaleString()}`;
-            document.getElementById('total-secondary').innerText = `≈ ¥ ${totalJPY.toLocaleString()}`;
-
-            let spentPercent = (totalTWD / TOTAL_BUDGET) * 100;
-            let remaining = TOTAL_BUDGET - totalTWD;
-            const fillEl = document.getElementById('budget-fill');
-            const remLabel = document.getElementById('budget-rem-label');
-
-            fillEl.style.width = `${Math.min(spentPercent, 100)}%`;
-
-            if (remaining >= 0) {
-                remLabel.innerText = `剩餘 NT$ ${remaining.toLocaleString()}`;
-                remLabel.style.color = 'rgba(255,255,255,0.8)';
-                fillEl.style.background = spentPercent > 85 ? '#FFCC00' : '#34C759'; 
-            } else {
-                remLabel.innerText = `超支 NT$ ${Math.abs(remaining).toLocaleString()}`;
-                remLabel.style.color = '#FF4B4B';
-                fillEl.style.background = '#FF4B4B';
-            }
+                    </div>
+                `;
+                listEl.insertAdjacentHTML('beforeend', html);
+            });
         }
 
-        async function fetchExchangeRate() {
-            try {
-                const res = await fetch('https://open.er-api.com/v6/latest/JPY');
-                const data = await res.json();
-                if (data?.rates?.TWD) {
-                    Store.updateRate(data.rates.TWD);
-                }
-            } catch (e) {}
-            document.getElementById('rate-display').innerText = `匯率 ${Store.state.rate.toFixed(4)}`;
-            
-            renderShopping(); 
-            renderExpenses();
+        /* ================= 行程渲染邏輯 ================= */
+        function switchDay(dayId, el) {
+            document.querySelectorAll('#view-itinerary .seg-btn').forEach(btn => btn.classList.remove('active'));
+            el.classList.add('active');
+            renderItinerary(dayId);
         }
 
-        async function fetchOsakaWeather() {
-            const badge = document.getElementById('weather-badge');
-            try {
-                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=34.6937&longitude=135.5023&current_weather=true&timezone=Asia%2FTokyo`);
-                const data = await res.json();
-                badge.innerHTML = `🇯🇵 大阪 ${Math.round(data.current_weather.temperature)}°C`;
-            } catch (e) { badge.innerHTML = `🇯🇵 天氣異常`; }
-        }
+        function renderItinerary(dayId) {
+            const container = document.getElementById('itinerary-content');
+            container.innerHTML = '';
+            const data = ITINERARY_DATA[dayId];
 
-        async function fetchExpenses() {
-            try {
-                const res = await fetch(`${SCRIPT_URL}?action=read&t=${Date.now()}`);
-                const freshData = await res.json();
-                if (Array.isArray(freshData)) {
-                    Store.updateExpenses(freshData);
-                    renderExpenses();
-                }
-            } catch (err) {}
-        }
-
-        async function addExpense() {
-            const nameEl = document.getElementById('item-name');
-            const priceEl = document.getElementById('item-price');
-            const inputPrice = parseFloat(priceEl.value); 
-            if (isNaN(inputPrice) || inputPrice <= 0) return showToast('請輸入有效金額', 'error'); 
-            
-            let baseName = nameEl.value.trim() || Store.state.category;
-            let finalName = Store.state.person ? `【${Store.state.person}】${baseName}` : baseName;
-            const finalPriceTWD = Store.state.currency === 'JPY' ? Math.round(inputPrice * Store.state.rate) : Math.round(inputPrice); 
-            
-            const newId = Date.now().toString();
-            const newExpenseObj = { id: newId, date: Store.state.date, cat: Store.state.category, name: finalName, price: finalPriceTWD };
-            
-            Store.updateExpenses([...Store.state.expenses, newExpenseObj]);
-            renderExpenses();
-            nameEl.value = ''; priceEl.value = ''; priceEl.blur(); 
-            showToast(`已新增一筆花費`);
-
-            try {
-                const params = new URLSearchParams({ action: 'add', ...newExpenseObj });
-                await fetch(SCRIPT_URL, { method: 'POST', body: params });
-                fetchExpenses();
-            } catch (err) { showToast('背景同步失敗，已存於本機', 'error'); }
-        }
-
-        async function deleteExpense(id) {
-            if (!confirm('確定刪除此筆紀錄？')) return;
-            const original = [...Store.state.expenses]; 
-            Store.updateExpenses(Store.state.expenses.filter(item => String(item.id) !== String(id)));
-            renderExpenses(); 
-
-            try { 
-                await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'delete', id: String(id) }) }); 
-                showToast('紀錄已刪除');
-                fetchExpenses();
-            } catch (err) { 
-                Store.updateExpenses(original); renderExpenses(); 
-                showToast('刪除失敗', 'error');
-            }
+            data.forEach(stop => {
+                const html = `
+                    <div class="trip-card">
+                        ${stop.imgUrl ? `<img src="${stop.imgUrl}" class="t-img" alt="景點圖片">` : ''}
+                        <div class="t-body">
+                            <span class="t-time">${stop.time}</span>
+                            <h3 class="t-title">${stop.title}</h3>
+                            
+                            <div class="info-block addr-block">
+                                <i class="ph-fill ph-map-pin i-icon"></i>
+                                <div class="i-text">${stop.address}</div>
+                            </div>
+                            
+                            <div class="info-block transport-block">
+                                ${stop.icon1}
+                                <div class="i-text">${stop.info1}</div>
+                            </div>
+                            
+                            ${stop.info2 ? `
+                            <div class="info-block note-block">
+                                ${stop.icon2}
+                                <div class="i-text">${stop.info2}</div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
         }
     </script>
 </body>
