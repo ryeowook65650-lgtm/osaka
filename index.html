@@ -22,11 +22,11 @@
         :root {
             --bg-color: #F4F6F9;         
             --card-bg: #FFFFFF;          
-            --primary: #1E3A8A;          /* 深海藍 */
+            --primary: #1E3A8A;          
             --primary-light: rgba(30, 58, 138, 0.08); 
-            --secondary: #3B82F6;        /* 亮藍色 */
+            --secondary: #3B82F6;        
             --accent: #2563EB;           
-            --text-main: #0F172A;        /* 深灰黑 */
+            --text-main: #0F172A;        
             --text-muted: #64748B;       
             --border-color: rgba(15, 23, 42, 0.08);
             
@@ -62,7 +62,7 @@
         input[type="number"] { -moz-appearance: textfield; }
 
         /* =========================================
-           2. 頂部狀態列 (明亮毛玻璃)
+           2. 頂部狀態列
            ========================================= */
         .app-header {
             position: sticky; top: 0; z-index: 100;
@@ -144,7 +144,8 @@
         .input-row input::placeholder { color: #94A3B8; font-weight: 500;}
         .price-action-row { display: flex; align-items: center; justify-content: space-between; }
         .price-input-wrapper { display: flex; align-items: center; background: var(--bg-color); border-radius: 12px; padding: 12px 16px; flex: 1; margin-right: 12px; border: inset 1px rgba(0,0,0,0.02);}
-        .curr-toggle { font-weight: 800; font-size: 18px; color: var(--primary); margin-right: 12px; padding-right: 12px; border-right: 2px solid var(--border-color); user-select: none; }
+        .curr-toggle { font-weight: 800; font-size: 18px; color: var(--primary); margin-right: 12px; padding-right: 12px; border-right: 2px solid var(--border-color); user-select: none; cursor: pointer; transition: 0.2s; }
+        .curr-toggle:active { transform: scale(0.85); opacity: 0.7; }
         .price-input-wrapper input { font-size: 24px; font-weight: 800; width: 100%; color: var(--text-main); }
         .price-input-wrapper input::placeholder { color: #94A3B8; font-weight: 500;}
         .submit-fab { width: 54px; height: 54px; border-radius: 16px; background: linear-gradient(135deg, var(--primary) 0%, #3B82F6 100%); color: #FFF; font-size: 24px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), var(--shadow-btn); flex-shrink: 0;}
@@ -163,10 +164,9 @@
         .h-del:active { color: var(--color-danger); }
 
         /* =========================================
-           6. 行程版面 (無圖片、純排版)
+           6. 行程版面 
            ========================================= */
         .trip-card { background: var(--card-bg); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--border-inner), var(--shadow-card); border: 1px solid var(--border-color); position: relative;}
-        /* 卡片頂部裝飾條 */
         .trip-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary));}
         
         .t-body { padding: 24px; }
@@ -205,9 +205,6 @@
     </header>
 
     <main>
-        <!-- =========================================
-             視圖：記帳
-             ========================================= -->
         <section id="view-accounting" class="view-container active">
             <div class="balance-card">
                 <div class="b-title">
@@ -236,7 +233,7 @@
                 <button class="seg-btn" onclick="selectDate('7/20', this)">7/20</button>
             </div>
 
-            <!-- 人員選擇 (加入阿珊) -->
+            <!-- 人員選擇 -->
             <div class="segment-wrapper" id="person-segment">
                 <button class="seg-btn active" onclick="selectPerson('', this)">👥 共用</button>
                 <button class="seg-btn" onclick="selectPerson('阿珊', this)">👧 阿珊</button>
@@ -258,22 +255,18 @@
                 <div class="input-row"><input type="text" id="item-name" placeholder="品項名稱 (選填)"></div>
                 <div class="price-action-row">
                     <div class="price-input-wrapper">
-                        <div class="curr-toggle">₩</div>
-                        <input type="number" id="item-price" placeholder="輸入韓元" min="0" step="1">
+                        <!-- 切換幣值 -->
+                        <div class="curr-toggle" id="curr-toggle" onclick="toggleCurrency()">₩</div>
+                        <input type="number" id="item-price" placeholder="輸入韓元" min="0" step="0.01">
                     </div>
                     <button class="submit-fab" onclick="addExpense()"><i class="ph-bold ph-plus"></i></button>
                 </div>
             </div>
 
             <h3 class="section-title">今日紀錄</h3>
-            <div id="expense-list" class="history-list">
-                <!-- JS動態生成 -->
-            </div>
+            <div id="expense-list" class="history-list"></div>
         </section>
 
-        <!-- =========================================
-             視圖：行程 (室內/雨備為主、無圖片)
-             ========================================= -->
         <section id="view-itinerary" class="view-container">
             <div class="segment-wrapper">
                 <button class="seg-btn active" onclick="switchDay('day1', this)">D1</button>
@@ -282,93 +275,46 @@
                 <button class="seg-btn" onclick="switchDay('day4', this)">D4</button>
                 <button class="seg-btn" onclick="switchDay('day5', this)">D5</button>
             </div>
-            <div id="itinerary-content">
-                <!-- JS動態生成 -->
-            </div>
+            <div id="itinerary-content"></div>
         </section>
     </main>
 
-    <!-- =========================================
-         底部導覽列
-         ========================================= -->
     <nav class="bottom-nav">
         <button class="tab-btn active" id="tab-accounting" onclick="switchTab('accounting')"><i class="ph-fill ph-wallet"></i><span>記帳</span></button>
         <button class="tab-btn" id="tab-itinerary" onclick="switchTab('itinerary')"><i class="ph-fill ph-map-trifold"></i><span>行程</span></button>
     </nav>
 
-    <!-- =========================================
-         JavaScript 邏輯區
-         ========================================= -->
     <script>
-        // 【設定你的 Google Apps Script Webhook URL】
-        // 請將下方引號內的網址替換為你「新試算表」所部署出來的 Apps Script 網址
-        const GOOGLE_SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbwlZh1yRbASdUqd-ZHE0VZl87PBt48oUmEIADF78x0GGzGI8foUz1c9Y8ohKAhLoYtY/exec/exec';
+        // ==========================================
+        // Google Apps Script Webhook URL
+        // ==========================================
+        const GOOGLE_SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwlZh1yRbASdUqd-ZHE0VZl87PBt48oUmEIADF78x0GGzGI8foUz1c9Y8ohKAhLoYtY/exec';
 
-        // 預設匯率 (當 API 失敗時的備用值)
+        // 預設匯率與預算
         let KRW_RATE = 0.024;
         const BUDGET = 30000;
 
-        // 【更新版】首爾五天四夜行程資料 (室內/雨備/Outlet)
+        // 行程資料
         const ITINERARY_DATA = {
             day1: [
-                { 
-                    time: "下午抵達", title: "Check in: 首爾 PJ 酒店", address: "首爾特別市中區乾川路71", 
-                    icon1: "<i class='ph-fill ph-taxi'></i>", info1: "從機場搭乘 機場巴士 或 包車 前往<br><span class=\"cost-tag\">近地鐵 乙支路4街站 / 忠武路站</span>", 
-                    icon2: "<i class='ph-fill ph-suitcase'></i>", info2: "辦理入住並寄放行李休息"
-                },
-                { 
-                    time: "預估 15 分鐘", title: "明洞商圈逛街吃晚餐", address: "首爾特別市中區明洞", 
-                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">步行到 <span class=\"subway-station\">忠武路站</span></span><span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵4號線</span></span><span class=\"subway-step\">搭到 <span class=\"subway-station\">明洞站</span></span>", 
-                    icon2: "<i class='ph-fill ph-umbrella'></i>", info2: "如下雨可多逛樂天免稅店或在室內吃明洞餃子、神仙雪濃湯"
-                }
+                { time: "下午抵達", title: "Check in: 首爾 PJ 酒店", address: "首爾特別市中區乾川路71", icon1: "<i class='ph-fill ph-taxi'></i>", info1: "從機場搭乘 機場巴士 或 包車 前往<br><span class=\"cost-tag\">近地鐵 乙支路4街站 / 忠武路站</span>", icon2: "<i class='ph-fill ph-suitcase'></i>", info2: "辦理入住並寄放行李休息" },
+                { time: "預估 15 分鐘", title: "明洞商圈逛街吃晚餐", address: "首爾特別市中區明洞", icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">步行到 <span class=\"subway-station\">忠武路站</span></span><span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵4號線</span></span><span class=\"subway-step\">搭到 <span class=\"subway-station\">明洞站</span></span>", icon2: "<i class='ph-fill ph-umbrella'></i>", info2: "如下雨可多逛樂天免稅店或在室內吃明洞餃子、神仙雪濃湯" }
             ],
             day2: [
-                { 
-                    time: "預估 30 分鐘", title: "逛街: The Hyundai Seoul 現代百貨", address: "首爾特別市永登浦區汝矣大路108", 
-                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵5號線</span> (乙支路4街站上車)</span><span class=\"subway-step\">搭到 <span class=\"subway-station\">汝矣渡口站</span></span>", 
-                    icon2: "<i class='ph-fill ph-tote'></i>", info2: "【室內雨備首選】首爾最大最美百貨，超多潮牌、美食與室內植物園"
-                },
-                { 
-                    time: "預估 30 分鐘", title: "逛街: COEX 星空圖書館 & 水族館", address: "首爾特別市江南區永東大路513", 
-                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵9號線</span> 轉 <span class=\"subway-line\">地鐵2號線</span></span><span class=\"subway-step\">搭到 <span class=\"subway-station\">三成站</span> 5/6號出口</span>", 
-                    icon2: "<i class='ph-fill ph-books'></i>", info2: "【全室內行程】拍巨型書牆，逛巨大地下商城，下雨完全不怕"
-                }
+                { time: "預估 30 分鐘", title: "逛街: The Hyundai Seoul 現代百貨", address: "首爾特別市永登浦區汝矣大路108", icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵5號線</span> (乙支路4街站上車)</span><span class=\"subway-step\">搭到 <span class=\"subway-station\">汝矣渡口站</span></span>", icon2: "<i class='ph-fill ph-tote'></i>", info2: "【室內雨備首選】首爾最大最美百貨，超多潮牌、美食與室內植物園" },
+                { time: "預估 30 分鐘", title: "逛街: COEX 星空圖書館 & 水族館", address: "首爾特別市江南區永東大路513", icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵9號線</span> 轉 <span class=\"subway-line\">地鐵2號線</span></span><span class=\"subway-step\">搭到 <span class=\"subway-station\">三成站</span> 5/6號出口</span>", icon2: "<i class='ph-fill ph-books'></i>", info2: "【全室內行程】拍巨型書牆，逛巨大地下商城，下雨完全不怕" }
             ],
             day3: [
-                { 
-                    time: "預估 50 分鐘", title: "採買: 金浦現代 Premium Outlet", address: "京畿道金浦市高村邑Ara陸路152番街100", 
-                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵5號線</span></span><span class=\"subway-step\">至 <span class=\"subway-station\">傍花站</span> 換乘公車 16號</span>", 
-                    icon2: "<i class='ph-fill ph-bag'></i>", info2: "【購物行程】擁有許多國際大牌與運動品牌，有雨遮步道方便逛街"
-                },
-                { 
-                    time: "傍晚", title: "晚餐: 弘大商圈", address: "首爾特別市麻浦區弘益大學周邊", 
-                    icon1: "<i class='ph-fill ph-train'></i>", info1: "從 Outlet 離開後可搭車前往弘大商圈", 
-                    icon2: "<i class='ph-fill ph-coffee'></i>", info2: "逛逛美妝服飾，找間舒適的室內咖啡廳或烤肉店吃晚餐"
-                }
+                { time: "預估 50 分鐘", title: "採買: 金浦現代 Premium Outlet", address: "京畿道金浦市高村邑Ara陸路152番街100", icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵5號線</span></span><span class=\"subway-step\">至 <span class=\"subway-station\">傍花站</span> 換乘公車 16號</span>", icon2: "<i class='ph-fill ph-bag'></i>", info2: "【購物行程】擁有許多國際大牌與運動品牌，有雨遮步道方便逛街" },
+                { time: "傍晚", title: "晚餐: 弘大商圈", address: "首爾特別市麻浦區弘益大學周邊", icon1: "<i class='ph-fill ph-train'></i>", info1: "從 Outlet 離開後可搭車前往弘大商圈", icon2: "<i class='ph-fill ph-coffee'></i>", info2: "逛逛美妝服飾，找間舒適的室內咖啡廳或烤肉店吃晚餐" }
             ],
             day4: [
-                { 
-                    time: "預估 20 分鐘", title: "逛街: Goto Mall 江南地下街", address: "首爾特別市瑞草區新盤浦路200", 
-                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵3號線</span> (忠武路站上車)</span><span class=\"subway-step\">搭到 <span class=\"subway-station\">高速巴士客運站</span></span>", 
-                    icon2: "<i class='ph-fill ph-t-shirt'></i>", info2: "【全室內行程】首爾規模最大的地下街，服飾超便宜且完全不受天氣影響"
-                },
-                { 
-                    time: "下午", title: "景點: 樂天世界 Lotte World", address: "首爾特別市松坡區奧林匹克路240", 
-                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵2號線</span></span><span class=\"subway-step\">搭到 <span class=\"subway-station\">蠶室站</span> 4號出口</span>", 
-                    icon2: "<i class='ph-fill ph-ticket'></i>", info2: "【室內樂園】擁有巨大的室內探險世界，雨天遊樂的最佳去處"
-                }
+                { time: "預估 20 分鐘", title: "逛街: Goto Mall 江南地下街", address: "首爾特別市瑞草區新盤浦路200", icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵3號線</span> (忠武路站上車)</span><span class=\"subway-step\">搭到 <span class=\"subway-station\">高速巴士客運站</span></span>", icon2: "<i class='ph-fill ph-t-shirt'></i>", info2: "【全室內行程】首爾規模最大的地下街，服飾超便宜且完全不受天氣影響" },
+                { time: "下午", title: "景點: 樂天世界 Lotte World", address: "首爾特別市松坡區奧林匹克路240", icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵2號線</span></span><span class=\"subway-step\">搭到 <span class=\"subway-station\">蠶室站</span> 4號出口</span>", icon2: "<i class='ph-fill ph-ticket'></i>", info2: "【室內樂園】擁有巨大的室內探險世界，雨天遊樂的最佳去處" }
             ],
             day5: [
-                { 
-                    time: "預估 20 分鐘", title: "伴手禮: 樂天超市 (首爾站店)", address: "首爾特別市中區青坡路426", 
-                    icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵4號線</span> (忠武路站上車)</span><span class=\"subway-step\">搭到 <span class=\"subway-station\">首爾站</span> 1號出口</span>", 
-                    icon2: "<i class='ph-fill ph-gift'></i>", info2: "室內大型超市，買泡麵零食伴手禮，滿額可直接辦理退稅"
-                },
-                { 
-                    time: "行程結束", title: "前往機場準備回程", address: "仁川國際機場", 
-                    icon1: "<i class='ph-fill ph-airplane-tilt'></i>", info1: "搭乘機場快線(AREX)或機場巴士", 
-                    icon2: "<i class='ph-fill ph-heart'></i>", info2: "首爾之旅圓滿結束"
-                }
+                { time: "預估 20 分鐘", title: "伴手禮: 樂天超市 (首爾站店)", address: "首爾特別市中區青坡路426", icon1: "<i class='ph-fill ph-train'></i>", info1: "<span class=\"subway-step\">搭乘 <span class=\"subway-line\">地鐵4號線</span> (忠武路站上車)</span><span class=\"subway-step\">搭到 <span class=\"subway-station\">首爾站</span> 1號出口</span>", icon2: "<i class='ph-fill ph-gift'></i>", info2: "室內大型超市，買泡麵零食伴手禮，滿額可直接辦理退稅" },
+                { time: "行程結束", title: "前往機場準備回程", address: "仁川國際機場", icon1: "<i class='ph-fill ph-airplane-tilt'></i>", info1: "搭乘機場快線(AREX)或機場巴士", icon2: "<i class='ph-fill ph-heart'></i>", info2: "首爾之旅圓滿結束" }
             ]
         };
 
@@ -377,31 +323,25 @@
             date: '7/16',
             person: '',
             category: '交通',
+            inputCurrency: 'KRW', // 追蹤目前輸入的是韓元還是台幣
             expenses: [] 
         };
 
-        // DOM 元素載入後初始化
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. 抓取最新即時匯率
             fetchRealTimeExchangeRate();
-
-            // 2. 載入本地記帳資料
-            const stored = localStorage.getItem('seoul_expenses_v2');
+            const stored = localStorage.getItem('seoul_expenses_v4');
             if (stored) {
                 state.expenses = JSON.parse(stored);
             }
             updateExpenseList();
             renderItinerary('day1');
             
-            // 隨機天氣模擬 (僅視覺效果)
             const weatherEmoji = Math.random() > 0.5 ? "🌧️ 首爾 24°C" : "☁️ 首爾 26°C";
             document.querySelector('.weather-pill').innerText = weatherEmoji;
         });
 
-        /* ================= 抓取即時匯率 ================= */
         async function fetchRealTimeExchangeRate() {
             try {
-                // 使用免費開源 API 取得韓元兌換台幣最新匯率
                 const response = await fetch('https://open.er-api.com/v6/latest/KRW');
                 const data = await response.json();
                 if (data && data.rates && data.rates.TWD) {
@@ -414,7 +354,6 @@
             }
         }
 
-        /* ================= 切換主 Tab ================= */
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
@@ -423,7 +362,6 @@
             document.getElementById('view-' + tabId).classList.add('active');
         }
 
-        /* ================= 記帳表單操作 ================= */
         function selectDate(date, el) {
             state.date = date;
             document.querySelectorAll('#date-segment .seg-btn').forEach(btn => btn.classList.remove('active'));
@@ -443,17 +381,43 @@
             el.classList.add('active');
         }
 
+        // 切換幣值的函數
+        function toggleCurrency() {
+            const toggleEl = document.getElementById('curr-toggle');
+            const inputEl = document.getElementById('item-price');
+            
+            if (state.inputCurrency === 'KRW') {
+                state.inputCurrency = 'TWD';
+                toggleEl.innerText = 'NT$';
+                inputEl.placeholder = '輸入台幣';
+            } else {
+                state.inputCurrency = 'KRW';
+                toggleEl.innerText = '₩';
+                inputEl.placeholder = '輸入韓元';
+            }
+        }
+
         function addExpense() {
             const priceInput = document.getElementById('item-price');
             const nameInput = document.getElementById('item-name');
-            const krwVal = parseFloat(priceInput.value);
+            const inputVal = parseFloat(priceInput.value);
             
-            if (isNaN(krwVal) || krwVal <= 0) {
-                alert('請輸入正確的韓元金額');
+            if (isNaN(inputVal) || inputVal <= 0) {
+                alert('請輸入正確的金額');
                 return;
             }
 
-            const twdVal = Math.round(krwVal * KRW_RATE);
+            let krwVal, twdVal;
+
+            // 根據當前選擇的幣值來換算
+            if (state.inputCurrency === 'KRW') {
+                krwVal = inputVal;
+                twdVal = Math.round(inputVal * KRW_RATE);
+            } else {
+                twdVal = inputVal;
+                krwVal = Math.round(inputVal / KRW_RATE); // 若輸入台幣，反推韓元
+            }
+
             const nameVal = nameInput.value.trim() || state.category;
 
             const newExpense = {
@@ -466,21 +430,19 @@
                 twd: twdVal
             };
 
-            // 1. 儲存到本地端
             state.expenses.push(newExpense);
-            localStorage.setItem('seoul_expenses_v2', JSON.stringify(state.expenses));
+            localStorage.setItem('seoul_expenses_v4', JSON.stringify(state.expenses));
 
-            // 2. 傳送到 Google 試算表 (背景執行，不影響使用者體驗)
+            // 發送到 Google Sheets
             if (GOOGLE_SHEET_WEBHOOK_URL && GOOGLE_SHEET_WEBHOOK_URL.includes('/s/')) {
                 fetch(GOOGLE_SHEET_WEBHOOK_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // 避免跨網域 CORS 問題
+                    mode: 'no-cors', 
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newExpense)
                 }).catch(e => console.log('傳送至試算表失敗', e));
             }
 
-            // 清空表單
             priceInput.value = '';
             nameInput.value = '';
 
@@ -490,12 +452,11 @@
         function deleteExpense(id) {
             if(confirm('確定要刪除這筆花費嗎？')){
                 state.expenses = state.expenses.filter(e => e.id !== id);
-                localStorage.setItem('seoul_expenses_v2', JSON.stringify(state.expenses));
+                localStorage.setItem('seoul_expenses_v4', JSON.stringify(state.expenses));
                 updateExpenseList();
             }
         }
 
-        /* ================= 更新記帳列表與總額 ================= */
         function updateExpenseList() {
             const listEl = document.getElementById('expense-list');
             listEl.innerHTML = '';
@@ -554,13 +515,6 @@
                 `;
                 listEl.insertAdjacentHTML('beforeend', html);
             });
-        }
-
-        /* ================= 行程渲染邏輯 ================= */
-        function switchDay(dayId, el) {
-            document.querySelectorAll('#view-itinerary .seg-btn').forEach(btn => btn.classList.remove('active'));
-            el.classList.add('active');
-            renderItinerary(dayId);
         }
 
         function renderItinerary(dayId) {
